@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>A1 Income</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f3f6fb;
+    color:#172033;
+}
+
+header{
+    background:#071a3d;
+    color:white;
+    padding:18px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#ffb000;
+}
+
+.back{
+    color:white;
+    text-decoration:none;
+    background:#0758a8;
+    padding:9px 15px;
+    border-radius:6px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:30px 18px;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.title h1{
+    color:#071a3d;
+    margin-bottom:8px;
+}
+
+.title p{
+    color:#666;
+}
+
+.loading{
+    text-align:center;
+    padding:25px;
+    color:#666;
+}
+
+.error{
+    display:none;
+    background:#ffe5e5;
+    color:#b00020;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(200px,1fr));
+    gap:18px;
+    margin-bottom:30px;
+}
+
+.card{
+    background:white;
+    padding:25px 18px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.card h3{
+    color:#666;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.amount{
+    font-size:27px;
+    font-weight:bold;
+    color:#0758a8;
+}
+
+.table-box{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:14px 10px;
+    border-bottom:1px solid #e5e9ef;
+    text-align:left;
+    white-space:nowrap;
+}
+
+th{
+    background:#071a3d;
+    color:white;
+}
+
+.income{
+    color:#198754;
+    font-weight:bold;
+}
+
+.empty{
+    text-align:center;
+    padding:25px;
+    color:#666;
+}
+
+.notice{
+    margin-top:25px;
+    background:#fff8df;
+    padding:15px;
+    border-radius:8px;
+    font-size:13px;
+    color:#555;
+    line-height:1.5;
+}
+
+footer{
+    margin-top:30px;
+    background:#041128;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+A1
+</div>
+
+<a
+    href="dashboard.html"
+    class="back"
+>
+← Dashboard
+</a>
+
+</header>
+
+
+<div class="container">
+
+
+<div class="title">
+
+<h1>
+Income & Earnings
+</h1>
+
+<p>
+A1 Member Income Overview
+</p>
+
+</div>
+
+
+<div
+    id="loading"
+    class="loading"
+>
+Loading income information...
+</div>
+
+
+<div
+    id="errorBox"
+    class="error"
+></div>
+
+
+<div
+    id="incomeContent"
+    style="display:none;"
+>
+
+
+<div class="cards">
+
+
+<div class="card">
+
+<h3>
+Total Income
+</h3>
+
+<div
+    class="amount"
+    id="totalIncome"
+>
+₹0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Available Balance
+</h3>
+
+<div
+    class="amount"
+    id="availableBalance"
+>
+₹0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Referral Income
+</h3>
+
+<div
+    class="amount"
+    id="referralIncome"
+>
+₹0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Binary Income
+</h3>
+
+<div
+    class="amount"
+    id="binaryIncome"
+>
+₹0
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="table-box">
+
+<h2 style="margin-bottom:20px;">
+Income History
+</h2>
+
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Date
+</th>
+
+<th>
+Income Type
+</th>
+
+<th>
+Amount
+</th>
+
+<th>
+Status
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="incomeTable">
+
+<tr>
+
+<td
+    colspan="4"
+    class="empty"
+>
+No income records available yet.
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+
+</div>
+
+
+<div class="notice">
+
+<strong>Important:</strong>
+
+Your income page is connected to your A1 member
+authentication. Actual commissions, binary income,
+referral income and withdrawals will be displayed
+after the A1 income database and final compensation
+rules are implemented.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<footer>
+
+<p>
+© 2026 A1 Enterprises Pvt. Ltd.
+</p>
+
+</footer>
+
+
+<script>
+
+/* =========================================
+   A1 SUPABASE CONNECTION
+   ========================================= */
+
+const SUPABASE_URL =
+"https://rtnxobtczeaxtpxgvfpb.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_f8QIMjFi5Zm2a10LcODEPg_z8EOWM3_";
+
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/* =========================================
+   LOAD INCOME PAGE
+   ========================================= */
+
+async function loadIncome(){
+
+    const loading =
+        document.getElementById("loading");
+
+    const content =
+        document.getElementById("incomeContent");
+
+    const errorBox =
+        document.getElementById("errorBox");
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+            .auth
+            .getUser();
+
+
+        if(error || !data.user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        /*
+          Member is authenticated.
+
+          Income records will be loaded from the
+          income database after the income table
+          is created.
+        */
+
+
+        document
+        .getElementById("totalIncome")
+        .innerText =
+            "₹0";
+
+
+        document
+        .getElementById("availableBalance")
+        .innerText =
+            "₹0";
+
+
+        document
+        .getElementById("referralIncome")
+        .innerText =
+            "₹0";
+
+
+        document
+        .getElementById("binaryIncome")
+        .innerText =
+            "₹0";
+
+
+        loading.style.display =
+            "none";
+
+
+        content.style.display =
+            "block";
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        loading.style.display =
+            "none";
+
+
+        errorBox.style.display =
+            "block";
+
+
+        errorBox.innerText =
+            "Unable to load income information.";
+
+    }
+
+}
+
+
+loadIncome();
+
+</script>
+
+
+</body>
+
+</html>
