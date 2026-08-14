@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>A1 Awards & Rewards</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f3f6fb;
+    color:#172033;
+}
+
+header{
+    background:#071a3d;
+    color:white;
+    padding:18px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#ffb000;
+}
+
+.back{
+    color:white;
+    text-decoration:none;
+    background:#0758a8;
+    padding:9px 15px;
+    border-radius:6px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:30px 18px;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.title h1{
+    color:#071a3d;
+    margin-bottom:8px;
+}
+
+.title p{
+    color:#666;
+}
+
+.loading{
+    text-align:center;
+    padding:25px;
+    color:#666;
+}
+
+.error{
+    display:none;
+    background:#ffe5e5;
+    color:#b00020;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.summary{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(200px,1fr));
+    gap:18px;
+    margin-bottom:30px;
+}
+
+.summary-card{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.icon{
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.summary-card h3{
+    color:#0758a8;
+    margin-bottom:8px;
+}
+
+.summary-card p{
+    color:#666;
+}
+
+.rewards{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(230px,1fr));
+    gap:20px;
+}
+
+.reward{
+    background:white;
+    padding:28px 20px;
+    border-radius:14px;
+    text-align:center;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.reward-icon{
+    font-size:55px;
+    margin-bottom:15px;
+}
+
+.reward h2{
+    color:#071a3d;
+    margin-bottom:10px;
+}
+
+.reward p{
+    color:#666;
+    line-height:1.5;
+}
+
+.badge{
+    display:inline-block;
+    margin-top:15px;
+    padding:7px 14px;
+    border-radius:20px;
+    background:#fff8df;
+    color:#856404;
+    font-size:13px;
+}
+
+.performance{
+    margin-top:30px;
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.performance h2{
+    color:#071a3d;
+    margin-bottom:20px;
+}
+
+.progress{
+    height:18px;
+    background:#e5e9ef;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:#0758a8;
+}
+
+.note{
+    margin-top:25px;
+    background:#fff8df;
+    padding:15px;
+    border-radius:8px;
+    font-size:13px;
+    color:#555;
+    line-height:1.5;
+}
+
+footer{
+    margin-top:30px;
+    background:#041128;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+A1
+</div>
+
+<a
+    href="dashboard.html"
+    class="back"
+>
+← Dashboard
+</a>
+
+</header>
+
+
+<div class="container">
+
+
+<div class="title">
+
+<h1>
+Awards & Rewards
+</h1>
+
+<p>
+A1 Member Recognition & Achievement
+</p>
+
+</div>
+
+
+<div
+    id="loading"
+    class="loading"
+>
+Loading reward information...
+</div>
+
+
+<div
+    id="errorBox"
+    class="error"
+></div>
+
+
+<div
+    id="rewardContent"
+    style="display:none;"
+>
+
+
+<div class="summary">
+
+
+<div class="summary-card">
+
+<div class="icon">
+🏆
+</div>
+
+<h3>
+Awards
+</h3>
+
+<p id="awardCount">
+0 Achieved
+</p>
+
+</div>
+
+
+<div class="summary-card">
+
+<div class="icon">
+🎁
+</div>
+
+<h3>
+Rewards
+</h3>
+
+<p id="rewardValue">
+₹0 Value
+</p>
+
+</div>
+
+
+<div class="summary-card">
+
+<div class="icon">
+⭐
+</div>
+
+<h3>
+Achievement Level
+</h3>
+
+<p id="achievementLevel">
+Starting Level
+</p>
+
+</div>
+
+
+</div>
+
+
+<div class="rewards">
+
+
+<div class="reward">
+
+<div class="reward-icon">
+🥉
+</div>
+
+<h2>
+Bronze
+</h2>
+
+<p>
+Recognition for achieving the applicable
+Bronze-level criteria.
+</p>
+
+<span class="badge">
+Not Yet Achieved
+</span>
+
+</div>
+
+
+<div class="reward">
+
+<div class="reward-icon">
+🥈
+</div>
+
+<h2>
+Silver
+</h2>
+
+<p>
+Recognition for achieving the applicable
+Silver-level criteria.
+</p>
+
+<span class="badge">
+Not Yet Achieved
+</span>
+
+</div>
+
+
+<div class="reward">
+
+<div class="reward-icon">
+🥇
+</div>
+
+<h2>
+Gold
+</h2>
+
+<p>
+Recognition for achieving the applicable
+Gold-level criteria.
+</p>
+
+<span class="badge">
+Not Yet Achieved
+</span>
+
+</div>
+
+
+<div class="reward">
+
+<div class="reward-icon">
+💎
+</div>
+
+<h2>
+Diamond
+</h2>
+
+<p>
+Recognition for achieving the applicable
+Diamond-level criteria.
+</p>
+
+<span class="badge">
+Not Yet Achieved
+</span>
+
+</div>
+
+
+</div>
+
+
+<div class="performance">
+
+<h2>
+Current Performance
+</h2>
+
+<p
+    style="margin-bottom:12px;color:#666;"
+>
+Your current reward progress will be calculated
+after the final A1 recognition rules and database
+are implemented.
+</p>
+
+<div class="progress">
+
+<div class="progress-bar">
+</div>
+
+</div>
+
+</div>
+
+
+<div class="note">
+
+<strong>Important:</strong>
+
+Awards, rewards, eligibility criteria and benefits
+will be activated after the A1 compensation and
+recognition rules are finalized and connected to
+the secure database.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<footer>
+
+<p>
+© 2026 A1 Enterprises Pvt. Ltd.
+</p>
+
+</footer>
+
+
+<script>
+
+/* =========================================
+   A1 SUPABASE CONNECTION
+   ========================================= */
+
+const SUPABASE_URL =
+"https://rtnxobtczeaxtpxgvfpb.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_f8QIMjFi5Zm2a10LcODEPg_z8EOWM3_";
+
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/* =========================================
+   LOAD REWARDS PAGE
+   ========================================= */
+
+async function loadRewards(){
+
+    const loading =
+        document.getElementById("loading");
+
+    const content =
+        document.getElementById("rewardContent");
+
+    const errorBox =
+        document.getElementById("errorBox");
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+            .auth
+            .getUser();
+
+
+        if(error || !data.user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        /*
+          Member is authenticated.
+
+          Real reward records will be loaded
+          after the reward database and final
+          A1 reward rules are created.
+        */
+
+
+        document
+        .getElementById("awardCount")
+        .innerText =
+            "0 Achieved";
+
+
+        document
+        .getElementById("rewardValue")
+        .innerText =
+            "₹0 Value";
+
+
+        document
+        .getElementById("achievementLevel")
+        .innerText =
+            "Starting Level";
+
+
+        loading.style.display =
+            "none";
+
+
+        content.style.display =
+            "block";
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        loading.style.display =
+            "none";
+
+
+        errorBox.style.display =
+            "block";
+
+
+        errorBox.innerText =
+            "Unable to load reward information.";
+
+    }
+
+}
+
+
+loadRewards();
+
+</script>
+
+
+</body>
+
+</html>
