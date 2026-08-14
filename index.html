@@ -216,7 +216,10 @@ footer{
 A1
 </div>
 
-<a href="index.html" class="home">
+<a
+    href="index.html"
+    class="home"
+>
 ← Home
 </a>
 
@@ -255,10 +258,10 @@ Full Name *
 </label>
 
 <input
-type="text"
-id="fullName"
-placeholder="Enter full name"
-required
+    type="text"
+    id="fullName"
+    placeholder="Enter full name"
+    required
 >
 
 </div>
@@ -271,12 +274,12 @@ Mobile Number *
 </label>
 
 <input
-type="tel"
-id="mobile"
-placeholder="Enter 10-digit mobile number"
-pattern="[0-9]{10}"
-maxlength="10"
-required
+    type="tel"
+    id="mobile"
+    placeholder="Enter 10-digit mobile number"
+    pattern="[0-9]{10}"
+    maxlength="10"
+    required
 >
 
 </div>
@@ -289,10 +292,10 @@ Email Address *
 </label>
 
 <input
-type="email"
-id="email"
-placeholder="Enter email address"
-required
+    type="email"
+    id="email"
+    placeholder="Enter email address"
+    required
 >
 
 </div>
@@ -305,8 +308,8 @@ Date of Birth
 </label>
 
 <input
-type="date"
-id="dob"
+    type="date"
+    id="dob"
 >
 
 </div>
@@ -318,7 +321,10 @@ id="dob"
 State *
 </label>
 
-<select id="state" required>
+<select
+    id="state"
+    required
+>
 
 <option value="">
 Select State
@@ -356,9 +362,9 @@ City
 </label>
 
 <input
-type="text"
-id="city"
-placeholder="Enter city"
+    type="text"
+    id="city"
+    placeholder="Enter city"
 >
 
 </div>
@@ -371,8 +377,8 @@ Address
 </label>
 
 <textarea
-id="address"
-placeholder="Enter your address"
+    id="address"
+    placeholder="Enter your address"
 ></textarea>
 
 </div>
@@ -385,9 +391,9 @@ Referral ID
 </label>
 
 <input
-type="text"
-id="referral"
-placeholder="Enter referral ID if applicable"
+    type="text"
+    id="referral"
+    placeholder="Enter referral ID if applicable"
 >
 
 </div>
@@ -400,11 +406,11 @@ Password *
 </label>
 
 <input
-type="password"
-id="password"
-placeholder="Create password"
-minlength="6"
-required
+    type="password"
+    id="password"
+    placeholder="Create password"
+    minlength="6"
+    required
 >
 
 </div>
@@ -417,11 +423,11 @@ Confirm Password *
 </label>
 
 <input
-type="password"
-id="confirmPassword"
-placeholder="Confirm password"
-minlength="6"
-required
+    type="password"
+    id="confirmPassword"
+    placeholder="Confirm password"
+    minlength="6"
+    required
 >
 
 </div>
@@ -433,9 +439,9 @@ required
 <div class="terms">
 
 <input
-type="checkbox"
-id="terms"
-required
+    type="checkbox"
+    id="terms"
+    required
 >
 
 <label for="terms">
@@ -449,8 +455,8 @@ Privacy Policy.
 
 
 <button
-type="submit"
-id="registerButton"
+    type="submit"
+    id="registerButton"
 >
 
 Create Account
@@ -523,196 +529,248 @@ supabase.createClient(
 
 document
 .getElementById("registerForm")
-.addEventListener("submit", async function(event){
+.addEventListener(
+    "submit",
+    async function(event){
 
-    event.preventDefault();
-
-
-    const fullName =
-        document.getElementById("fullName").value.trim();
-
-    const mobile =
-        document.getElementById("mobile").value.trim();
-
-    const email =
-        document.getElementById("email").value.trim();
-
-    const dob =
-        document.getElementById("dob").value;
-
-    const state =
-        document.getElementById("state").value;
-
-    const city =
-        document.getElementById("city").value.trim();
-
-    const address =
-        document.getElementById("address").value.trim();
-
-    const referral =
-        document.getElementById("referral").value.trim();
-
-    const password =
-        document.getElementById("password").value;
-
-    const confirmPassword =
-        document.getElementById("confirmPassword").value;
+        event.preventDefault();
 
 
-    /* Password check */
-
-    if(password !== confirmPassword){
-
-        alert(
-            "Password and Confirm Password do not match."
-        );
-
-        return;
-
-    }
+        const fullName =
+            document
+            .getElementById("fullName")
+            .value
+            .trim();
 
 
-    /* Mobile check */
-
-    if(!/^[0-9]{10}$/.test(mobile)){
-
-        alert(
-            "Please enter a valid 10-digit mobile number."
-        );
-
-        return;
-
-    }
+        const mobile =
+            document
+            .getElementById("mobile")
+            .value
+            .trim();
 
 
-    /* Password length */
-
-    if(password.length < 6){
-
-        alert(
-            "Password must contain at least 6 characters."
-        );
-
-        return;
-
-    }
+        const email =
+            document
+            .getElementById("email")
+            .value
+            .trim();
 
 
-    const button =
-        document.getElementById("registerButton");
+        const dob =
+            document
+            .getElementById("dob")
+            .value;
 
 
-    button.disabled = true;
-
-    button.innerText =
-        "Creating Account...";
-
-
-    try{
+        const state =
+            document
+            .getElementById("state")
+            .value;
 
 
-        /* Create Supabase Auth account */
-
-        const { data, error } =
-            await supabaseClient.auth.signUp({
-
-                email: email,
-
-                password: password,
-
-                options: {
-
-                    data: {
-
-                        full_name: fullName,
-
-                        mobile: mobile,
-
-                        date_of_birth: dob,
-
-                        state: state,
-
-                        city: city,
-
-                        address: address,
-
-                        referral_id: referral
-
-                    }
-
-                }
-
-            });
+        const city =
+            document
+            .getElementById("city")
+            .value
+            .trim();
 
 
-        if(error){
+        const address =
+            document
+            .getElementById("address")
+            .value
+            .trim();
+
+
+        const referral =
+            document
+            .getElementById("referral")
+            .value
+            .trim();
+
+
+        const password =
+            document
+            .getElementById("password")
+            .value;
+
+
+        const confirmPassword =
+            document
+            .getElementById("confirmPassword")
+            .value;
+
+
+        /* Password check */
+
+        if(password !== confirmPassword){
 
             alert(
-                "Registration failed:\n\n" +
-                error.message
+                "Password and Confirm Password do not match."
             );
-
-            button.disabled = false;
-
-            button.innerText =
-                "Create Account";
 
             return;
 
         }
 
 
-        /* Success */
+        /* Mobile check */
 
-        if(data.user){
+        if(!/^[0-9]{10}$/.test(mobile)){
 
-            if(data.session){
+            alert(
+                "Please enter a valid 10-digit mobile number."
+            );
 
-                alert(
-                    "A1 account created successfully!\n\n" +
-                    "You can now login."
-                );
-
-            }else{
-
-                alert(
-                    "A1 account created successfully!\n\n" +
-                    "Please check your email and confirm your email address before logging in."
-                );
-
-            }
+            return;
 
         }
 
 
-        document
-        .getElementById("registerForm")
-        .reset();
+        /* Password length */
+
+        if(password.length < 6){
+
+            alert(
+                "Password must contain at least 6 characters."
+            );
+
+            return;
+
+        }
 
 
-        button.disabled = false;
-
-        button.innerText =
-            "Create Account";
-
-
-    }catch(error){
+        const button =
+            document
+            .getElementById("registerButton");
 
 
-        alert(
-            "Something went wrong.\n\n" +
-            error.message
-        );
-
-
-        button.disabled = false;
+        button.disabled = true;
 
         button.innerText =
-            "Create Account";
+            "Creating Account...";
+
+
+        try{
+
+            /* Create Supabase Auth account */
+
+            const { data, error } =
+                await supabaseClient.auth.signUp({
+
+                    email: email,
+
+                    password: password,
+
+                    options: {
+
+                        /* Email confirmation redirect */
+
+                        emailRedirectTo:
+                            "https://kuruvasrikanth11-droid.github.io/A1-MLM-Website/",
+
+
+                        /* Member information */
+
+                        data: {
+
+                            full_name:
+                                fullName,
+
+                            mobile:
+                                mobile,
+
+                            date_of_birth:
+                                dob,
+
+                            state:
+                                state,
+
+                            city:
+                                city,
+
+                            address:
+                                address,
+
+                            referral_id:
+                                referral
+
+                        }
+
+                    }
+
+                });
+
+
+            if(error){
+
+                alert(
+                    "Registration failed:\n\n" +
+                    error.message
+                );
+
+                button.disabled = false;
+
+                button.innerText =
+                    "Create Account";
+
+                return;
+
+            }
+
+
+            /* Success */
+
+            if(data.user){
+
+                if(data.session){
+
+                    alert(
+                        "A1 account created successfully!\n\n" +
+                        "You can now login."
+                    );
+
+                }else{
+
+                    alert(
+                        "A1 account created successfully!\n\n" +
+                        "Please check your email and confirm your email address before logging in."
+                    );
+
+                }
+
+            }
+
+
+            document
+            .getElementById("registerForm")
+            .reset();
+
+
+            button.disabled = false;
+
+            button.innerText =
+                "Create Account";
+
+
+        }catch(error){
+
+            alert(
+                "Something went wrong.\n\n" +
+                error.message
+            );
+
+
+            button.disabled = false;
+
+            button.innerText =
+                "Create Account";
+
+        }
 
     }
-
-});
+);
 
 </script>
 
