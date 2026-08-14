@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>A1 My Profile</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f3f6fb;
+    color:#172033;
+}
+
+header{
+    background:#071a3d;
+    color:white;
+    padding:18px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#ffb000;
+}
+
+.back{
+    color:white;
+    text-decoration:none;
+    background:#0758a8;
+    padding:9px 15px;
+    border-radius:6px;
+}
+
+.container{
+    max-width:800px;
+    margin:auto;
+    padding:30px 18px;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.title h1{
+    color:#071a3d;
+    margin-bottom:8px;
+}
+
+.title p{
+    color:#666;
+}
+
+.profile-card{
+    background:white;
+    border-radius:15px;
+    padding:30px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.profile-top{
+    text-align:center;
+    padding-bottom:25px;
+    border-bottom:1px solid #e5e9ef;
+}
+
+.avatar{
+    width:90px;
+    height:90px;
+    margin:auto;
+    border-radius:50%;
+    background:#071a3d;
+    color:#ffb000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:36px;
+    font-weight:bold;
+}
+
+.profile-top h2{
+    margin-top:15px;
+    color:#071a3d;
+}
+
+.member-id{
+    color:#666;
+    margin-top:5px;
+}
+
+.details{
+    margin-top:25px;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    padding:16px 5px;
+    border-bottom:1px solid #edf0f4;
+}
+
+.label{
+    color:#666;
+    font-weight:bold;
+}
+
+.value{
+    color:#172033;
+    text-align:right;
+}
+
+.status{
+    color:#198754;
+    font-weight:bold;
+}
+
+.note{
+    margin-top:25px;
+    background:#fff8df;
+    padding:15px;
+    border-radius:8px;
+    font-size:13px;
+    color:#555;
+    line-height:1.5;
+}
+
+.loading{
+    text-align:center;
+    padding:20px;
+    color:#666;
+}
+
+.error{
+    background:#ffe5e5;
+    color:#b00020;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+    display:none;
+}
+
+footer{
+    margin-top:30px;
+    background:#041128;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+@media(max-width:600px){
+
+    .row{
+        flex-direction:column;
+        gap:6px;
+    }
+
+    .value{
+        text-align:left;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+A1
+</div>
+
+<a
+    href="dashboard.html"
+    class="back"
+>
+← Dashboard
+</a>
+
+</header>
+
+
+<div class="container">
+
+
+<div class="title">
+
+<h1>
+My Profile
+</h1>
+
+<p>
+A1 Member Information
+</p>
+
+</div>
+
+
+<div
+    id="errorBox"
+    class="error"
+></div>
+
+
+<div class="profile-card">
+
+
+<div
+    id="loading"
+    class="loading"
+>
+Loading member information...
+</div>
+
+
+<div id="profileContent" style="display:none;">
+
+
+<div class="profile-top">
+
+
+<div
+    class="avatar"
+    id="avatar"
+>
+A1
+</div>
+
+
+<h2 id="profileName">
+A1 Member
+</h2>
+
+
+<p class="member-id">
+
+Member ID:
+
+<span id="memberId">
+Loading...
+</span>
+
+</p>
+
+
+</div>
+
+
+<div class="details">
+
+
+<div class="row">
+
+<div class="label">
+Full Name
+</div>
+
+<div
+    class="value"
+    id="fullName"
+>
+-
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Mobile Number
+</div>
+
+<div
+    class="value"
+    id="mobile"
+>
+-
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Email Address
+</div>
+
+<div
+    class="value"
+    id="email"
+>
+-
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Date of Birth
+</div>
+
+<div
+    class="value"
+    id="dob"
+>
+-
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+State
+</div>
+
+<div
+    class="value"
+    id="state"
+>
+-
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+City
+</div>
+
+<div
+    class="value"
+    id="city"
+>
+-
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Address
+</div>
+
+<div
+    class="value"
+    id="address"
+>
+-
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Referral ID
+</div>
+
+<div
+    class="value"
+    id="referral"
+>
+-
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Joining Date
+</div>
+
+<div
+    class="value"
+    id="joiningDate"
+>
+-
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Account Status
+</div>
+
+<div class="value status">
+Active
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="note">
+
+<strong>Note:</strong>
+
+Your profile information is loaded from your
+A1 Supabase authentication account.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<footer>
+
+<p>
+© 2026 A1 Enterprises Pvt. Ltd.
+</p>
+
+</footer>
+
+
+<script>
+
+/* =========================================
+   A1 SUPABASE CONNECTION
+   ========================================= */
+
+const SUPABASE_URL =
+"https://rtnxobtczeaxtpxgvfpb.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_f8QIMjFi5Zm2a10LcODEPg_z8EOWM3_";
+
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/* =========================================
+   LOAD MEMBER PROFILE
+   ========================================= */
+
+async function loadProfile(){
+
+    const loading =
+        document.getElementById("loading");
+
+    const profileContent =
+        document.getElementById("profileContent");
+
+    const errorBox =
+        document.getElementById("errorBox");
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+            .auth
+            .getUser();
+
+
+        if(error || !data.user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        const user =
+            data.user;
+
+
+        const metadata =
+            user.user_metadata || {};
+
+
+        /* Full name */
+
+        const fullName =
+            metadata.full_name ||
+            "A1 Member";
+
+
+        document
+        .getElementById("profileName")
+        .innerText =
+            fullName;
+
+
+        document
+        .getElementById("fullName")
+        .innerText =
+            fullName;
+
+
+        /* Avatar */
+
+        const firstLetter =
+            fullName
+            .charAt(0)
+            .toUpperCase();
+
+
+        document
+        .getElementById("avatar")
+        .innerText =
+            firstLetter;
+
+
+        /* Member ID */
+
+        const memberId =
+            "A1-" +
+            user.id
+            .substring(0,8)
+            .toUpperCase();
+
+
+        document
+        .getElementById("memberId")
+        .innerText =
+            memberId;
+
+
+        /* Email */
+
+        document
+        .getElementById("email")
+        .innerText =
+            user.email || "-";
+
+
+        /* Mobile */
+
+        document
+        .getElementById("mobile")
+        .innerText =
+            metadata.mobile || "-";
+
+
+        /* Date of Birth */
+
+        document
+        .getElementById("dob")
+        .innerText =
+            metadata.date_of_birth || "-";
+
+
+        /* State */
+
+        document
+        .getElementById("state")
+        .innerText =
+            metadata.state || "-";
+
+
+        /* City */
+
+        document
+        .getElementById("city")
+        .innerText =
+            metadata.city || "-";
+
+
+        /* Address */
+
+        document
+        .getElementById("address")
+        .innerText =
+            metadata.address || "-";
+
+
+        /* Referral ID */
+
+        document
+        .getElementById("referral")
+        .innerText =
+            metadata.referral_id || "-";
+
+
+        /* Joining Date */
+
+        if(user.created_at){
+
+            const date =
+                new Date(
+                    user.created_at
+                );
+
+
+            document
+            .getElementById("joiningDate")
+            .innerText =
+                date.toLocaleDateString(
+                    "en-IN"
+                );
+
+        }
+
+
+        loading.style.display =
+            "none";
+
+
+        profileContent.style.display =
+            "block";
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        loading.style.display =
+            "none";
+
+
+        errorBox.style.display =
+            "block";
+
+
+        errorBox.innerText =
+            "Unable to load profile information.";
+
+
+    }
+
+}
+
+
+/* =========================================
+   START
+   ========================================= */
+
+loadProfile();
+
+</script>
+
+
+</body>
+
+</html>
+
+ఇప్పుడు ఒక్క పని మాత్రమే 👇
+
+HTML Editorలో ఈ కొత్త codeని "profile.html"లో paste చేసి Save చేయండి.
+
+ఇంకా GitHubకి upload చేయకండి.
+
+Save అయిన తర్వాత “Profile Save అయింది” అని చెప్పండి. 👍
