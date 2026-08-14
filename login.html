@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>A1 Member Login</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f3f6fb;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.login-box{
+    width:100%;
+    max-width:420px;
+    background:white;
+    padding:35px;
+    border-radius:15px;
+    box-shadow:0 8px 30px rgba(0,0,0,0.10);
+}
+
+.logo{
+    text-align:center;
+    font-size:48px;
+    font-weight:bold;
+    color:#ffb000;
+    background:#071a3d;
+    width:80px;
+    height:80px;
+    line-height:80px;
+    border-radius:50%;
+    margin:0 auto 20px;
+}
+
+h1{
+    text-align:center;
+    color:#071a3d;
+    margin-bottom:8px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:25px;
+}
+
+label{
+    display:block;
+    margin:15px 0 7px;
+    font-weight:bold;
+    color:#172033;
+}
+
+input{
+    width:100%;
+    padding:13px;
+    border:1px solid #d5dbe5;
+    border-radius:7px;
+    font-size:15px;
+}
+
+input:focus{
+    outline:none;
+    border-color:#0758a8;
+}
+
+.login-btn{
+    width:100%;
+    padding:14px;
+    margin-top:25px;
+    border:none;
+    border-radius:7px;
+    background:#0758a8;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.login-btn:hover{
+    background:#071a3d;
+}
+
+.login-btn:disabled{
+    background:#777;
+    cursor:not-allowed;
+}
+
+.links{
+    text-align:center;
+    margin-top:20px;
+}
+
+.links a{
+    color:#0758a8;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.links p{
+    margin:10px 0;
+}
+
+.message{
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    border-radius:7px;
+    font-size:14px;
+    text-align:center;
+}
+
+.note{
+    margin-top:20px;
+    padding:12px;
+    background:#fff8df;
+    border-radius:7px;
+    font-size:12px;
+    color:#555;
+    text-align:center;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-box">
+
+
+<div class="logo">
+A1
+</div>
+
+
+<h1>
+Member Login
+</h1>
+
+
+<p class="subtitle">
+Welcome back to A1 Enterprises
+</p>
+
+
+<form id="loginForm">
+
+
+<label>
+Email Address
+</label>
+
+
+<input
+    type="email"
+    id="email"
+    placeholder="Enter your email address"
+    required
+>
+
+
+<label>
+Password
+</label>
+
+
+<input
+    type="password"
+    id="password"
+    placeholder="Enter password"
+    required
+>
+
+
+<button
+    type="submit"
+    class="login-btn"
+    id="loginButton"
+>
+
+Login
+
+</button>
+
+
+</form>
+
+
+<div
+    id="message"
+    class="message"
+></div>
+
+
+<div class="links">
+
+
+<p>
+<a href="#" id="forgotPassword">
+Forgot Password?
+</a>
+</p>
+
+
+<p>
+New Member?
+
+<a href="register.html">
+Register Now
+</a>
+
+</p>
+
+
+<p>
+<a href="index.html">
+← Back to Home
+</a>
+</p>
+
+
+</div>
+
+
+<div class="note">
+
+Your A1 account is securely authenticated
+using Supabase.
+
+</div>
+
+
+</div>
+
+
+<script>
+
+/* =========================================
+   A1 SUPABASE CONNECTION
+   ========================================= */
+
+const SUPABASE_URL =
+"https://rtnxobtczeaxtpxgvfpb.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_f8QIMjFi5Zm2a10LcODEPg_z8EOWM3_";
+
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/* =========================================
+   MESSAGE FUNCTION
+   ========================================= */
+
+function showMessage(
+    text,
+    type
+){
+
+    const message =
+        document.getElementById("message");
+
+
+    message.style.display =
+        "block";
+
+
+    message.innerText =
+        text;
+
+
+    if(type === "error"){
+
+        message.style.background =
+            "#ffe5e5";
+
+        message.style.color =
+            "#b00020";
+
+    }else{
+
+        message.style.background =
+            "#e5f7e8";
+
+        message.style.color =
+            "#146b2e";
+
+    }
+
+}
+
+
+/* =========================================
+   LOGIN
+   ========================================= */
+
+document
+.getElementById("loginForm")
+.addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+
+        const email =
+            document
+            .getElementById("email")
+            .value
+            .trim();
+
+
+        const password =
+            document
+            .getElementById("password")
+            .value;
+
+
+        const button =
+            document
+            .getElementById("loginButton");
+
+
+        button.disabled =
+            true;
+
+
+        button.innerText =
+            "Logging in...";
+
+
+        showMessage(
+            "Please wait...",
+            "success"
+        );
+
+
+        try{
+
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                .auth
+                .signInWithPassword({
+
+                    email:
+                        email,
+
+                    password:
+                        password
+
+                });
+
+
+            if(error){
+
+                showMessage(
+                    "Login failed: " +
+                    error.message,
+                    "error"
+                );
+
+
+                button.disabled =
+                    false;
+
+
+                button.innerText =
+                    "Login";
+
+
+                return;
+
+            }
+
+
+            if(data.user){
+
+                showMessage(
+                    "Login successful! Welcome to A1.",
+                    "success"
+                );
+
+
+                /*
+                   Dashboard page will be added
+                   in the next step.
+                */
+
+                setTimeout(
+                    function(){
+
+                        window.location.href =
+                            "dashboard.html";
+
+                    },
+                    1200
+                );
+
+            }
+
+
+        }catch(error){
+
+
+            showMessage(
+                "Something went wrong: " +
+                error.message,
+                "error"
+            );
+
+
+            button.disabled =
+                false;
+
+
+            button.innerText =
+                "Login";
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   FORGOT PASSWORD
+   ========================================= */
+
+document
+.getElementById("forgotPassword")
+.addEventListener(
+    "click",
+    async function(event){
+
+        event.preventDefault();
+
+
+        const email =
+            document
+            .getElementById("email")
+            .value
+            .trim();
+
+
+        if(!email){
+
+            showMessage(
+                "Please enter your email address first.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        try{
+
+
+            const {
+                error
+            } =
+                await supabaseClient
+                .auth
+                .resetPasswordForEmail(
+                    email,
+                    {
+
+                        redirectTo:
+                            "https://kuruvasrikanth11-droid.github.io/A1-MLM-Website/"
+
+                    }
+                );
+
+
+            if(error){
+
+                showMessage(
+                    "Password reset failed: " +
+                    error.message,
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            showMessage(
+                "Password reset email sent. Please check your inbox.",
+                "success"
+            );
+
+
+        }catch(error){
+
+
+            showMessage(
+                "Something went wrong: " +
+                error.message,
+                "error"
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
