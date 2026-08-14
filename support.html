@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>A1 Contact & Support</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f3f6fb;
+    color:#172033;
+}
+
+header{
+    background:#071a3d;
+    color:white;
+    padding:18px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#ffb000;
+}
+
+.back{
+    color:white;
+    text-decoration:none;
+    background:#0758a8;
+    padding:9px 15px;
+    border-radius:6px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:30px 18px;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.title h1{
+    color:#071a3d;
+    margin-bottom:8px;
+}
+
+.title p{
+    color:#666;
+}
+
+.loading{
+    text-align:center;
+    padding:25px;
+    color:#666;
+}
+
+.error{
+    display:none;
+    background:#ffe5e5;
+    color:#b00020;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.contact-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+    margin-bottom:30px;
+}
+
+.contact-card{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.icon{
+    font-size:38px;
+    margin-bottom:12px;
+}
+
+.contact-card h3{
+    color:#071a3d;
+    margin-bottom:8px;
+}
+
+.contact-card p{
+    color:#666;
+    line-height:1.5;
+}
+
+.contact-card a{
+    color:#0758a8;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.form-box{
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.form-box h2{
+    color:#071a3d;
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    margin:15px 0 7px;
+    font-weight:bold;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:13px;
+    border:1px solid #d5dbe5;
+    border-radius:7px;
+    font-size:15px;
+}
+
+textarea{
+    min-height:130px;
+    resize:vertical;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:14px;
+    border:0;
+    border-radius:7px;
+    background:#0758a8;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+}
+
+button:disabled{
+    background:#9aa7b8;
+}
+
+.message{
+    display:none;
+    margin-top:15px;
+    padding:13px;
+    border-radius:7px;
+    font-size:14px;
+}
+
+.success{
+    background:#e8f7ee;
+    color:#198754;
+}
+
+.note{
+    margin-top:20px;
+    background:#fff8df;
+    padding:15px;
+    border-radius:8px;
+    font-size:13px;
+    color:#555;
+    line-height:1.5;
+}
+
+footer{
+    margin-top:30px;
+    background:#041128;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+A1
+</div>
+
+<a
+    href="dashboard.html"
+    class="back"
+>
+← Dashboard
+</a>
+
+</header>
+
+
+<div class="container">
+
+
+<div class="title">
+
+<h1>
+Contact & Support
+</h1>
+
+<p>
+We are here to help A1 Members
+</p>
+
+</div>
+
+
+<div
+    id="loading"
+    class="loading"
+>
+Checking member login...
+</div>
+
+
+<div
+    id="errorBox"
+    class="error"
+></div>
+
+
+<div
+    id="supportContent"
+    style="display:none;"
+>
+
+
+<div class="contact-grid">
+
+
+<div class="contact-card">
+
+<div class="icon">
+📞
+</div>
+
+<h3>
+Call Us
+</h3>
+
+<p>
+
+<a href="tel:8555049255">
+8555049255
+</a>
+
+</p>
+
+</div>
+
+
+<div class="contact-card">
+
+<div class="icon">
+📧
+</div>
+
+<h3>
+Email
+</h3>
+
+<p>
+
+<a href="mailto:sreesree1080@gmail.com">
+sreesree1080@gmail.com
+</a>
+
+</p>
+
+</div>
+
+
+<div class="contact-card">
+
+<div class="icon">
+📍
+</div>
+
+<h3>
+Location
+</h3>
+
+<p>
+Andhra Pradesh,<br>
+India
+</p>
+
+</div>
+
+
+</div>
+
+
+<div class="form-box">
+
+
+<h2>
+Send Us a Message
+</h2>
+
+
+<form id="supportForm">
+
+
+<label>
+Full Name
+</label>
+
+<input
+    id="fullName"
+    type="text"
+    placeholder="Enter your name"
+    required
+>
+
+
+<label>
+Mobile Number
+</label>
+
+<input
+    id="mobile"
+    type="tel"
+    placeholder="Enter mobile number"
+    required
+>
+
+
+<label>
+Email Address
+</label>
+
+<input
+    id="email"
+    type="email"
+    placeholder="Enter email address"
+>
+
+
+<label>
+Message
+</label>
+
+<textarea
+    id="message"
+    placeholder="Type your message here..."
+    required
+></textarea>
+
+
+<button
+    id="sendButton"
+    type="submit"
+>
+Send Message
+</button>
+
+
+<div
+    id="successMessage"
+    class="message success"
+>
+Your message has been prepared successfully.
+Support database connection will be added next.
+</div>
+
+
+</form>
+
+
+<div class="note">
+
+<strong>Note:</strong>
+
+Your support page is now connected to A1 member
+authentication. The message-storage database will
+be connected after the Support table is created.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<footer>
+
+<p>
+© 2026 A1 Enterprises Pvt. Ltd.
+</p>
+
+</footer>
+
+
+<script>
+
+/* =========================================
+   A1 SUPABASE CONNECTION
+   ========================================= */
+
+const SUPABASE_URL =
+"https://rtnxobtczeaxtpxgvfpb.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_f8QIMjFi5Zm2a10LcODEPg_z8EOWM3_";
+
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/* =========================================
+   CHECK MEMBER LOGIN
+   ========================================= */
+
+async function checkMember(){
+
+    const loading =
+        document.getElementById("loading");
+
+    const content =
+        document.getElementById("supportContent");
+
+    const errorBox =
+        document.getElementById("errorBox");
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+            .auth
+            .getUser();
+
+
+        if(error || !data.user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        loading.style.display =
+            "none";
+
+
+        content.style.display =
+            "block";
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        loading.style.display =
+            "none";
+
+
+        errorBox.style.display =
+            "block";
+
+
+        errorBox.innerText =
+            "Unable to verify member login.";
+
+    }
+
+}
+
+
+/* =========================================
+   SUPPORT FORM
+   ========================================= */
+
+document
+.getElementById("supportForm")
+.addEventListener(
+    "submit",
+    function(event){
+
+        event.preventDefault();
+
+
+        const button =
+            document.getElementById("sendButton");
+
+
+        const success =
+            document.getElementById("successMessage");
+
+
+        button.disabled =
+            true;
+
+
+        button.innerText =
+            "Processing...";
+
+
+        setTimeout(function(){
+
+            success.style.display =
+                "block";
+
+
+            button.disabled =
+                false;
+
+
+            button.innerText =
+                "Send Message";
+
+
+            document
+            .getElementById("supportForm")
+            .reset();
+
+
+        },500);
+
+    }
+);
+
+
+checkMember();
+
+</script>
+
+
+</body>
+
+</html>
