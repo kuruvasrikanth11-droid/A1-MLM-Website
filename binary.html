@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>A1 Binary Tree</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f3f6fb;
+    color:#172033;
+}
+
+header{
+    background:#071a3d;
+    color:white;
+    padding:18px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#ffb000;
+}
+
+.back{
+    color:white;
+    text-decoration:none;
+    background:#0758a8;
+    padding:9px 15px;
+    border-radius:6px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:30px 15px;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.title h1{
+    color:#071a3d;
+    margin-bottom:8px;
+}
+
+.title p{
+    color:#666;
+}
+
+.loading{
+    text-align:center;
+    padding:25px;
+    color:#666;
+}
+
+.error{
+    display:none;
+    background:#ffe5e5;
+    color:#b00020;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.tree{
+    background:white;
+    padding:35px 15px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+    overflow-x:auto;
+}
+
+.tree-level{
+    display:flex;
+    justify-content:center;
+    gap:60px;
+    min-width:600px;
+}
+
+.node{
+    width:160px;
+    text-align:center;
+    background:#0758a8;
+    color:white;
+    padding:15px 10px;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(0,0,0,.12);
+}
+
+.node strong{
+    display:block;
+    color:#ffb000;
+    margin-bottom:6px;
+}
+
+.root{
+    margin:auto;
+    background:#071a3d;
+}
+
+.empty{
+    background:#e9eef5;
+    color:#777;
+    border:2px dashed #aab4c3;
+    box-shadow:none;
+}
+
+.line{
+    width:2px;
+    height:35px;
+    background:#9aa7b8;
+    margin:auto;
+}
+
+.team-label{
+    text-align:center;
+    margin:15px 0;
+    color:#0758a8;
+    font-weight:bold;
+}
+
+.info{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
+}
+
+.info-card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 4px 15px rgba(0,0,0,.07);
+    text-align:center;
+}
+
+.info-card h3{
+    color:#666;
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+.info-card strong{
+    font-size:25px;
+    color:#0758a8;
+}
+
+.note{
+    margin-top:25px;
+    background:#fff8df;
+    padding:15px;
+    border-radius:8px;
+    font-size:13px;
+    color:#555;
+    line-height:1.5;
+}
+
+footer{
+    margin-top:30px;
+    background:#041128;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+A1
+</div>
+
+<a
+    href="dashboard.html"
+    class="back"
+>
+← Dashboard
+</a>
+
+</header>
+
+
+<div class="container">
+
+
+<div class="title">
+
+<h1>
+Binary Tree
+</h1>
+
+<p>
+A1 Member Network Structure
+</p>
+
+</div>
+
+
+<div
+    id="errorBox"
+    class="error"
+></div>
+
+
+<div
+    id="loading"
+    class="loading"
+>
+Loading Binary Tree...
+</div>
+
+
+<div
+    id="treeContent"
+    style="display:none;"
+>
+
+
+<div class="tree">
+
+
+<div
+    class="node root"
+>
+
+<strong>
+A1 MEMBER
+</strong>
+
+<span>
+Member ID
+</span>
+
+<br>
+
+<span id="memberId">
+A1-XXXXXXXX
+</span>
+
+</div>
+
+
+<div class="line"></div>
+
+
+<div class="team-label">
+My Direct Team
+</div>
+
+
+<div class="tree-level">
+
+
+<div
+    class="node"
+    id="leftNode"
+>
+
+<strong>
+LEFT
+</strong>
+
+<span id="leftMember">
+Empty Position
+</span>
+
+</div>
+
+
+<div
+    class="node"
+    id="rightNode"
+>
+
+<strong>
+RIGHT
+</strong>
+
+<span id="rightMember">
+Empty Position
+</span>
+
+</div>
+
+
+</div>
+
+
+<div class="line"></div>
+
+
+<div class="tree-level">
+
+
+<div class="node empty">
+
+<strong>
+LEFT
+</strong>
+
+Empty Position
+
+</div>
+
+
+<div class="node empty">
+
+<strong>
+RIGHT
+</strong>
+
+Empty Position
+
+</div>
+
+
+<div class="node empty">
+
+<strong>
+LEFT
+</strong>
+
+Empty Position
+
+</div>
+
+
+<div class="node empty">
+
+<strong>
+RIGHT
+</strong>
+
+Empty Position
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<div class="info">
+
+
+<div class="info-card">
+
+<h3>
+Total Left Members
+</h3>
+
+<strong id="leftCount">
+0
+</strong>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+Total Right Members
+</h3>
+
+<strong id="rightCount">
+0
+</strong>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+Left Business Points
+</h3>
+
+<strong id="leftBusiness">
+0
+</strong>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>
+Right Business Points
+</h3>
+
+<strong id="rightBusiness">
+0
+</strong>
+
+</div>
+
+
+</div>
+
+
+<div class="note">
+
+<strong>Important:</strong>
+
+Your member ID is loaded from your A1 account.
+Actual binary positions, team members and business
+points will be connected to the A1 database after the
+binary network tables are created.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<footer>
+
+<p>
+© 2026 A1 Enterprises Pvt. Ltd.
+</p>
+
+</footer>
+
+
+<script>
+
+/* =========================================
+   A1 SUPABASE CONNECTION
+   ========================================= */
+
+const SUPABASE_URL =
+"https://rtnxobtczeaxtpxgvfpb.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_f8QIMjFi5Zm2a10LcODEPg_z8EOWM3_";
+
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/* =========================================
+   LOAD CURRENT MEMBER
+   ========================================= */
+
+async function loadBinary(){
+
+    const loading =
+        document.getElementById("loading");
+
+    const content =
+        document.getElementById("treeContent");
+
+    const errorBox =
+        document.getElementById("errorBox");
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+            .auth
+            .getUser();
+
+
+        if(error || !data.user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        const user =
+            data.user;
+
+
+        /* Create A1 Member ID */
+
+        const memberId =
+            "A1-" +
+            user.id
+            .substring(0,8)
+            .toUpperCase();
+
+
+        document
+        .getElementById("memberId")
+        .innerText =
+            memberId;
+
+
+        /*
+           Real binary members will be loaded
+           after the binary database table is created.
+        */
+
+        document
+        .getElementById("leftMember")
+        .innerText =
+            "Empty Position";
+
+
+        document
+        .getElementById("rightMember")
+        .innerText =
+            "Empty Position";
+
+
+        document
+        .getElementById("leftCount")
+        .innerText =
+            "0";
+
+
+        document
+        .getElementById("rightCount")
+        .innerText =
+            "0";
+
+
+        document
+        .getElementById("leftBusiness")
+        .innerText =
+            "0";
+
+
+        document
+        .getElementById("rightBusiness")
+        .innerText =
+            "0";
+
+
+        loading.style.display =
+            "none";
+
+
+        content.style.display =
+            "block";
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        loading.style.display =
+            "none";
+
+
+        errorBox.style.display =
+            "block";
+
+
+        errorBox.innerText =
+            "Unable to load Binary Tree.";
+
+    }
+
+}
+
+
+loadBinary();
+
+</script>
+
+
+</body>
+
+</html>
