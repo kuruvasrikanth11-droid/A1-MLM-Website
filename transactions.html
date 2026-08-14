@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>A1 Transaction History</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f3f6fb;
+    color:#172033;
+}
+
+header{
+    background:#071a3d;
+    color:white;
+    padding:18px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#ffb000;
+}
+
+.back{
+    color:white;
+    text-decoration:none;
+    background:#0758a8;
+    padding:9px 15px;
+    border-radius:6px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:30px 15px;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.title h1{
+    color:#071a3d;
+    margin-bottom:8px;
+}
+
+.title p{
+    color:#666;
+}
+
+.loading{
+    text-align:center;
+    padding:25px;
+    color:#666;
+}
+
+.error{
+    display:none;
+    background:#ffe5e5;
+    color:#b00020;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.summary{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(200px,1fr));
+    gap:18px;
+    margin-bottom:30px;
+}
+
+.card{
+    background:white;
+    padding:22px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.card h3{
+    color:#666;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.amount{
+    font-size:26px;
+    font-weight:bold;
+    color:#0758a8;
+}
+
+.table-box{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:650px;
+}
+
+th,
+td{
+    padding:14px 10px;
+    border-bottom:1px solid #e5e9ef;
+    text-align:left;
+}
+
+th{
+    background:#071a3d;
+    color:white;
+}
+
+.credit{
+    color:#198754;
+    font-weight:bold;
+}
+
+.debit{
+    color:#d9534f;
+    font-weight:bold;
+}
+
+.status{
+    font-weight:bold;
+}
+
+.empty{
+    text-align:center;
+    padding:30px;
+    color:#777;
+}
+
+.notice{
+    margin-top:25px;
+    background:#fff8df;
+    padding:15px;
+    border-radius:8px;
+    font-size:13px;
+    color:#555;
+    line-height:1.5;
+}
+
+footer{
+    margin-top:30px;
+    background:#041128;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+A1
+</div>
+
+<a
+    href="dashboard.html"
+    class="back"
+>
+← Dashboard
+</a>
+
+</header>
+
+
+<div class="container">
+
+
+<div class="title">
+
+<h1>
+Transaction History
+</h1>
+
+<p>
+A1 Member Account Transactions
+</p>
+
+</div>
+
+
+<div
+    id="loading"
+    class="loading"
+>
+Loading transaction information...
+</div>
+
+
+<div
+    id="errorBox"
+    class="error"
+></div>
+
+
+<div
+    id="transactionContent"
+    style="display:none;"
+>
+
+
+<div class="summary">
+
+
+<div class="card">
+
+<h3>
+Total Credits
+</h3>
+
+<div
+    class="amount"
+    id="totalCredits"
+>
+₹0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Total Debits
+</h3>
+
+<div
+    class="amount"
+    id="totalDebits"
+>
+₹0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Available Balance
+</h3>
+
+<div
+    class="amount"
+    id="availableBalance"
+>
+₹0
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="table-box">
+
+
+<h2 style="margin-bottom:20px;">
+Transactions
+</h2>
+
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Date
+</th>
+
+<th>
+Reference
+</th>
+
+<th>
+Type
+</th>
+
+<th>
+Amount
+</th>
+
+<th>
+Status
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="transactionTable">
+
+<tr>
+
+<td
+    colspan="5"
+    class="empty"
+>
+No real transactions available yet.
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+
+</div>
+
+
+<div class="notice">
+
+<strong>Important:</strong>
+
+Your transaction page is connected to your A1
+member authentication. Actual credits, debits,
+withdrawals and payment records will appear after
+the secure transaction database is implemented.
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<footer>
+
+<p>
+© 2026 A1 Enterprises Pvt. Ltd.
+</p>
+
+</footer>
+
+
+<script>
+
+/* =========================================
+   A1 SUPABASE CONNECTION
+   ========================================= */
+
+const SUPABASE_URL =
+"https://rtnxobtczeaxtpxgvfpb.supabase.co";
+
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_f8QIMjFi5Zm2a10LcODEPg_z8EOWM3_";
+
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/* =========================================
+   LOAD TRANSACTION PAGE
+   ========================================= */
+
+async function loadTransactions(){
+
+    const loading =
+        document.getElementById("loading");
+
+    const content =
+        document.getElementById("transactionContent");
+
+    const errorBox =
+        document.getElementById("errorBox");
+
+
+    try{
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+            .auth
+            .getUser();
+
+
+        if(error || !data.user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        /*
+          Member is authenticated.
+
+          Real transaction records will be loaded
+          after the transaction database table is
+          created.
+        */
+
+
+        document
+        .getElementById("totalCredits")
+        .innerText =
+            "₹0";
+
+
+        document
+        .getElementById("totalDebits")
+        .innerText =
+            "₹0";
+
+
+        document
+        .getElementById("availableBalance")
+        .innerText =
+            "₹0";
+
+
+        loading.style.display =
+            "none";
+
+
+        content.style.display =
+            "block";
+
+
+    }catch(error){
+
+        console.error(error);
+
+
+        loading.style.display =
+            "none";
+
+
+        errorBox.style.display =
+            "block";
+
+
+        errorBox.innerText =
+            "Unable to load transaction information.";
+
+    }
+
+}
+
+
+loadTransactions();
+
+</script>
+
+
+</body>
+
+</html>
