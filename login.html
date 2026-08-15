@@ -262,15 +262,13 @@ using Supabase.
 
 /* =========================================
    A1 SUPABASE CONNECTION
-   ========================================= */
+========================================= */
 
 const SUPABASE_URL =
 "https://rtnxobtczeaxtpxgvfpb.supabase.co";
 
-
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_f8QIMjFi5Zm2a10LcODEPg_z8EOWM3_";
-
 
 const supabaseClient =
 supabase.createClient(
@@ -281,24 +279,18 @@ supabase.createClient(
 
 /* =========================================
    MESSAGE FUNCTION
-   ========================================= */
+========================================= */
 
-function showMessage(
-    text,
-    type
-){
+function showMessage(text,type){
 
     const message =
         document.getElementById("message");
 
-
     message.style.display =
         "block";
 
-
     message.innerText =
         text;
-
 
     if(type === "error"){
 
@@ -323,7 +315,7 @@ function showMessage(
 
 /* =========================================
    LOGIN
-   ========================================= */
+========================================= */
 
 document
 .getElementById("loginForm")
@@ -333,32 +325,26 @@ document
 
         event.preventDefault();
 
-
         const email =
             document
             .getElementById("email")
             .value
             .trim();
 
-
         const password =
             document
             .getElementById("password")
             .value;
 
-
         const button =
             document
             .getElementById("loginButton");
 
-
         button.disabled =
             true;
 
-
         button.innerText =
             "Logging in...";
-
 
         showMessage(
             "Please wait...",
@@ -368,22 +354,19 @@ document
 
         try{
 
-
             const {
                 data,
                 error
             } =
-                await supabaseClient
-                .auth
-                .signInWithPassword({
+            await supabaseClient
+            .auth
+            .signInWithPassword({
 
-                    email:
-                        email,
+                email: email,
 
-                    password:
-                        password
+                password: password
 
-                });
+            });
 
 
             if(error){
@@ -394,17 +377,13 @@ document
                     "error"
                 );
 
-
                 button.disabled =
                     false;
-
 
                 button.innerText =
                     "Login";
 
-
                 return;
-
             }
 
 
@@ -416,11 +395,6 @@ document
                 );
 
 
-                /*
-                   Dashboard page will be added
-                   in the next step.
-                */
-
                 setTimeout(
                     function(){
 
@@ -428,7 +402,7 @@ document
                             "dashboard.html";
 
                     },
-                    1200
+                    1000
                 );
 
             }
@@ -436,6 +410,7 @@ document
 
         }catch(error){
 
+            console.error(error);
 
             showMessage(
                 "Something went wrong: " +
@@ -443,10 +418,8 @@ document
                 "error"
             );
 
-
             button.disabled =
                 false;
-
 
             button.innerText =
                 "Login";
@@ -459,7 +432,7 @@ document
 
 /* =========================================
    FORGOT PASSWORD
-   ========================================= */
+========================================= */
 
 document
 .getElementById("forgotPassword")
@@ -491,21 +464,26 @@ document
 
         try{
 
+            showMessage(
+                "Sending password reset email...",
+                "success"
+            );
+
 
             const {
                 error
             } =
-                await supabaseClient
-                .auth
-                .resetPasswordForEmail(
-                    email,
-                    {
+            await supabaseClient
+            .auth
+            .resetPasswordForEmail(
+                email,
+                {
 
-                        redirectTo:
-                            "https://kuruvasrikanth11-droid.github.io/A1-MLM-Website/"
+                    redirectTo:
+                    "https://kuruvasrikanth11-droid.github.io/A1-MLM-Website/reset-password.html"
 
-                    }
-                );
+                }
+            );
 
 
             if(error){
@@ -529,6 +507,7 @@ document
 
         }catch(error){
 
+            console.error(error);
 
             showMessage(
                 "Something went wrong: " +
