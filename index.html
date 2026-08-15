@@ -646,11 +646,15 @@ document
 
         /* =========================
            SAVE MEMBER
+           
+           IMPORTANT:
+           id is NOT included here.
+           Supabase will automatically
+           generate UUID using the
+           table default.
         ========================= */
 
         const memberData = {
-
-            id: authData.user.id,
 
             full_name: full_name,
 
@@ -680,7 +684,7 @@ document
 
             phone: phone,
 
-            "placement-side": placement_side
+            placement_side: placement_side
 
         };
 
