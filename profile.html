@@ -5,10 +5,8 @@
 
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>A1 My Profile</title>
 
@@ -52,7 +50,7 @@ header{
 }
 
 .container{
-    max-width:800px;
+    max-width:850px;
     margin:auto;
     padding:30px 18px;
 }
@@ -105,11 +103,11 @@ header{
 
 .member-id{
     color:#666;
-    margin-top:5px;
+    margin-top:6px;
 }
 
 .details{
-    margin-top:25px;
+    margin-top:20px;
 }
 
 .row{
@@ -128,21 +126,12 @@ header{
 .value{
     color:#172033;
     text-align:right;
+    word-break:break-word;
 }
 
 .status{
     color:#198754;
     font-weight:bold;
-}
-
-.note{
-    margin-top:25px;
-    background:#fff8df;
-    padding:15px;
-    border-radius:8px;
-    font-size:13px;
-    color:#555;
-    line-height:1.5;
 }
 
 .loading{
@@ -158,6 +147,16 @@ header{
     border-radius:8px;
     margin-bottom:20px;
     display:none;
+}
+
+.note{
+    margin-top:25px;
+    background:#fff8df;
+    padding:15px;
+    border-radius:8px;
+    font-size:13px;
+    color:#555;
+    line-height:1.5;
 }
 
 footer{
@@ -179,15 +178,17 @@ footer{
         text-align:left;
     }
 
+    .profile-card{
+        padding:20px;
+    }
+
 }
 
 </style>
 
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -195,10 +196,8 @@ footer{
 A1
 </div>
 
-<a
-    href="dashboard.html"
-    class="back"
->
+<a href="dashboard.html"
+   class="back">
 ← Dashboard
 </a>
 
@@ -206,7 +205,6 @@ A1
 
 
 <div class="container">
-
 
 <div class="title">
 
@@ -221,52 +219,43 @@ A1 Member Information
 </div>
 
 
-<div
-    id="errorBox"
-    class="error"
-></div>
+<div id="errorBox"
+     class="error">
+</div>
 
 
 <div class="profile-card">
 
-
-<div
-    id="loading"
-    class="loading"
->
+<div id="loading"
+     class="loading">
 Loading member information...
 </div>
 
 
-<div id="profileContent" style="display:none;">
+<div id="profileContent"
+     style="display:none;">
 
 
 <div class="profile-top">
 
-
-<div
-    class="avatar"
-    id="avatar"
->
+<div class="avatar"
+     id="avatar">
 A1
 </div>
-
 
 <h2 id="profileName">
 A1 Member
 </h2>
-
 
 <p class="member-id">
 
 Member ID:
 
 <span id="memberId">
-Loading...
+-
 </span>
 
 </p>
-
 
 </div>
 
@@ -280,10 +269,8 @@ Loading...
 Full Name
 </div>
 
-<div
-    class="value"
-    id="fullName"
->
+<div class="value"
+     id="fullName">
 -
 </div>
 
@@ -296,10 +283,22 @@ Full Name
 Mobile Number
 </div>
 
-<div
-    class="value"
-    id="mobile"
->
+<div class="value"
+     id="mobile">
+-
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Phone
+</div>
+
+<div class="value"
+     id="phone">
 -
 </div>
 
@@ -312,10 +311,22 @@ Mobile Number
 Email Address
 </div>
 
-<div
-    class="value"
-    id="email"
->
+<div class="value"
+     id="email">
+-
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Username
+</div>
+
+<div class="value"
+     id="username">
 -
 </div>
 
@@ -328,10 +339,8 @@ Email Address
 Date of Birth
 </div>
 
-<div
-    class="value"
-    id="dob"
->
+<div class="value"
+     id="dob">
 -
 </div>
 
@@ -344,10 +353,8 @@ Date of Birth
 State
 </div>
 
-<div
-    class="value"
-    id="state"
->
+<div class="value"
+     id="state">
 -
 </div>
 
@@ -360,10 +367,8 @@ State
 City
 </div>
 
-<div
-    class="value"
-    id="city"
->
+<div class="value"
+     id="city">
 -
 </div>
 
@@ -376,10 +381,8 @@ City
 Address
 </div>
 
-<div
-    class="value"
-    id="address"
->
+<div class="value"
+     id="address">
 -
 </div>
 
@@ -389,13 +392,11 @@ Address
 <div class="row">
 
 <div class="label">
-Referral ID
+Referral Code
 </div>
 
-<div
-    class="value"
-    id="referral"
->
+<div class="value"
+     id="referralCode">
 -
 </div>
 
@@ -405,13 +406,39 @@ Referral ID
 <div class="row">
 
 <div class="label">
-Joining Date
+Sponsor Code
 </div>
 
-<div
-    class="value"
-    id="joiningDate"
->
+<div class="value"
+     id="sponsorCode">
+-
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Placement Side
+</div>
+
+<div class="value"
+     id="placementSide">
+-
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="label">
+Role
+</div>
+
+<div class="value"
+     id="role">
 -
 </div>
 
@@ -424,8 +451,9 @@ Joining Date
 Account Status
 </div>
 
-<div class="value status">
-Active
+<div class="value status"
+     id="status">
+-
 </div>
 
 </div>
@@ -438,17 +466,15 @@ Active
 
 <strong>Note:</strong>
 
-Your profile information is loaded from your
-A1 Supabase authentication account.
+Your profile information is loaded directly
+from your A1 members database.
 
 </div>
 
 
 </div>
 
-
 </div>
-
 
 </div>
 
@@ -465,16 +491,14 @@ A1 Supabase authentication account.
 <script>
 
 /* =========================================
-   A1 SUPABASE CONNECTION
-   ========================================= */
+   SUPABASE CONNECTION
+========================================= */
 
 const SUPABASE_URL =
 "https://rtnxobtczeaxtpxgvfpb.supabase.co";
 
-
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_f8QIMjFi5Zm2a10LcODEPg_z8EOWM3_";
-
 
 const supabaseClient =
 supabase.createClient(
@@ -484,8 +508,8 @@ supabase.createClient(
 
 
 /* =========================================
-   LOAD MEMBER PROFILE
-   ========================================= */
+   LOAD PROFILE
+========================================= */
 
 async function loadProfile(){
 
@@ -501,37 +525,82 @@ async function loadProfile(){
 
     try{
 
+        /* Get logged-in user */
+
         const {
-            data,
-            error
+            data: userData,
+            error: userError
         } =
-            await supabaseClient
-            .auth
-            .getUser();
+        await supabaseClient
+        .auth
+        .getUser();
 
 
-        if(error || !data.user){
+        if(userError || !userData.user){
 
             window.location.href =
                 "login.html";
 
             return;
-
         }
 
 
         const user =
-            data.user;
+            userData.user;
 
 
-        const metadata =
-            user.user_metadata || {};
+        /* Find member using email */
+
+        const {
+            data: member,
+            error: memberError
+        } =
+        await supabaseClient
+        .from("members")
+        .select("*")
+        .eq("email", user.email)
+        .maybeSingle();
 
 
-        /* Full name */
+        if(memberError){
+
+            console.error(memberError);
+
+            loading.style.display =
+                "none";
+
+            errorBox.style.display =
+                "block";
+
+            errorBox.innerText =
+                "Member information could not be loaded: " +
+                memberError.message;
+
+            return;
+        }
+
+
+        if(!member){
+
+            loading.style.display =
+                "none";
+
+            errorBox.style.display =
+                "block";
+
+            errorBox.innerText =
+                "Your login is successful, but your member record was not found.";
+
+            return;
+        }
+
+
+        /* =====================================
+           DISPLAY MEMBER DATA
+        ===================================== */
 
         const fullName =
-            metadata.full_name ||
+            member.full_name ||
             "A1 Member";
 
 
@@ -544,117 +613,105 @@ async function loadProfile(){
         document
         .getElementById("fullName")
         .innerText =
-            fullName;
-
-
-        /* Avatar */
-
-        const firstLetter =
-            fullName
-            .charAt(0)
-            .toUpperCase();
-
-
-        document
-        .getElementById("avatar")
-        .innerText =
-            firstLetter;
-
-
-        /* Member ID */
-
-        const memberId =
-            "A1-" +
-            user.id
-            .substring(0,8)
-            .toUpperCase();
+            member.full_name || "-";
 
 
         document
         .getElementById("memberId")
         .innerText =
-            memberId;
+            member.member_code || "-";
 
-
-        /* Email */
-
-        document
-        .getElementById("email")
-        .innerText =
-            user.email || "-";
-
-
-        /* Mobile */
 
         document
         .getElementById("mobile")
         .innerText =
-            metadata.mobile || "-";
+            member.mobile || "-";
 
 
-        /* Date of Birth */
+        document
+        .getElementById("phone")
+        .innerText =
+            member.phone || "-";
+
+
+        document
+        .getElementById("email")
+        .innerText =
+            member.email || user.email || "-";
+
+
+        document
+        .getElementById("username")
+        .innerText =
+            member.username || "-";
+
 
         document
         .getElementById("dob")
         .innerText =
-            metadata.date_of_birth || "-";
+            member.date_of_birth || "-";
 
-
-        /* State */
 
         document
         .getElementById("state")
         .innerText =
-            metadata.state || "-";
+            member.state || "-";
 
-
-        /* City */
 
         document
         .getElementById("city")
         .innerText =
-            metadata.city || "-";
+            member.city || "-";
 
-
-        /* Address */
 
         document
         .getElementById("address")
         .innerText =
-            metadata.address || "-";
+            member.address || "-";
 
-
-        /* Referral ID */
 
         document
-        .getElementById("referral")
+        .getElementById("referralCode")
         .innerText =
-            metadata.referral_id || "-";
+            member.referral_code || "Not assigned";
 
 
-        /* Joining Date */
-
-        if(user.created_at){
-
-            const date =
-                new Date(
-                    user.created_at
-                );
+        document
+        .getElementById("sponsorCode")
+        .innerText =
+            member.sponsor_code || "Not assigned";
 
 
-            document
-            .getElementById("joiningDate")
-            .innerText =
-                date.toLocaleDateString(
-                    "en-IN"
-                );
+        document
+        .getElementById("placementSide")
+        .innerText =
+            member["placement-side"] || "Not assigned";
 
-        }
+
+        document
+        .getElementById("role")
+        .innerText =
+            member.role || "member";
+
+
+        document
+        .getElementById("status")
+        .innerText =
+            member.status || "active";
+
+
+        /* Avatar */
+
+        document
+        .getElementById("avatar")
+        .innerText =
+            fullName
+            .charAt(0)
+            .toUpperCase();
 
 
         loading.style.display =
             "none";
-
 
         profileContent.style.display =
             "block";
@@ -664,18 +721,15 @@ async function loadProfile(){
 
         console.error(error);
 
-
         loading.style.display =
             "none";
-
 
         errorBox.style.display =
             "block";
 
-
         errorBox.innerText =
-            "Unable to load profile information.";
-
+            "Something went wrong: " +
+            error.message;
 
     }
 
@@ -684,21 +738,12 @@ async function loadProfile(){
 
 /* =========================================
    START
-   ========================================= */
+========================================= */
 
 loadProfile();
 
 </script>
 
-
 </body>
 
 </html>
-
-ఇప్పుడు ఒక్క పని మాత్రమే 👇
-
-HTML Editorలో ఈ కొత్త codeని "profile.html"లో paste చేసి Save చేయండి.
-
-ఇంకా GitHubకి upload చేయకండి.
-
-Save అయిన తర్వాత “Profile Save అయింది” అని చెప్పండి. 👍
