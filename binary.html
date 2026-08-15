@@ -1,14 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>A1 Binary Tree</title>
 
@@ -94,15 +88,9 @@ header{
     overflow-x:auto;
 }
 
-.tree-level{
-    display:flex;
-    justify-content:center;
-    gap:60px;
-    min-width:600px;
-}
-
 .node{
-    width:160px;
+    width:180px;
+    min-height:90px;
     text-align:center;
     background:#0758a8;
     color:white;
@@ -114,7 +102,7 @@ header{
 .node strong{
     display:block;
     color:#ffb000;
-    margin-bottom:6px;
+    margin-bottom:7px;
 }
 
 .root{
@@ -129,25 +117,17 @@ header{
     box-shadow:none;
 }
 
-.line{
-    width:2px;
-    height:35px;
-    background:#9aa7b8;
-    margin:auto;
-}
-
-.team-label{
-    text-align:center;
-    margin:15px 0;
-    color:#0758a8;
-    font-weight:bold;
+.children{
+    display:flex;
+    justify-content:center;
+    gap:60px;
+    margin-top:35px;
 }
 
 .info{
     margin-top:25px;
     display:grid;
-    grid-template-columns:
-    repeat(auto-fit,minmax(200px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
     gap:15px;
 }
 
@@ -188,109 +168,84 @@ footer{
     padding:25px;
 }
 
+@media(max-width:600px){
+
+    .children{
+        gap:20px;
+    }
+
+    .node{
+        width:150px;
+    }
+
+}
+
 </style>
-
 </head>
-
 
 <body>
 
-
 <header>
 
-<div class="logo">
-A1
-</div>
+<div class="logo">A1</div>
 
-<a
-    href="dashboard.html"
-    class="back"
->
+<a href="dashboard.html" class="back">
 ← Dashboard
 </a>
 
 </header>
 
-
 <div class="container">
-
 
 <div class="title">
 
-<h1>
-Binary Tree
-</h1>
+<h1>Binary Tree</h1>
 
-<p>
-A1 Member Network Structure
-</p>
+<p>A1 Member Network Structure</p>
 
 </div>
 
+<div id="errorBox" class="error"></div>
 
-<div
-    id="errorBox"
-    class="error"
-></div>
-
-
-<div
-    id="loading"
-    class="loading"
->
+<div id="loading" class="loading">
 Loading Binary Tree...
 </div>
 
-
-<div
-    id="treeContent"
-    style="display:none;"
->
-
+<div id="treeContent" style="display:none;">
 
 <div class="tree">
 
+<div class="node root">
 
-<div
-    class="node root"
->
+<strong>A1 MEMBER</strong>
 
-<strong>
-A1 MEMBER
-</strong>
+<span id="rootName">
+Loading...
+</span>
+
+<br>
 
 <span>
-Member ID
+Member ID:
 </span>
 
 <br>
 
 <span id="memberId">
-A1-XXXXXXXX
+Loading...
 </span>
 
 </div>
 
 
-<div class="line"></div>
-
-
-<div class="team-label">
-My Direct Team
-</div>
-
-
-<div class="tree-level">
-
+<div class="children">
 
 <div
-    class="node"
+    class="node empty"
     id="leftNode"
 >
 
-<strong>
-LEFT
-</strong>
+<strong>LEFT</strong>
 
 <span id="leftMember">
 Empty Position
@@ -300,13 +255,11 @@ Empty Position
 
 
 <div
-    class="node"
+    class="node empty"
     id="rightNode"
 >
 
-<strong>
-RIGHT
-</strong>
+<strong>RIGHT</strong>
 
 <span id="rightMember">
 Empty Position
@@ -314,138 +267,62 @@ Empty Position
 
 </div>
 
-
 </div>
-
-
-<div class="line"></div>
-
-
-<div class="tree-level">
-
-
-<div class="node empty">
-
-<strong>
-LEFT
-</strong>
-
-Empty Position
-
-</div>
-
-
-<div class="node empty">
-
-<strong>
-RIGHT
-</strong>
-
-Empty Position
-
-</div>
-
-
-<div class="node empty">
-
-<strong>
-LEFT
-</strong>
-
-Empty Position
-
-</div>
-
-
-<div class="node empty">
-
-<strong>
-RIGHT
-</strong>
-
-Empty Position
-
-</div>
-
-
-</div>
-
 
 </div>
 
 
 <div class="info">
 
-
 <div class="info-card">
 
-<h3>
-Total Left Members
-</h3>
+<h3>Total Left Members</h3>
 
-<strong id="leftCount">
-0
-</strong>
+<strong id="leftCount">0</strong>
 
 </div>
 
 
 <div class="info-card">
 
-<h3>
-Total Right Members
-</h3>
+<h3>Total Right Members</h3>
 
-<strong id="rightCount">
-0
-</strong>
+<strong id="rightCount">0</strong>
 
 </div>
 
 
 <div class="info-card">
 
-<h3>
-Left Business Points
-</h3>
+<h3>Left Business Points</h3>
 
-<strong id="leftBusiness">
-0
-</strong>
+<strong id="leftBusiness">0</strong>
 
 </div>
 
 
 <div class="info-card">
 
-<h3>
-Right Business Points
-</h3>
+<h3>Right Business Points</h3>
 
-<strong id="rightBusiness">
-0
-</strong>
+<strong id="rightBusiness">0</strong>
 
 </div>
-
 
 </div>
 
 
 <div class="note">
 
-<strong>Important:</strong>
+<strong>Binary Network:</strong>
 
-Your member ID is loaded from your A1 account.
-Actual binary positions, team members and business
-points will be connected to the A1 database after the
-binary network tables are created.
-
-</div>
-
+Your A1 Binary Tree is connected to the
+members database. New members will appear
+under their assigned parent and placement side.
 
 </div>
 
+</div>
 
 </div>
 
@@ -461,17 +338,11 @@ binary network tables are created.
 
 <script>
 
-/* =========================================
-   A1 SUPABASE CONNECTION
-   ========================================= */
-
 const SUPABASE_URL =
 "https://rtnxobtczeaxtpxgvfpb.supabase.co";
 
-
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_f8QIMjFi5Zm2a10LcODEPg_z8EOWM3_";
-
 
 const supabaseClient =
 supabase.createClient(
@@ -480,9 +351,36 @@ supabase.createClient(
 );
 
 
-/* =========================================
-   LOAD CURRENT MEMBER
-   ========================================= */
+function showMember(nodeId, member){
+
+    const node =
+        document.getElementById(nodeId);
+
+    const text =
+        document.getElementById(
+            nodeId === "leftNode"
+            ? "leftMember"
+            : "rightMember"
+        );
+
+    if(!member){
+
+        node.classList.add("empty");
+
+        text.innerText =
+            "Empty Position";
+
+        return;
+    }
+
+    node.classList.remove("empty");
+
+    text.innerText =
+        member.full_name ||
+        member.member_code ||
+        "A1 Member";
+}
+
 
 async function loadBinary(){
 
@@ -495,91 +393,184 @@ async function loadBinary(){
     const errorBox =
         document.getElementById("errorBox");
 
-
     try{
 
         const {
-            data,
-            error
+            data: userData,
+            error: userError
         } =
-            await supabaseClient
-            .auth
-            .getUser();
+        await supabaseClient.auth.getUser();
 
 
-        if(error || !data.user){
+        if(userError || !userData.user){
 
             window.location.href =
                 "login.html";
 
             return;
-
         }
 
 
         const user =
-            data.user;
+            userData.user;
 
 
-        /* Create A1 Member ID */
+        /*
+          Load current member using
+          authenticated email.
+        */
 
-        const memberId =
-            "A1-" +
-            user.id
-            .substring(0,8)
-            .toUpperCase();
+        const {
+            data: currentMember,
+            error: memberError
+        } =
+        await supabaseClient
+        .from("members")
+        .select("*")
+        .eq("email", user.email)
+        .maybeSingle();
+
+
+        if(memberError){
+
+            throw memberError;
+        }
+
+
+        if(!currentMember){
+
+            throw new Error(
+                "Member record not found."
+            );
+        }
+
+
+        document
+        .getElementById("rootName")
+        .innerText =
+            currentMember.full_name ||
+            "A1 Member";
 
 
         document
         .getElementById("memberId")
         .innerText =
-            memberId;
+            currentMember.member_code ||
+            "A1 Member";
 
 
         /*
-           Real binary members will be loaded
-           after the binary database table is created.
+          Find direct children using
+          parent_member_id.
         */
 
-        document
-        .getElementById("leftMember")
-        .innerText =
-            "Empty Position";
+        const {
+            data: children,
+            error: childrenError
+        } =
+        await supabaseClient
+        .from("members")
+        .select(
+            "id,full_name,member_code,placement_side,business_points"
+        )
+        .eq(
+            "parent_member_id",
+            currentMember.id
+        );
 
 
-        document
-        .getElementById("rightMember")
-        .innerText =
-            "Empty Position";
+        if(childrenError){
 
+            throw childrenError;
+        }
+
+
+        const members =
+            children || [];
+
+
+        const leftMembers =
+            members.filter(
+                member =>
+                    member.placement_side === "left"
+            );
+
+
+        const rightMembers =
+            members.filter(
+                member =>
+                    member.placement_side === "right"
+            );
+
+
+        showMember(
+            "leftNode",
+            leftMembers[0] || null
+        );
+
+
+        showMember(
+            "rightNode",
+            rightMembers[0] || null
+        );
+
+
+        /*
+          Count direct members.
+        */
 
         document
         .getElementById("leftCount")
         .innerText =
-            "0";
+            leftMembers.length;
 
 
         document
         .getElementById("rightCount")
         .innerText =
-            "0";
+            rightMembers.length;
+
+
+        /*
+          Business points.
+        */
+
+        const leftBusiness =
+            leftMembers.reduce(
+                (total, member) =>
+                    total +
+                    Number(
+                        member.business_points || 0
+                    ),
+                0
+            );
+
+
+        const rightBusiness =
+            rightMembers.reduce(
+                (total, member) =>
+                    total +
+                    Number(
+                        member.business_points || 0
+                    ),
+                0
+            );
 
 
         document
         .getElementById("leftBusiness")
         .innerText =
-            "0";
+            leftBusiness;
 
 
         document
         .getElementById("rightBusiness")
         .innerText =
-            "0";
+            rightBusiness;
 
 
         loading.style.display =
             "none";
-
 
         content.style.display =
             "block";
@@ -589,18 +580,15 @@ async function loadBinary(){
 
         console.error(error);
 
-
         loading.style.display =
             "none";
-
 
         errorBox.style.display =
             "block";
 
-
         errorBox.innerText =
-            "Unable to load Binary Tree.";
-
+            "Unable to load Binary Tree: " +
+            error.message;
     }
 
 }
@@ -610,7 +598,5 @@ loadBinary();
 
 </script>
 
-
 </body>
-
-</html>
+    </html>
