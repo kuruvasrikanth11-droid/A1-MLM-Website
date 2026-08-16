@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>A1 Binary Tree</title>
 
@@ -78,6 +84,7 @@ header{
     padding:15px;
     border-radius:8px;
     margin-bottom:20px;
+    line-height:1.5;
 }
 
 .tree{
@@ -86,6 +93,18 @@ header{
     border-radius:15px;
     box-shadow:0 5px 20px rgba(0,0,0,.08);
     overflow-x:auto;
+}
+
+.root-area{
+    display:flex;
+    justify-content:center;
+}
+
+.children{
+    display:flex;
+    justify-content:center;
+    gap:60px;
+    margin-top:35px;
 }
 
 .node{
@@ -106,7 +125,6 @@ header{
 }
 
 .root{
-    margin:auto;
     background:#071a3d;
 }
 
@@ -117,17 +135,18 @@ header{
     box-shadow:none;
 }
 
-.children{
-    display:flex;
-    justify-content:center;
-    gap:60px;
-    margin-top:35px;
+.connector{
+    width:2px;
+    height:35px;
+    background:#9aa7b8;
+    margin:0 auto;
 }
 
 .info{
     margin-top:25px;
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    grid-template-columns:
+    repeat(auto-fit,minmax(200px,1fr));
     gap:15px;
 }
 
@@ -181,43 +200,72 @@ footer{
 }
 
 </style>
+
 </head>
 
 <body>
 
 <header>
 
-<div class="logo">A1</div>
+<div class="logo">
+A1
+</div>
 
-<a href="dashboard.html" class="back">
+<a
+    href="dashboard.html"
+    class="back"
+>
 ← Dashboard
 </a>
 
 </header>
 
+
 <div class="container">
 
 <div class="title">
 
-<h1>Binary Tree</h1>
+<h1>
+Binary Tree
+</h1>
 
-<p>A1 Member Network Structure</p>
+<p>
+A1 Member Network Structure
+</p>
 
 </div>
 
-<div id="errorBox" class="error"></div>
 
-<div id="loading" class="loading">
+<div
+    id="errorBox"
+    class="error"
+></div>
+
+
+<div
+    id="loading"
+    class="loading"
+>
 Loading Binary Tree...
 </div>
 
-<div id="treeContent" style="display:none;">
+
+<div
+    id="treeContent"
+    style="display:none;"
+>
+
 
 <div class="tree">
 
+
+<div class="root-area">
+
 <div class="node root">
 
-<strong>A1 MEMBER</strong>
+<strong>
+A1 MEMBER
+</strong>
 
 <span id="rootName">
 Loading...
@@ -226,7 +274,7 @@ Loading...
 <br>
 
 <span>
-Member ID:
+Member ID
 </span>
 
 <br>
@@ -237,15 +285,23 @@ Loading...
 
 </div>
 
+</div>
+
+
+<div class="connector"></div>
+
 
 <div class="children">
+
 
 <div
     class="node empty"
     id="leftNode"
 >
 
-<strong>LEFT</strong>
+<strong>
+LEFT
+</strong>
 
 <span id="leftMember">
 Empty Position
@@ -259,7 +315,9 @@ Empty Position
     id="rightNode"
 >
 
-<strong>RIGHT</strong>
+<strong>
+RIGHT
+</strong>
 
 <span id="rightMember">
 Empty Position
@@ -267,47 +325,67 @@ Empty Position
 
 </div>
 
+
 </div>
+
 
 </div>
 
 
 <div class="info">
 
+
 <div class="info-card">
 
-<h3>Total Left Members</h3>
+<h3>
+Total Left Members
+</h3>
 
-<strong id="leftCount">0</strong>
+<strong id="leftCount">
+0
+</strong>
 
 </div>
 
 
 <div class="info-card">
 
-<h3>Total Right Members</h3>
+<h3>
+Total Right Members
+</h3>
 
-<strong id="rightCount">0</strong>
-
-</div>
-
-
-<div class="info-card">
-
-<h3>Left Business Points</h3>
-
-<strong id="leftBusiness">0</strong>
+<strong id="rightCount">
+0
+</strong>
 
 </div>
 
 
 <div class="info-card">
 
-<h3>Right Business Points</h3>
+<h3>
+Left Business Points
+</h3>
 
-<strong id="rightBusiness">0</strong>
+<strong id="leftBusiness">
+0
+</strong>
 
 </div>
+
+
+<div class="info-card">
+
+<h3>
+Right Business Points
+</h3>
+
+<strong id="rightBusiness">
+0
+</strong>
+
+</div>
+
 
 </div>
 
@@ -316,11 +394,13 @@ Empty Position
 
 <strong>Binary Network:</strong>
 
-Your A1 Binary Tree is connected to the
-members database. New members will appear
-under their assigned parent and placement side.
+Your A1 member information is loaded from
+the members database. Direct members are
+identified using the parent member UUID and
+their placement side.
 
 </div>
+
 
 </div>
 
@@ -338,11 +418,17 @@ under their assigned parent and placement side.
 
 <script>
 
+/* =========================================
+   A1 SUPABASE CONNECTION
+   ========================================= */
+
 const SUPABASE_URL =
 "https://rtnxobtczeaxtpxgvfpb.supabase.co";
 
+
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_f8QIMjFi5Zm2a10LcODEPg_z8EOWM3_";
+
 
 const supabaseClient =
 supabase.createClient(
@@ -351,17 +437,22 @@ supabase.createClient(
 );
 
 
-function showMember(nodeId, member){
+/* =========================================
+   SHOW MEMBER
+   ========================================= */
+
+function showMember(
+    nodeId,
+    textId,
+    member
+){
 
     const node =
         document.getElementById(nodeId);
 
     const text =
-        document.getElementById(
-            nodeId === "leftNode"
-            ? "leftMember"
-            : "rightMember"
-        );
+        document.getElementById(textId);
+
 
     if(!member){
 
@@ -371,16 +462,24 @@ function showMember(nodeId, member){
             "Empty Position";
 
         return;
+
     }
 
+
     node.classList.remove("empty");
+
 
     text.innerText =
         member.full_name ||
         member.member_code ||
         "A1 Member";
+
 }
 
+
+/* =========================================
+   LOAD BINARY TREE
+   ========================================= */
 
 async function loadBinary(){
 
@@ -393,32 +492,40 @@ async function loadBinary(){
     const errorBox =
         document.getElementById("errorBox");
 
+
     try{
 
+        /* Get logged-in Supabase user */
+
         const {
-            data: userData,
-            error: userError
+            data: authData,
+            error: authError
         } =
-        await supabaseClient.auth.getUser();
+        await supabaseClient
+        .auth
+        .getUser();
 
 
-        if(userError || !userData.user){
+        if(
+            authError ||
+            !authData.user
+        ){
 
             window.location.href =
                 "login.html";
 
             return;
+
         }
 
 
         const user =
-            userData.user;
+            authData.user;
 
 
-        /*
-          Load current member using
-          authenticated email.
-        */
+        /* =====================================
+           LOAD CURRENT MEMBER
+           ===================================== */
 
         const {
             data: currentMember,
@@ -426,24 +533,33 @@ async function loadBinary(){
         } =
         await supabaseClient
         .from("members")
-        .select("*")
-        .eq("email", user.email)
+        .select(
+            "member_code,full_name,email,parent_member_id,placement_side,business_points"
+        )
+        .eq(
+            "email",
+            user.email
+        )
         .maybeSingle();
 
 
         if(memberError){
 
             throw memberError;
+
         }
 
 
         if(!currentMember){
 
             throw new Error(
-                "Member record not found."
+                "Your member record was not found."
             );
+
         }
 
+
+        /* Root member information */
 
         document
         .getElementById("rootName")
@@ -456,13 +572,17 @@ async function loadBinary(){
         .getElementById("memberId")
         .innerText =
             currentMember.member_code ||
-            "A1 Member";
+            "-";
 
 
-        /*
-          Find direct children using
-          parent_member_id.
-        */
+        /* =====================================
+           LOAD DIRECT CHILDREN
+           
+           IMPORTANT:
+           parent_member_id is UUID.
+           Therefore we compare it with
+           the logged-in Supabase user's UUID.
+           ===================================== */
 
         const {
             data: children,
@@ -471,17 +591,18 @@ async function loadBinary(){
         await supabaseClient
         .from("members")
         .select(
-            "id,full_name,member_code,placement_side,business_points"
+            "member_code,full_name,placement_side,business_points"
         )
         .eq(
             "parent_member_id",
-            currentMember.id
+            user.id
         );
 
 
         if(childrenError){
 
             throw childrenError;
+
         }
 
 
@@ -489,35 +610,57 @@ async function loadBinary(){
             children || [];
 
 
+        /* LEFT MEMBERS */
+
         const leftMembers =
             members.filter(
-                member =>
-                    member.placement_side === "left"
+                function(member){
+
+                    return (
+                        String(
+                            member.placement_side || ""
+                        ).toLowerCase() ===
+                        "left"
+                    );
+
+                }
             );
 
+
+        /* RIGHT MEMBERS */
 
         const rightMembers =
             members.filter(
-                member =>
-                    member.placement_side === "right"
+                function(member){
+
+                    return (
+                        String(
+                            member.placement_side || ""
+                        ).toLowerCase() ===
+                        "right"
+                    );
+
+                }
             );
 
 
+        /* Display first direct member */
+
         showMember(
             "leftNode",
+            "leftMember",
             leftMembers[0] || null
         );
 
 
         showMember(
             "rightNode",
+            "rightMember",
             rightMembers[0] || null
         );
 
 
-        /*
-          Count direct members.
-        */
+        /* Counts */
 
         document
         .getElementById("leftCount")
@@ -531,28 +674,32 @@ async function loadBinary(){
             rightMembers.length;
 
 
-        /*
-          Business points.
-        */
+        /* Business points */
 
         const leftBusiness =
             leftMembers.reduce(
-                (total, member) =>
-                    total +
-                    Number(
-                        member.business_points || 0
-                    ),
+                function(total, member){
+
+                    return total +
+                        Number(
+                            member.business_points || 0
+                        );
+
+                },
                 0
             );
 
 
         const rightBusiness =
             rightMembers.reduce(
-                (total, member) =>
-                    total +
-                    Number(
-                        member.business_points || 0
-                    ),
+                function(total, member){
+
+                    return total +
+                        Number(
+                            member.business_points || 0
+                        );
+
+                },
                 0
             );
 
@@ -569,8 +716,11 @@ async function loadBinary(){
             rightBusiness;
 
 
+        /* Show page */
+
         loading.style.display =
             "none";
+
 
         content.style.display =
             "block";
@@ -580,23 +730,30 @@ async function loadBinary(){
 
         console.error(error);
 
+
         loading.style.display =
             "none";
+
 
         errorBox.style.display =
             "block";
 
+
         errorBox.innerText =
             "Unable to load Binary Tree: " +
             error.message;
+
     }
 
 }
 
+
+/* START */
 
 loadBinary();
 
 </script>
 
 </body>
+
     </html>
