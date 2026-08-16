@@ -5,8 +5,10 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>A1 Member Dashboard</title>
 
@@ -83,7 +85,6 @@ header{
     display:grid;
     grid-template-columns:
     repeat(auto-fit,minmax(200px,1fr));
-
     gap:18px;
     margin-bottom:30px;
 }
@@ -111,7 +112,6 @@ header{
     display:grid;
     grid-template-columns:
     repeat(auto-fit,minmax(250px,1fr));
-
     gap:20px;
     margin-bottom:30px;
 }
@@ -135,11 +135,85 @@ header{
     margin-top:8px;
 }
 
+/* =========================================
+   REFERRAL BOX
+========================================= */
+
+.referral-box{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+    margin-bottom:30px;
+}
+
+.referral-box h2{
+    color:#071a3d;
+    margin-bottom:10px;
+}
+
+.referral-description{
+    color:#666;
+    font-size:14px;
+    line-height:1.5;
+    margin-bottom:18px;
+}
+
+.referral-link-row{
+    display:flex;
+    gap:10px;
+}
+
+.referral-link{
+    flex:1;
+    padding:13px;
+    border:1px solid #d5dbe5;
+    border-radius:7px;
+    background:#f8fafc;
+    color:#172033;
+    font-size:14px;
+    outline:none;
+}
+
+.referral-button{
+    border:0;
+    border-radius:7px;
+    padding:13px 18px;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.copy-button{
+    background:#0758a8;
+}
+
+.copy-button:hover{
+    background:#071a3d;
+}
+
+.whatsapp-button{
+    margin-top:12px;
+    width:100%;
+    background:#198754;
+}
+
+.whatsapp-button:hover{
+    background:#146c43;
+}
+
+.copy-message{
+    display:none;
+    margin-top:12px;
+    color:#146c43;
+    font-size:14px;
+    font-weight:bold;
+}
+
 .menu{
     display:grid;
     grid-template-columns:
     repeat(auto-fit,minmax(160px,1fr));
-
     gap:15px;
 }
 
@@ -184,6 +258,18 @@ footer{
     margin-top:30px;
 }
 
+@media(max-width:650px){
+
+    .referral-link-row{
+        flex-direction:column;
+    }
+
+    .referral-button{
+        width:100%;
+    }
+
+}
+
 </style>
 
 </head>
@@ -196,8 +282,10 @@ footer{
 A1
 </div>
 
-<button id="logoutButton"
-        class="logout">
+<button
+    id="logoutButton"
+    class="logout"
+>
 Logout
 </button>
 
@@ -207,8 +295,10 @@ Logout
 <div class="container">
 
 
-<div id="errorBox"
-     class="error-box">
+<div
+    id="errorBox"
+    class="error-box"
+>
 </div>
 
 
@@ -252,6 +342,65 @@ Welcome, <span id="memberName">Loading...</span>
 <strong>Status:</strong>
 <span id="memberStatus">Active</span>
 </p>
+
+</div>
+
+
+<!-- =====================================
+     REFERRAL SECTION
+===================================== -->
+
+<div class="referral-box">
+
+<h2>
+My Referral Link
+</h2>
+
+<p class="referral-description">
+Share your A1 Enterprises referral link.
+When a new member opens this link,
+your Member Code will be automatically
+used as their Sponsor Code.
+</p>
+
+
+<div class="referral-link-row">
+
+<input
+    type="text"
+    id="referralLink"
+    class="referral-link"
+    readonly
+    value="Loading referral link..."
+>
+
+
+<button
+    type="button"
+    id="copyReferralButton"
+    class="referral-button copy-button"
+>
+Copy Link
+</button>
+
+</div>
+
+
+<button
+    type="button"
+    id="whatsappButton"
+    class="referral-button whatsapp-button"
+>
+Share on WhatsApp
+</button>
+
+
+<div
+    id="copyMessage"
+    class="copy-message"
+>
+Referral link copied successfully!
+</div>
 
 </div>
 
@@ -392,7 +541,7 @@ the A1 members database.
 
 /* =========================================
    SUPABASE CONNECTION
-   ========================================= */
+========================================= */
 
 const SUPABASE_URL =
 "https://rtnxobtczeaxtpxgvfpb.supabase.co";
@@ -409,22 +558,194 @@ supabase.createClient(
 
 /* =========================================
    ERROR MESSAGE
-   ========================================= */
+========================================= */
 
 function showError(message){
 
     const box =
         document.getElementById("errorBox");
 
-    box.style.display = "block";
+    box.style.display =
+        "block";
 
-    box.innerText = message;
+    box.innerText =
+        message;
 }
 
 
 /* =========================================
+   CREATE REFERRAL LINK
+========================================= */
+
+function createReferralLink(memberCode){
+
+    const baseUrl =
+        window.location.origin +
+        window.location.pathname
+        .replace(
+            "dashboard.html",
+            "index.html"
+        );
+
+    return (
+        baseUrl +
+        "?ref=" +
+        encodeURIComponent(memberCode)
+    );
+
+}
+
+
+/* =========================================
+   SET REFERRAL LINK
+========================================= */
+
+function setReferralLink(memberCode){
+
+    if(!memberCode){
+
+        return;
+    }
+
+
+    const link =
+        createReferralLink(
+            memberCode
+        );
+
+
+    document
+    .getElementById("referralLink")
+    .value =
+        link;
+
+
+    return link;
+
+}
+
+
+/* =========================================
+   COPY REFERRAL LINK
+========================================= */
+
+document
+.getElementById("copyReferralButton")
+.addEventListener(
+    "click",
+    async function(){
+
+        const input =
+            document.getElementById(
+                "referralLink"
+            );
+
+
+        const message =
+            document.getElementById(
+                "copyMessage"
+            );
+
+
+        try{
+
+            await navigator.clipboard.writeText(
+                input.value
+            );
+
+
+            message.style.display =
+                "block";
+
+
+            setTimeout(
+                function(){
+
+                    message.style.display =
+                        "none";
+
+                },
+                2500
+            );
+
+
+        }catch(error){
+
+            input.select();
+
+            document.execCommand(
+                "copy"
+            );
+
+
+            message.innerText =
+                "Referral link copied!";
+
+
+            message.style.display =
+                "block";
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   WHATSAPP SHARE
+========================================= */
+
+document
+.getElementById("whatsappButton")
+.addEventListener(
+    "click",
+    function(){
+
+        const link =
+            document
+            .getElementById(
+                "referralLink"
+            )
+            .value;
+
+
+        if(
+            !link ||
+            link ===
+            "Loading referral link..."
+        ){
+
+            alert(
+                "Referral link is not ready yet."
+            );
+
+            return;
+
+        }
+
+
+        const text =
+            "Join A1 Enterprises using my referral link:\n\n" +
+            link;
+
+
+        const whatsappUrl =
+            "https://wa.me/?text=" +
+            encodeURIComponent(text);
+
+
+        window.open(
+            whatsappUrl,
+            "_blank"
+        );
+
+    }
+);
+
+
+/* =========================================
    LOAD MEMBER
-   ========================================= */
+========================================= */
 
 async function loadMember(){
 
@@ -447,6 +768,7 @@ async function loadMember(){
                 "login.html";
 
             return;
+
         }
 
 
@@ -460,6 +782,7 @@ async function loadMember(){
                 "login.html";
 
             return;
+
         }
 
 
@@ -486,6 +809,7 @@ async function loadMember(){
             );
 
             return;
+
         }
 
 
@@ -496,29 +820,34 @@ async function loadMember(){
             );
 
             return;
+
         }
 
 
         /* =====================================
            DISPLAY MEMBER INFORMATION
-           ===================================== */
+        ===================================== */
 
         document
         .getElementById("memberName")
         .innerText =
-            member.full_name || "A1 Member";
+            member.full_name ||
+            "A1 Member";
 
 
         document
         .getElementById("memberId")
         .innerText =
-            member.member_code || "Not assigned";
+            member.member_code ||
+            "Not assigned";
 
 
         document
         .getElementById("memberEmail")
         .innerText =
-            member.email || user.email || "";
+            member.email ||
+            user.email ||
+            "";
 
 
         document
@@ -557,6 +886,15 @@ async function loadMember(){
             "Active";
 
 
+        /* =====================================
+           CREATE MEMBER REFERRAL LINK
+        ===================================== */
+
+        setReferralLink(
+            member.member_code
+        );
+
+
     }catch(error){
 
         console.error(error);
@@ -573,7 +911,7 @@ async function loadMember(){
 
 /* =========================================
    LOGOUT
-   ========================================= */
+========================================= */
 
 document
 .getElementById("logoutButton")
@@ -597,6 +935,7 @@ document
             );
 
             return;
+
         }
 
 
@@ -609,7 +948,7 @@ document
 
 /* =========================================
    START
-   ========================================= */
+========================================= */
 
 loadMember();
 
@@ -617,4 +956,4 @@ loadMember();
 
 </body>
 
-</html>
+      </html>
