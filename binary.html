@@ -43,23 +43,23 @@ header{
     color:#ffb000;
 }
 
-.back{
+.back-btn{
     color:white;
-    text-decoration:none;
     background:#0758a8;
-    padding:9px 15px;
+    padding:10px 16px;
     border-radius:6px;
+    text-decoration:none;
 }
 
 .container{
-    max-width:1100px;
+    max-width:1200px;
     margin:auto;
-    padding:30px 15px;
+    padding:30px 18px;
 }
 
 .title{
     text-align:center;
-    margin-bottom:30px;
+    margin-bottom:25px;
 }
 
 .title h1{
@@ -71,130 +71,165 @@ header{
     color:#666;
 }
 
-.loading{
-    text-align:center;
-    padding:25px;
-    color:#666;
-}
-
-.error{
+.error-box{
     display:none;
     background:#ffe5e5;
     color:#b00020;
     padding:15px;
     border-radius:8px;
     margin-bottom:20px;
-    line-height:1.5;
 }
 
-.tree{
+.root-card{
     background:white;
-    padding:35px 15px;
+    padding:25px;
     border-radius:15px;
     box-shadow:0 5px 20px rgba(0,0,0,.08);
-    overflow-x:auto;
-}
-
-.root-area{
-    display:flex;
-    justify-content:center;
-}
-
-.children{
-    display:flex;
-    justify-content:center;
-    gap:60px;
-    margin-top:35px;
-}
-
-.node{
-    width:180px;
-    min-height:90px;
     text-align:center;
-    background:#0758a8;
-    color:white;
-    padding:15px 10px;
-    border-radius:10px;
-    box-shadow:0 4px 12px rgba(0,0,0,.12);
+    margin-bottom:25px;
 }
 
-.node strong{
-    display:block;
-    color:#ffb000;
-    margin-bottom:7px;
-}
-
-.root{
-    background:#071a3d;
-}
-
-.empty{
-    background:#e9eef5;
-    color:#777;
-    border:2px dashed #aab4c3;
-    box-shadow:none;
-}
-
-.connector{
-    width:2px;
-    height:35px;
-    background:#9aa7b8;
-    margin:0 auto;
-}
-
-.info{
-    margin-top:25px;
-    display:grid;
-    grid-template-columns:
-    repeat(auto-fit,minmax(200px,1fr));
-    gap:15px;
-}
-
-.info-card{
-    background:white;
-    padding:20px;
-    border-radius:10px;
-    box-shadow:0 4px 15px rgba(0,0,0,.07);
-    text-align:center;
-}
-
-.info-card h3{
-    color:#666;
-    font-size:14px;
+.root-title{
+    color:#0758a8;
+    font-size:13px;
+    font-weight:bold;
     margin-bottom:8px;
 }
 
-.info-card strong{
-    font-size:25px;
+.member-name{
+    color:#071a3d;
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.member-code{
+    color:#666;
+    font-size:14px;
+}
+
+.tree{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+}
+
+.branch{
+    background:white;
+    border-radius:15px;
+    padding:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.branch-title{
+    color:#071a3d;
+    font-size:21px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.left-title{
     color:#0758a8;
 }
 
-.note{
+.right-title{
+    color:#198754;
+}
+
+.position{
+    border:2px dashed #d5dbe5;
+    border-radius:12px;
+    padding:25px;
+    text-align:center;
+    min-height:170px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.empty{
+    color:#999;
+    font-size:18px;
+}
+
+.child-name{
+    color:#071a3d;
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.child-code{
+    color:#0758a8;
+    font-weight:bold;
+    margin-bottom:8px;
+}
+
+.child-info{
+    color:#666;
+    font-size:14px;
+    line-height:1.6;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:
+    repeat(4,1fr);
+    gap:15px;
+    margin-top:25px;
+}
+
+.stat{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+    text-align:center;
+}
+
+.stat h3{
+    color:#666;
+    font-size:14px;
+    margin-bottom:10px;
+}
+
+.stat-number{
+    font-size:27px;
+    font-weight:bold;
+    color:#0758a8;
+}
+
+.notice{
     margin-top:25px;
     background:#fff8df;
-    padding:15px;
+    padding:18px;
     border-radius:8px;
-    font-size:13px;
     color:#555;
-    line-height:1.5;
+    font-size:13px;
+    line-height:1.6;
+}
+
+.loading{
+    color:#0758a8;
+    font-weight:bold;
 }
 
 footer{
-    margin-top:30px;
     background:#041128;
     color:white;
     text-align:center;
     padding:25px;
+    margin-top:30px;
 }
 
-@media(max-width:600px){
+@media(max-width:700px){
 
-    .children{
-        gap:20px;
+    .tree{
+        grid-template-columns:1fr;
     }
 
-    .node{
-        width:150px;
+    .stats{
+        grid-template-columns:1fr 1fr;
     }
 
 }
@@ -205,6 +240,7 @@ footer{
 
 <body>
 
+
 <header>
 
 <div class="logo">
@@ -213,15 +249,16 @@ A1
 
 <a
     href="dashboard.html"
-    class="back"
+    class="back-btn"
 >
-← Dashboard
+Dashboard
 </a>
 
 </header>
 
 
 <div class="container">
+
 
 <div class="title">
 
@@ -238,151 +275,146 @@ A1 Member Network Structure
 
 <div
     id="errorBox"
-    class="error"
-></div>
-
-
-<div
-    id="loading"
-    class="loading"
+    class="error-box"
 >
-Loading Binary Tree...
 </div>
 
 
+<div class="root-card">
+
+<div class="root-title">
+A1 MEMBER
+</div>
+
 <div
-    id="treeContent"
-    style="display:none;"
+    id="rootName"
+    class="member-name"
 >
+Loading...
+</div>
+
+<div
+    id="rootCode"
+    class="member-code"
+>
+Loading...
+</div>
+
+</div>
 
 
 <div class="tree">
 
 
-<div class="root-area">
+<!-- LEFT -->
 
-<div class="node root">
+<div class="branch">
 
-<strong>
-A1 MEMBER
-</strong>
-
-<span id="rootName">
-Loading...
-</span>
-
-<br>
-
-<span>
-Member ID
-</span>
-
-<br>
-
-<span id="memberId">
-Loading...
-</span>
-
-</div>
-
-</div>
-
-
-<div class="connector"></div>
-
-
-<div class="children">
-
-
-<div
-    class="node empty"
-    id="leftNode"
->
-
-<strong>
+<div class="branch-title left-title">
 LEFT
-</strong>
-
-<span id="leftMember">
-Empty Position
-</span>
-
 </div>
-
 
 <div
-    class="node empty"
-    id="rightNode"
+    id="leftPosition"
+    class="position"
 >
 
-<strong>
+<div class="loading">
+Loading...
+</div>
+
+</div>
+
+</div>
+
+
+<!-- RIGHT -->
+
+<div class="branch">
+
+<div class="branch-title right-title">
 RIGHT
-</strong>
+</div>
 
-<span id="rightMember">
-Empty Position
-</span>
+<div
+    id="rightPosition"
+    class="position"
+>
+
+<div class="loading">
+Loading...
+</div>
+
+</div>
+
+</div>
 
 </div>
 
 
-</div>
+<div class="stats">
 
 
-</div>
-
-
-<div class="info">
-
-
-<div class="info-card">
+<div class="stat">
 
 <h3>
 Total Left Members
 </h3>
 
-<strong id="leftCount">
+<div
+    id="leftCount"
+    class="stat-number"
+>
 0
-</strong>
+</div>
 
 </div>
 
 
-<div class="info-card">
+<div class="stat">
 
 <h3>
 Total Right Members
 </h3>
 
-<strong id="rightCount">
+<div
+    id="rightCount"
+    class="stat-number"
+>
 0
-</strong>
+</div>
 
 </div>
 
 
-<div class="info-card">
+<div class="stat">
 
 <h3>
 Left Business Points
 </h3>
 
-<strong id="leftBusiness">
+<div
+    id="leftPoints"
+    class="stat-number"
+>
 0
-</strong>
+</div>
 
 </div>
 
 
-<div class="info-card">
+<div class="stat">
 
 <h3>
 Right Business Points
 </h3>
 
-<strong id="rightBusiness">
+<div
+    id="rightPoints"
+    class="stat-number"
+>
 0
-</strong>
+</div>
 
 </div>
 
@@ -390,19 +422,19 @@ Right Business Points
 </div>
 
 
-<div class="note">
+<div class="notice">
 
-<strong>Binary Network:</strong>
+<strong>Binary Tree:</strong>
 
-Your A1 member information is loaded from
-the members database. Direct members are
-identified using the parent member UUID and
-their placement side.
+Members are connected using
+<code>parent_member_id</code> and
+<code>placement_side</code>.
+
+LEFT and RIGHT positions are calculated
+from the member's parent relationship.
 
 </div>
 
-
-</div>
 
 </div>
 
@@ -419,97 +451,99 @@ their placement side.
 <script>
 
 /* =========================================
-   A1 SUPABASE CONNECTION
-   ========================================= */
+   SUPABASE
+========================================= */
 
 const SUPABASE_URL =
 "https://rtnxobtczeaxtpxgvfpb.supabase.co";
 
-
-const SUPABASE_PUBLISHABLE_KEY =
+const SUPABASE_KEY =
 "sb_publishable_f8QIMjFi5Zm2a10LcODEPg_z8EOWM3_";
 
-
 const supabaseClient =
-supabase.createClient(
+window.supabase.createClient(
     SUPABASE_URL,
-    SUPABASE_PUBLISHABLE_KEY
+    SUPABASE_KEY
 );
 
 
 /* =========================================
-   SHOW MEMBER
-   ========================================= */
+   ERROR
+========================================= */
 
-function showMember(
-    nodeId,
-    textId,
-    member
-){
+function showError(message){
 
-    const node =
-        document.getElementById(nodeId);
+    const box =
+        document.getElementById(
+            "errorBox"
+        );
 
-    const text =
-        document.getElementById(textId);
+    box.style.display =
+        "block";
 
-
-    if(!member){
-
-        node.classList.add("empty");
-
-        text.innerText =
-            "Empty Position";
-
-        return;
-
-    }
-
-
-    node.classList.remove("empty");
-
-
-    text.innerText =
-        member.full_name ||
-        member.member_code ||
-        "A1 Member";
+    box.innerText =
+        message;
 
 }
 
 
 /* =========================================
-   LOAD BINARY TREE
-   ========================================= */
+   FIND UUID VALUE
+========================================= */
 
-async function loadBinary(){
+function findUUID(member){
 
-    const loading =
-        document.getElementById("loading");
+    const uuidPattern =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
-    const content =
-        document.getElementById("treeContent");
 
-    const errorBox =
-        document.getElementById("errorBox");
+    for(
+        const key in member
+    ){
 
+        const value =
+            member[key];
+
+
+        if(
+            typeof value === "string" &&
+            uuidPattern.test(value)
+        ){
+
+            return value;
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =========================================
+   LOAD CURRENT MEMBER
+========================================= */
+
+async function loadBinaryTree(){
 
     try{
 
-        /* Get logged-in Supabase user */
+        /* =========================
+           GET LOGIN USER
+        ========================= */
 
         const {
-            data: authData,
-            error: authError
+            data: userData,
+            error: userError
         } =
         await supabaseClient
         .auth
         .getUser();
 
 
-        if(
-            authError ||
-            !authData.user
-        ){
+        if(userError){
 
             window.location.href =
                 "login.html";
@@ -520,22 +554,30 @@ async function loadBinary(){
 
 
         const user =
-            authData.user;
+            userData.user;
 
 
-        /* =====================================
-           LOAD CURRENT MEMBER
-           ===================================== */
+        if(!user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        /* =========================
+           GET CURRENT MEMBER
+        ========================= */
 
         const {
             data: currentMember,
-            error: memberError
+            error: currentError
         } =
         await supabaseClient
         .from("members")
-        .select(
-            "member_code,full_name,email,parent_member_id,placement_side,business_points"
-        )
+        .select("*")
         .eq(
             "email",
             user.email
@@ -543,23 +585,32 @@ async function loadBinary(){
         .maybeSingle();
 
 
-        if(memberError){
+        if(currentError){
 
-            throw memberError;
+            showError(
+                "Member could not be loaded: " +
+                currentError.message
+            );
+
+            return;
 
         }
 
 
         if(!currentMember){
 
-            throw new Error(
-                "Your member record was not found."
+            showError(
+                "Member record not found."
             );
+
+            return;
 
         }
 
 
-        /* Root member information */
+        /* =========================
+           ROOT MEMBER DISPLAY
+        ========================= */
 
         document
         .getElementById("rootName")
@@ -569,191 +620,401 @@ async function loadBinary(){
 
 
         document
-        .getElementById("memberId")
+        .getElementById("rootCode")
         .innerText =
-            currentMember.member_code ||
-            "-";
+            "Member ID: " +
+            (
+                currentMember.member_code ||
+                "Not assigned"
+            );
 
 
-        /* =====================================
-           LOAD DIRECT CHILDREN
-           
-           IMPORTANT:
-           parent_member_id is UUID.
-           Therefore we compare it with
-           the logged-in Supabase user's UUID.
-           ===================================== */
+        /* =========================
+           GET ROOT UUID
+        ========================= */
 
-        const {
-            data: children,
-            error: childrenError
-        } =
-        await supabaseClient
-        .from("members")
-        .select(
-            "member_code,full_name,placement_side,business_points"
-        )
-        .eq(
-            "parent_member_id",
-            user.id
-        );
+        const rootUUID =
+            findUUID(
+                currentMember
+            );
 
 
-        if(childrenError){
+        if(!rootUUID){
 
-            throw childrenError;
+            throw new Error(
+                "Root member UUID could not be identified."
+            );
 
         }
 
 
-        const members =
-            children || [];
+        /* =========================
+           GET ALL MEMBERS
+        ========================= */
+
+        const {
+            data: members,
+            error: membersError
+        } =
+        await supabaseClient
+        .from("members")
+        .select("*");
 
 
-        /* LEFT MEMBERS */
+        if(membersError){
 
-        const leftMembers =
-            members.filter(
-                function(member){
+            throw membersError;
 
-                    return (
-                        String(
-                            member.placement_side || ""
-                        ).toLowerCase() ===
+        }
+
+
+        if(!members){
+
+            throw new Error(
+                "No members were found."
+            );
+
+        }
+
+
+        /* =========================
+           FIND DIRECT CHILDREN
+        ========================= */
+
+        let leftMember = null;
+
+        let rightMember = null;
+
+
+        for(
+            const member of members
+        ){
+
+            const parentUUID =
+                member.parent_member_id;
+
+
+            if(
+                !parentUUID
+            ){
+
+                continue;
+
+            }
+
+
+            if(
+                parentUUID !== rootUUID
+            ){
+
+                continue;
+
+            }
+
+
+            const side =
+                (
+                    member.placement_side ||
+                    ""
+                )
+                .toString()
+                .trim()
+                .toLowerCase();
+
+
+            if(side === "left"){
+
+                leftMember =
+                    member;
+
+            }
+
+
+            if(side === "right"){
+
+                rightMember =
+                    member;
+
+            }
+
+        }
+
+
+        /* =========================
+           DISPLAY LEFT
+        ========================= */
+
+        const leftBox =
+            document
+            .getElementById(
+                "leftPosition"
+            );
+
+
+        if(leftMember){
+
+            leftBox.innerHTML = `
+
+                <div class="child-name">
+                    ${escapeHTML(
+                        leftMember.full_name ||
+                        "A1 Member"
+                    )}
+                </div>
+
+                <div class="child-code">
+                    ${escapeHTML(
+                        leftMember.member_code ||
+                        "No Member ID"
+                    )}
+                </div>
+
+                <div class="child-info">
+                    Placement:
+                    ${escapeHTML(
+                        leftMember.placement_side ||
                         "left"
-                    );
-
-                }
-            );
-
-
-        /* RIGHT MEMBERS */
-
-        const rightMembers =
-            members.filter(
-                function(member){
-
-                    return (
+                    )}
+                    <br>
+                    Status:
+                    ${escapeHTML(
+                        leftMember.status ||
+                        "active"
+                    )}
+                    <br>
+                    Business Points:
+                    ${escapeHTML(
                         String(
-                            member.placement_side || ""
-                        ).toLowerCase() ===
-                        "right"
-                    );
+                            leftMember.business_points ||
+                            0
+                        )
+                    )}
+                </div>
 
-                }
+            `;
+
+        }else{
+
+            leftBox.innerHTML = `
+
+                <div class="empty">
+                    Empty Position
+                </div>
+
+            `;
+
+        }
+
+
+        /* =========================
+           DISPLAY RIGHT
+        ========================= */
+
+        const rightBox =
+            document
+            .getElementById(
+                "rightPosition"
             );
 
 
-        /* Display first direct member */
+        if(rightMember){
 
-        showMember(
-            "leftNode",
-            "leftMember",
-            leftMembers[0] || null
-        );
+            rightBox.innerHTML = `
+
+                <div class="child-name">
+                    ${escapeHTML(
+                        rightMember.full_name ||
+                        "A1 Member"
+                    )}
+                </div>
+
+                <div class="child-code">
+                    ${escapeHTML(
+                        rightMember.member_code ||
+                        "No Member ID"
+                    )}
+                </div>
+
+                <div class="child-info">
+                    Placement:
+                    ${escapeHTML(
+                        rightMember.placement_side ||
+                        "right"
+                    )}
+                    <br>
+                    Status:
+                    ${escapeHTML(
+                        rightMember.status ||
+                        "active"
+                    )}
+                    <br>
+                    Business Points:
+                    ${escapeHTML(
+                        String(
+                            rightMember.business_points ||
+                            0
+                        )
+                    )}
+                </div>
+
+            `;
+
+        }else{
+
+            rightBox.innerHTML = `
+
+                <div class="empty">
+                    Empty Position
+                </div>
+
+            `;
+
+        }
 
 
-        showMember(
-            "rightNode",
-            "rightMember",
-            rightMembers[0] || null
-        );
+        /* =========================
+           COUNT MEMBERS
+        ========================= */
+
+        let leftCount = 0;
+
+        let rightCount = 0;
+
+        let leftPoints = 0;
+
+        let rightPoints = 0;
 
 
-        /* Counts */
+        for(
+            const member of members
+        ){
+
+            const parentUUID =
+                member.parent_member_id;
+
+
+            if(!parentUUID){
+
+                continue;
+
+            }
+
+
+            const side =
+                (
+                    member.placement_side ||
+                    ""
+                )
+                .toString()
+                .trim()
+                .toLowerCase();
+
+
+            if(side === "left"){
+
+                leftCount += 1;
+
+                leftPoints +=
+                    Number(
+                        member.business_points ||
+                        0
+                    );
+
+            }
+
+
+            if(side === "right"){
+
+                rightCount += 1;
+
+                rightPoints +=
+                    Number(
+                        member.business_points ||
+                        0
+                    );
+
+            }
+
+        }
+
 
         document
         .getElementById("leftCount")
         .innerText =
-            leftMembers.length;
+            leftCount;
 
 
         document
         .getElementById("rightCount")
         .innerText =
-            rightMembers.length;
-
-
-        /* Business points */
-
-        const leftBusiness =
-            leftMembers.reduce(
-                function(total, member){
-
-                    return total +
-                        Number(
-                            member.business_points || 0
-                        );
-
-                },
-                0
-            );
-
-
-        const rightBusiness =
-            rightMembers.reduce(
-                function(total, member){
-
-                    return total +
-                        Number(
-                            member.business_points || 0
-                        );
-
-                },
-                0
-            );
+            rightCount;
 
 
         document
-        .getElementById("leftBusiness")
+        .getElementById("leftPoints")
         .innerText =
-            leftBusiness;
+            leftPoints;
 
 
         document
-        .getElementById("rightBusiness")
+        .getElementById("rightPoints")
         .innerText =
-            rightBusiness;
-
-
-        /* Show page */
-
-        loading.style.display =
-            "none";
-
-
-        content.style.display =
-            "block";
+            rightPoints;
 
 
     }catch(error){
 
         console.error(error);
 
-
-        loading.style.display =
-            "none";
-
-
-        errorBox.style.display =
-            "block";
-
-
-        errorBox.innerText =
+        showError(
             "Unable to load Binary Tree: " +
-            error.message;
+            error.message
+        );
 
     }
 
 }
 
 
-/* START */
+/* =========================================
+   HTML SAFETY
+========================================= */
 
-loadBinary();
+function escapeHTML(value){
+
+    return String(value)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+loadBinaryTree();
 
 </script>
 
 </body>
 
-    </html>
+</html>
