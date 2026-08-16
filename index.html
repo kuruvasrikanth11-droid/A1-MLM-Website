@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>A1 Enterprises - Member Registration</title>
 
@@ -194,7 +199,9 @@ footer{
 
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -202,7 +209,10 @@ footer{
 A1
 </div>
 
-<a href="login.html" class="login-btn">
+<a
+    href="login.html"
+    class="login-btn"
+>
 Login
 </a>
 
@@ -210,6 +220,7 @@ Login
 
 
 <div class="container">
+
 
 <div class="title">
 
@@ -226,7 +237,9 @@ Create your A1 Enterprises member account
 
 <div class="form-box">
 
+
 <form id="registerForm">
+
 
 <div class="form-grid">
 
@@ -238,10 +251,10 @@ Full Name *
 </label>
 
 <input
-type="text"
-id="full_name"
-placeholder="Enter full name"
-required
+    type="text"
+    id="full_name"
+    placeholder="Enter full name"
+    required
 >
 
 </div>
@@ -254,11 +267,11 @@ Mobile Number *
 </label>
 
 <input
-type="tel"
-id="mobile"
-placeholder="Enter mobile number"
-maxlength="10"
-required
+    type="tel"
+    id="mobile"
+    placeholder="Enter mobile number"
+    maxlength="10"
+    required
 >
 
 </div>
@@ -271,10 +284,10 @@ Email Address *
 </label>
 
 <input
-type="email"
-id="email"
-placeholder="Enter email address"
-required
+    type="email"
+    id="email"
+    placeholder="Enter email address"
+    required
 >
 
 </div>
@@ -287,10 +300,10 @@ Username *
 </label>
 
 <input
-type="text"
-id="username"
-placeholder="Choose username"
-required
+    type="text"
+    id="username"
+    placeholder="Choose username"
+    required
 >
 
 </div>
@@ -303,11 +316,11 @@ Password *
 </label>
 
 <input
-type="password"
-id="password"
-placeholder="Create password"
-minlength="6"
-required
+    type="password"
+    id="password"
+    placeholder="Create password"
+    minlength="6"
+    required
 >
 
 </div>
@@ -320,9 +333,9 @@ Referral Code
 </label>
 
 <input
-type="text"
-id="referral_code"
-placeholder="Enter referral code"
+    type="text"
+    id="referral_code"
+    placeholder="Enter referral code"
 >
 
 </div>
@@ -331,13 +344,14 @@ placeholder="Enter referral code"
 <div class="field">
 
 <label>
-Sponsor Code
+Sponsor Code *
 </label>
 
 <input
-type="text"
-id="sponsor_code"
-placeholder="Enter sponsor code"
+    type="text"
+    id="sponsor_code"
+    placeholder="Example: A1-Y5BZDS2M"
+    required
 >
 
 </div>
@@ -346,10 +360,13 @@ placeholder="Enter sponsor code"
 <div class="field">
 
 <label>
-Placement Side
+Placement Side *
 </label>
 
-<select id="placement_side">
+<select
+    id="placement_side"
+    required
+>
 
 <option value="">
 Select Side
@@ -375,9 +392,9 @@ State
 </label>
 
 <input
-type="text"
-id="state"
-placeholder="Enter state"
+    type="text"
+    id="state"
+    placeholder="Enter state"
 >
 
 </div>
@@ -390,9 +407,9 @@ City
 </label>
 
 <input
-type="text"
-id="city"
-placeholder="Enter city"
+    type="text"
+    id="city"
+    placeholder="Enter city"
 >
 
 </div>
@@ -405,8 +422,8 @@ Address
 </label>
 
 <textarea
-id="address"
-placeholder="Enter address"
+    id="address"
+    placeholder="Enter address"
 ></textarea>
 
 </div>
@@ -419,8 +436,8 @@ Date of Birth
 </label>
 
 <input
-type="date"
-id="date_of_birth"
+    type="date"
+    id="date_of_birth"
 >
 
 </div>
@@ -433,9 +450,9 @@ Phone
 </label>
 
 <input
-type="tel"
-id="phone"
-placeholder="Phone number"
+    type="tel"
+    id="phone"
+    placeholder="Phone number"
 >
 
 </div>
@@ -445,18 +462,19 @@ placeholder="Phone number"
 
 
 <button
-type="submit"
-id="registerButton"
+    type="submit"
+    id="registerButton"
 >
 Create A1 Account
 </button>
+
 
 </form>
 
 
 <div
-id="message"
-class="message"
+    id="message"
+    class="message"
 ></div>
 
 
@@ -464,13 +482,24 @@ class="message"
 
 <strong>Important:</strong>
 
-Please enter your details correctly.
-Your member account will be created using
-the A1 registration system.
+Enter the Sponsor Code of the member
+under whom this new member should be placed.
+
+Select LEFT or RIGHT for the binary position.
+
+Example:
+
+Sponsor Code:
+A1-Y5BZDS2M
+
+Placement Side:
+RIGHT
 
 </div>
 
+
 </div>
+
 
 </div>
 
@@ -486,9 +515,9 @@ the A1 registration system.
 
 <script>
 
-/* =========================
+/* =========================================
    SUPABASE CONNECTION
-========================= */
+========================================= */
 
 const SUPABASE_URL =
 "https://rtnxobtczeaxtpxgvfpb.supabase.co";
@@ -503,254 +532,508 @@ window.supabase.createClient(
 );
 
 
-/* =========================
-   MEMBER CODE
-========================= */
+/* =========================================
+   GENERATE MEMBER CODE
+========================================= */
 
 function generateMemberCode(){
 
     const random =
-    Math.random()
-    .toString(36)
-    .substring(2,10)
-    .toUpperCase();
+        Math.random()
+        .toString(36)
+        .substring(2,10)
+        .toUpperCase();
 
     return "A1-" + random;
 }
 
 
-/* =========================
-   MESSAGE
-========================= */
+/* =========================================
+   SHOW MESSAGE
+========================================= */
 
 function showMessage(text,type){
 
     const message =
-    document.getElementById("message");
+        document.getElementById("message");
 
-    message.textContent = text;
+    message.textContent =
+        text;
 
     message.className =
-    "message " + type;
+        "message " + type;
 
-    message.style.display = "block";
+    message.style.display =
+        "block";
 }
 
 
-/* =========================
-   REGISTER
-========================= */
+/* =========================================
+   FIND SPONSOR
+========================================= */
+
+async function findSponsor(sponsorCode){
+
+    /*
+       First search by member_code.
+       This allows the Root Member's
+       code such as A1-Y5BZDS2M to be
+       used as Sponsor Code.
+    */
+
+    let result =
+        await supabaseClient
+        .from("members")
+        .select("*")
+        .eq("member_code", sponsorCode)
+        .limit(1);
+
+    if(
+        !result.error &&
+        result.data &&
+        result.data.length > 0
+    ){
+
+        return result.data[0];
+
+    }
+
+
+    /*
+       If not found, also try the
+       sponsor_code column.
+    */
+
+    result =
+        await supabaseClient
+        .from("members")
+        .select("*")
+        .eq("sponsor_code", sponsorCode)
+        .limit(1);
+
+
+    if(
+        !result.error &&
+        result.data &&
+        result.data.length > 0
+    ){
+
+        return result.data[0];
+
+    }
+
+
+    return null;
+}
+
+
+/* =========================================
+   FIND MEMBER UUID
+========================================= */
+
+function findMemberUUID(member){
+
+    /*
+       parent_member_id is excluded.
+
+       The remaining UUID value is used
+       as the member's primary UUID.
+    */
+
+    const uuidPattern =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+
+    for(
+        const key in member
+    ){
+
+        if(
+            key === "parent_member_id"
+        ){
+            continue;
+        }
+
+
+        const value =
+            member[key];
+
+
+        if(
+            typeof value === "string" &&
+            uuidPattern.test(value)
+        ){
+
+            return value;
+
+        }
+
+    }
+
+
+    return null;
+}
+
+
+/* =========================================
+   REGISTRATION
+========================================= */
 
 document
 .getElementById("registerForm")
-.addEventListener("submit", async function(e){
+.addEventListener(
+    "submit",
+    async function(e){
 
-    e.preventDefault();
-
-    const button =
-    document.getElementById("registerButton");
-
-    button.disabled = true;
-
-    button.textContent =
-    "Creating Account...";
+        e.preventDefault();
 
 
-    try{
-
-        const full_name =
-        document.getElementById("full_name").value.trim();
-
-        const mobile =
-        document.getElementById("mobile").value.trim();
-
-        const email =
-        document.getElementById("email").value.trim();
-
-        const username =
-        document.getElementById("username").value.trim();
-
-        const password =
-        document.getElementById("password").value;
-
-        const referral_code =
-        document.getElementById("referral_code").value.trim();
-
-        const sponsor_code =
-        document.getElementById("sponsor_code").value.trim();
-
-        const placement_side =
-        document.getElementById("placement_side").value;
-
-        const state =
-        document.getElementById("state").value.trim();
-
-        const city =
-        document.getElementById("city").value.trim();
-
-        const address =
-        document.getElementById("address").value.trim();
-
-        const date_of_birth =
-        document.getElementById("date_of_birth").value || null;
-
-        const phone =
-        document.getElementById("phone").value.trim();
-
-        const member_code =
-        generateMemberCode();
+        const button =
+            document.getElementById(
+                "registerButton"
+            );
 
 
-        /* =========================
-           CREATE AUTH USER
-        ========================= */
+        button.disabled =
+            true;
 
-        const {
-            data: authData,
-            error: authError
-        } =
-        await supabaseClient.auth.signUp({
 
-            email: email,
+        button.textContent =
+            "Creating Account...";
 
-            password: password,
 
-            options:{
+        try{
 
-                data:{
-                    full_name:full_name,
-                    username:username,
-                    member_code:member_code
-                }
+
+            /* =========================
+               GET FORM DATA
+            ========================= */
+
+            const full_name =
+                document
+                .getElementById("full_name")
+                .value
+                .trim();
+
+
+            const mobile =
+                document
+                .getElementById("mobile")
+                .value
+                .trim();
+
+
+            const email =
+                document
+                .getElementById("email")
+                .value
+                .trim();
+
+
+            const username =
+                document
+                .getElementById("username")
+                .value
+                .trim();
+
+
+            const password =
+                document
+                .getElementById("password")
+                .value;
+
+
+            const referral_code =
+                document
+                .getElementById("referral_code")
+                .value
+                .trim();
+
+
+            const sponsor_code =
+                document
+                .getElementById("sponsor_code")
+                .value
+                .trim()
+                .toUpperCase();
+
+
+            const placement_side =
+                document
+                .getElementById("placement_side")
+                .value;
+
+
+            const state =
+                document
+                .getElementById("state")
+                .value
+                .trim();
+
+
+            const city =
+                document
+                .getElementById("city")
+                .value
+                .trim();
+
+
+            const address =
+                document
+                .getElementById("address")
+                .value
+                .trim();
+
+
+            const date_of_birth =
+                document
+                .getElementById("date_of_birth")
+                .value || null;
+
+
+            const phone =
+                document
+                .getElementById("phone")
+                .value
+                .trim();
+
+
+            /* =========================
+               FIND SPONSOR
+            ========================= */
+
+            button.textContent =
+                "Checking Sponsor...";
+
+
+            const sponsor =
+                await findSponsor(
+                    sponsor_code
+                );
+
+
+            if(!sponsor){
+
+                throw new Error(
+                    "Sponsor Code not found. " +
+                    "Please enter a valid A1 Member Code."
+                );
 
             }
 
-        });
+
+            /* =========================
+               GET SPONSOR UUID
+            ========================= */
+
+            const parent_member_id =
+                findMemberUUID(sponsor);
 
 
-        if(authError){
+            if(!parent_member_id){
 
-            throw authError;
+                throw new Error(
+                    "Sponsor UUID could not be found."
+                );
 
-        }
+            }
 
 
-        if(!authData.user){
+            /* =========================
+               GENERATE MEMBER CODE
+            ========================= */
 
-            throw new Error(
-                "Account could not be created."
+            const member_code =
+                generateMemberCode();
+
+
+            /* =========================
+               CREATE AUTH ACCOUNT
+            ========================= */
+
+            button.textContent =
+                "Creating Account...";
+
+
+            const {
+                data: authData,
+                error: authError
+            } =
+            await supabaseClient
+            .auth
+            .signUp({
+
+                email: email,
+
+                password: password,
+
+                options:{
+
+                    data:{
+
+                        full_name:
+                            full_name,
+
+                        username:
+                            username,
+
+                        member_code:
+                            member_code
+
+                    }
+
+                }
+
+            });
+
+
+            if(authError){
+
+                throw authError;
+
+            }
+
+
+            if(!authData.user){
+
+                throw new Error(
+                    "Account could not be created."
+                );
+
+            }
+
+
+            /* =========================
+               SAVE MEMBER
+            ========================= */
+
+            button.textContent =
+                "Saving Member...";
+
+
+            const memberData = {
+
+                full_name:
+                    full_name,
+
+                mobile:
+                    mobile,
+
+                email:
+                    email,
+
+                username:
+                    username,
+
+                referral_code:
+                    referral_code,
+
+                member_code:
+                    member_code,
+
+                state:
+                    state,
+
+                city:
+                    city,
+
+                address:
+                    address,
+
+                date_of_birth:
+                    date_of_birth,
+
+                status:
+                    "active",
+
+                role:
+                    "member",
+
+                sponsor_code:
+                    sponsor_code,
+
+                phone:
+                    phone,
+
+                placement_side:
+                    placement_side,
+
+                parent_member_id:
+                    parent_member_id
+
+            };
+
+
+            const {
+                error: memberError
+            } =
+            await supabaseClient
+            .from("members")
+            .insert(memberData);
+
+
+            if(memberError){
+
+                throw memberError;
+
+            }
+
+
+            /* =========================
+               SUCCESS
+            ========================= */
+
+            showMessage(
+
+                "Registration successful! " +
+                "Your Member ID is " +
+                member_code,
+
+                "success"
+
             );
 
-        }
+
+            document
+            .getElementById(
+                "registerForm"
+            )
+            .reset();
 
 
-        /* =========================
-           SAVE MEMBER
-           
-           IMPORTANT:
-           id is NOT included here.
-           Supabase will automatically
-           generate UUID using the
-           table default.
-        ========================= */
+            button.textContent =
+                "Registration Completed";
 
-        const memberData = {
-
-            full_name: full_name,
-
-            mobile: mobile,
-
-            email: email,
-
-            username: username,
-
-            referral_code: referral_code,
-
-            member_code: member_code,
-
-            state: state,
-
-            city: city,
-
-            address: address,
-
-            date_of_birth: date_of_birth,
-
-            status: "active",
-
-            role: "member",
-
-            sponsor_code: sponsor_code,
-
-            phone: phone,
-
-            placement_side: placement_side
-
-        };
-
-
-        const {
-            error: memberError
-        } =
-        await supabaseClient
-        .from("members")
-        .insert(memberData);
-
-
-        if(memberError){
-
-            throw memberError;
 
         }
 
 
-        /* =========================
-           SUCCESS
-        ========================= */
+        catch(error){
 
-        showMessage(
-
-            "Registration successful! " +
-            "Your Member ID is " +
-            member_code,
-
-            "success"
-
-        );
+            console.error(error);
 
 
-        document
-        .getElementById("registerForm")
-        .reset();
+            showMessage(
+
+                "Registration failed: " +
+                error.message,
+
+                "error"
+
+            );
 
 
-        button.textContent =
-        "Registration Completed";
+            button.disabled =
+                false;
 
 
-    }
+            button.textContent =
+                "Create A1 Account";
 
-    catch(error){
-
-        console.error(error);
-
-        showMessage(
-
-            "Registration failed: " +
-            error.message,
-
-            "error"
-
-        );
-
-        button.disabled = false;
-
-        button.textContent =
-        "Create A1 Account";
+        }
 
     }
-
-});
+);
 
 </script>
 
