@@ -171,6 +171,16 @@ button:disabled{
     line-height:1.5;
 }
 
+.referral-info{
+    display:none;
+    margin-bottom:20px;
+    background:#e8f7ee;
+    color:#146c43;
+    padding:15px;
+    border-radius:8px;
+    line-height:1.5;
+}
+
 footer{
     margin-top:30px;
     background:#041128;
@@ -198,7 +208,6 @@ footer{
 </style>
 
 </head>
-
 
 <body>
 
@@ -232,6 +241,13 @@ A1 Member Registration
 Create your A1 Enterprises member account
 </p>
 
+</div>
+
+
+<div
+    id="referralInfo"
+    class="referral-info"
+>
 </div>
 
 
@@ -350,7 +366,7 @@ Sponsor Code *
 <input
     type="text"
     id="sponsor_code"
-    placeholder="Example: A1-Y5BZDS2M"
+    placeholder="Sponsor Member Code"
     required
 >
 
@@ -482,24 +498,17 @@ Create A1 Account
 
 <strong>Important:</strong>
 
-Enter the Sponsor Code of the member
-under whom this new member should be placed.
+If you opened this page using a member's
+referral link, the Referral Code and
+Sponsor Code will be filled automatically.
 
-Select LEFT or RIGHT for the binary position.
-
-Example:
-
-Sponsor Code:
-A1-Y5BZDS2M
-
-Placement Side:
-RIGHT
+Choose LEFT or RIGHT placement before
+creating the account.
 
 </div>
 
 
 </div>
-
 
 </div>
 
@@ -533,6 +542,56 @@ window.supabase.createClient(
 
 
 /* =========================================
+   AUTO LOAD REFERRAL CODE FROM URL
+========================================= */
+
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
+
+const referralFromUrl =
+    urlParams.get("ref");
+
+
+if(referralFromUrl){
+
+    const referralCode =
+        referralFromUrl
+        .trim()
+        .toUpperCase();
+
+
+    document
+    .getElementById("referral_code")
+    .value =
+        referralCode;
+
+
+    document
+    .getElementById("sponsor_code")
+    .value =
+        referralCode;
+
+
+    const referralInfo =
+        document
+        .getElementById("referralInfo");
+
+
+    referralInfo.innerHTML =
+        "<strong>Referral Member:</strong> " +
+        referralCode +
+        "<br>Your Sponsor Code has been filled automatically.";
+
+
+    referralInfo.style.display =
+        "block";
+
+}
+
+
+/* =========================================
    GENERATE MEMBER CODE
 ========================================= */
 
@@ -544,7 +603,9 @@ function generateMemberCode(){
         .substring(2,10)
         .toUpperCase();
 
+
     return "A1-" + random;
+
 }
 
 
@@ -555,16 +616,22 @@ function generateMemberCode(){
 function showMessage(text,type){
 
     const message =
-        document.getElementById("message");
+        document.getElementById(
+            "message"
+        );
+
 
     message.textContent =
         text;
 
+
     message.className =
         "message " + type;
 
+
     message.style.display =
         "block";
+
 }
 
 
@@ -572,21 +639,20 @@ function showMessage(text,type){
    FIND SPONSOR
 ========================================= */
 
-async function findSponsor(sponsorCode){
-
-    /*
-       First search by member_code.
-       This allows the Root Member's
-       code such as A1-Y5BZDS2M to be
-       used as Sponsor Code.
-    */
+async function findSponsor(
+    sponsorCode
+){
 
     let result =
         await supabaseClient
         .from("members")
         .select("*")
-        .eq("member_code", sponsorCode)
+        .eq(
+            "member_code",
+            sponsorCode
+        )
         .limit(1);
+
 
     if(
         !result.error &&
@@ -599,16 +665,14 @@ async function findSponsor(sponsorCode){
     }
 
 
-    /*
-       If not found, also try the
-       sponsor_code column.
-    */
-
     result =
         await supabaseClient
         .from("members")
         .select("*")
-        .eq("sponsor_code", sponsorCode)
+        .eq(
+            "sponsor_code",
+            sponsorCode
+        )
         .limit(1);
 
 
@@ -624,21 +688,15 @@ async function findSponsor(sponsorCode){
 
 
     return null;
+
 }
 
 
 /* =========================================
-   FIND MEMBER UUID
+   FIND SPONSOR UUID
 ========================================= */
 
 function findMemberUUID(member){
-
-    /*
-       parent_member_id is excluded.
-
-       The remaining UUID value is used
-       as the member's primary UUID.
-    */
 
     const uuidPattern =
         /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -651,7 +709,9 @@ function findMemberUUID(member){
         if(
             key === "parent_member_id"
         ){
+
             continue;
+
         }
 
 
@@ -672,6 +732,7 @@ function findMemberUUID(member){
 
 
     return null;
+
 }
 
 
@@ -699,7 +760,7 @@ document
 
 
         button.textContent =
-            "Creating Account...";
+            "Checking Sponsor...";
 
 
         try{
@@ -747,7 +808,8 @@ document
                 document
                 .getElementById("referral_code")
                 .value
-                .trim();
+                .trim()
+                .toUpperCase();
 
 
             const sponsor_code =
@@ -788,7 +850,8 @@ document
             const date_of_birth =
                 document
                 .getElementById("date_of_birth")
-                .value || null;
+                .value ||
+                null;
 
 
             const phone =
@@ -801,10 +864,6 @@ document
             /* =========================
                FIND SPONSOR
             ========================= */
-
-            button.textContent =
-                "Checking Sponsor...";
-
 
             const sponsor =
                 await findSponsor(
@@ -827,7 +886,9 @@ document
             ========================= */
 
             const parent_member_id =
-                findMemberUUID(sponsor);
+                findMemberUUID(
+                    sponsor
+                );
 
 
             if(!parent_member_id){
@@ -840,7 +901,7 @@ document
 
 
             /* =========================
-               GENERATE MEMBER CODE
+               MEMBER CODE
             ========================= */
 
             const member_code =
@@ -848,7 +909,7 @@ document
 
 
             /* =========================
-               CREATE AUTH ACCOUNT
+               CREATE AUTH USER
             ========================= */
 
             button.textContent =
@@ -863,9 +924,11 @@ document
             .auth
             .signUp({
 
-                email: email,
+                email:
+                    email,
 
-                password: password,
+                password:
+                    password,
 
                 options:{
 
@@ -969,7 +1032,9 @@ document
             } =
             await supabaseClient
             .from("members")
-            .insert(memberData);
+            .insert(
+                memberData
+            );
 
 
             if(memberError){
