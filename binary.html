@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>A1 Binary Tree</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -82,6 +87,7 @@ header{
     padding:15px;
     border-radius:8px;
     margin-bottom:20px;
+    line-height:1.5;
 }
 
 .root-card{
@@ -211,11 +217,6 @@ header{
     line-height:1.6;
 }
 
-.loading{
-    color:#0758a8;
-    font-weight:bold;
-}
-
 footer{
     background:#041128;
     color:white;
@@ -243,7 +244,9 @@ footer{
     }
 
 }
+
 </style>
+
 </head>
 
 <body>
@@ -254,13 +257,16 @@ footer{
 A1
 </div>
 
-<a href="dashboard.html" class="back-btn">
+<a href="dashboard.html"
+   class="back-btn">
 Dashboard
 </a>
 
 </header>
 
+
 <div class="container">
+
 
 <div class="title">
 
@@ -274,12 +280,16 @@ A1 Member Network Structure
 
 </div>
 
-<div id="successBox" class="success-box">
-Binary Tree loaded successfully.
+
+<div id="successBox"
+     class="success-box">
 </div>
 
-<div id="errorBox" class="error-box">
+
+<div id="errorBox"
+     class="error-box">
 </div>
+
 
 <div class="root-card">
 
@@ -287,17 +297,23 @@ Binary Tree loaded successfully.
 A1 MEMBER
 </div>
 
-<div id="rootName" class="member-name">
+<div id="rootName"
+     class="member-name">
 Loading...
 </div>
 
-<div id="rootCode" class="member-code">
+<div id="rootCode"
+     class="member-code">
 Loading...
 </div>
 
 </div>
+
 
 <div class="tree">
+
+
+<!-- LEFT -->
 
 <div class="branch">
 
@@ -305,15 +321,19 @@ Loading...
 LEFT
 </div>
 
-<div id="leftPosition" class="position">
+<div id="leftPosition"
+     class="position">
 
-<div class="loading">
+<div>
 Loading...
 </div>
 
 </div>
 
 </div>
+
+
+<!-- RIGHT -->
 
 <div class="branch">
 
@@ -321,9 +341,10 @@ Loading...
 RIGHT
 </div>
 
-<div id="rightPosition" class="position">
+<div id="rightPosition"
+     class="position">
 
-<div class="loading">
+<div>
 Loading...
 </div>
 
@@ -333,7 +354,11 @@ Loading...
 
 </div>
 
+
+<!-- STATS -->
+
 <div class="stats">
+
 
 <div class="stat">
 
@@ -341,11 +366,13 @@ Loading...
 Total Left Members
 </h3>
 
-<div id="leftCount" class="stat-number">
+<div id="leftCount"
+     class="stat-number">
 0
 </div>
 
 </div>
+
 
 <div class="stat">
 
@@ -353,11 +380,13 @@ Total Left Members
 Total Right Members
 </h3>
 
-<div id="rightCount" class="stat-number">
+<div id="rightCount"
+     class="stat-number">
 0
 </div>
 
 </div>
+
 
 <div class="stat">
 
@@ -365,11 +394,13 @@ Total Right Members
 Left Business Points
 </h3>
 
-<div id="leftPoints" class="stat-number">
+<div id="leftPoints"
+     class="stat-number">
 0
 </div>
 
 </div>
+
 
 <div class="stat">
 
@@ -377,29 +408,38 @@ Left Business Points
 Right Business Points
 </h3>
 
-<div id="rightPoints" class="stat-number">
+<div id="rightPoints"
+     class="stat-number">
 0
 </div>
 
 </div>
 
+
 </div>
+
 
 <div class="notice">
 
 <strong>Binary Tree:</strong>
 
 Members are connected using
-<code>parent_member_id</code> and
+<code>parent_member_id</code>
+and
 <code>placement_side</code>.
 
-The current member's actual database
-<code>id</code> is used to find direct
-LEFT and RIGHT members.
+The member's database
+<code>id</code> is used to calculate
+the complete LEFT and RIGHT teams.
+
+Direct members and all members below
+them are included in the team totals.
 
 </div>
 
+
 </div>
+
 
 <footer>
 
@@ -409,10 +449,11 @@ LEFT and RIGHT members.
 
 </footer>
 
+
 <script>
 
 /* =========================================
-   SUPABASE CONNECTION
+   SUPABASE
 ========================================= */
 
 const SUPABASE_URL =
@@ -429,33 +470,41 @@ window.supabase.createClient(
 
 
 /* =========================================
-   SHOW ERROR
+   ERROR
 ========================================= */
 
 function showError(message){
 
     const box =
-        document.getElementById("errorBox");
+        document.getElementById(
+            "errorBox"
+        );
 
-    box.style.display = "block";
+    box.style.display =
+        "block";
 
-    box.innerText = message;
+    box.innerText =
+        message;
 
 }
 
 
 /* =========================================
-   SHOW SUCCESS
+   SUCCESS
 ========================================= */
 
 function showSuccess(message){
 
     const box =
-        document.getElementById("successBox");
+        document.getElementById(
+            "successBox"
+        );
 
-    box.style.display = "block";
+    box.style.display =
+        "block";
 
-    box.innerText = message;
+    box.innerText =
+        message;
 
 }
 
@@ -484,15 +533,17 @@ async function loadBinaryTree(){
 
     try{
 
-        /* -------------------------------------
+        /* =====================================
            1. GET LOGGED-IN USER
-        ------------------------------------- */
+        ===================================== */
 
         const {
-            data: userData,
-            error: userError
+            data:userData,
+            error:userError
         } =
-        await supabaseClient.auth.getUser();
+        await supabaseClient
+        .auth
+        .getUser();
 
 
         if(userError){
@@ -519,22 +570,13 @@ async function loadBinaryTree(){
         }
 
 
-        /* -------------------------------------
+        /* =====================================
            2. GET CURRENT MEMBER
-           
-           Database columns:
-           id
-           member_code
-           full_name
-           email
-           parent_member_id
-           placement_side
-           business_points
-        ------------------------------------- */
+        ===================================== */
 
         const {
-            data: currentMember,
-            error: currentError
+            data:currentMember,
+            error:currentError
         } =
         await supabaseClient
         .from("members")
@@ -573,9 +615,9 @@ async function loadBinaryTree(){
         }
 
 
-        /* -------------------------------------
-           3. DISPLAY ROOT MEMBER
-        ------------------------------------- */
+        /* =====================================
+           3. DISPLAY ROOT
+        ===================================== */
 
         document
         .getElementById("rootName")
@@ -594,12 +636,9 @@ async function loadBinaryTree(){
             );
 
 
-        /* -------------------------------------
-           4. CURRENT MEMBER UUID
-           
-           IMPORTANT:
-           Database column is exactly "id"
-        ------------------------------------- */
+        /* =====================================
+           4. GET CURRENT MEMBER ID
+        ===================================== */
 
         const currentMemberId =
             currentMember.id;
@@ -608,19 +647,19 @@ async function loadBinaryTree(){
         if(!currentMemberId){
 
             throw new Error(
-                "Current member UUID (id) was not found."
+                "Current member ID was not found."
             );
 
         }
 
 
-        /* -------------------------------------
-           5. LOAD MEMBERS
-        ------------------------------------- */
+        /* =====================================
+           5. GET ALL MEMBERS
+        ===================================== */
 
         const {
-            data: members,
-            error: membersError
+            data:members,
+            error:membersError
         } =
         await supabaseClient
         .from("members")
@@ -643,21 +682,21 @@ async function loadBinaryTree(){
         }
 
 
-        if(!members){
+        if(
+            !members ||
+            members.length === 0
+        ){
 
             throw new Error(
-                "Members could not be loaded."
+                "No members were found."
             );
 
         }
 
 
-        /* -------------------------------------
+        /* =====================================
            6. FIND DIRECT CHILDREN
-           
-           parent_member_id must equal
-           current member's id.
-        ------------------------------------- */
+        ===================================== */
 
         let leftMember = null;
 
@@ -678,9 +717,13 @@ async function loadBinaryTree(){
 
 
             if(
-                String(member.parent_member_id)
+                String(
+                    member.parent_member_id
+                )
                 !==
-                String(currentMemberId)
+                String(
+                    currentMemberId
+                )
             ){
 
                 continue;
@@ -714,9 +757,9 @@ async function loadBinaryTree(){
         }
 
 
-        /* -------------------------------------
-           7. DISPLAY LEFT MEMBER
-        ------------------------------------- */
+        /* =====================================
+           7. DISPLAY LEFT
+        ===================================== */
 
         const leftBox =
             document.getElementById(
@@ -772,7 +815,8 @@ async function loadBinaryTree(){
 
             `;
 
-        }else{
+        }
+        else{
 
             leftBox.innerHTML = `
 
@@ -785,9 +829,9 @@ async function loadBinaryTree(){
         }
 
 
-        /* -------------------------------------
-           8. DISPLAY RIGHT MEMBER
-        ------------------------------------- */
+        /* =====================================
+           8. DISPLAY RIGHT
+        ===================================== */
 
         const rightBox =
             document.getElementById(
@@ -843,7 +887,8 @@ async function loadBinaryTree(){
 
             `;
 
-        }else{
+        }
+        else{
 
             rightBox.innerHTML = `
 
@@ -856,13 +901,9 @@ async function loadBinaryTree(){
         }
 
 
-        /* -------------------------------------
-           9. CALCULATE CURRENT MEMBER'S
-              LEFT AND RIGHT TEAM
-           
-           This counts the complete subtree,
-           not unrelated members elsewhere.
-        ------------------------------------- */
+        /* =====================================
+           9. BUILD CHILDREN MAP
+        ===================================== */
 
         const childrenMap = {};
 
@@ -902,31 +943,72 @@ async function loadBinaryTree(){
         }
 
 
-        function getSubtreeStats(
-            rootId
+        /* =====================================
+           10. CALCULATE COMPLETE TEAM
+           
+           IMPORTANT:
+           The direct member itself is
+           counted as 1.
+           
+           Then all descendants are counted.
+        ===================================== */
+
+        function getTeamStats(
+            directMember
         ){
 
             let count = 0;
 
             let points = 0;
 
-            const stack = [];
 
+            if(!directMember){
 
-            if(
-                childrenMap[
-                    String(rootId)
-                ]
-            ){
-
-                stack.push(
-                    ...childrenMap[
-                        String(rootId)
-                    ]
-                );
+                return {
+                    count:0,
+                    points:0
+                };
 
             }
 
+
+            /*
+               Count direct member
+            */
+
+            count += 1;
+
+
+            points +=
+                Number(
+                    directMember.business_points ||
+                    0
+                );
+
+
+            /*
+               Find all descendants
+            */
+
+            const stack = [];
+
+
+            const directChildren =
+                childrenMap[
+                    String(
+                        directMember.id
+                    )
+                ] || [];
+
+
+            stack.push(
+                ...directChildren
+            );
+
+
+            /*
+               Walk through every level
+            */
 
             while(
                 stack.length > 0
@@ -946,16 +1028,20 @@ async function loadBinaryTree(){
                     );
 
 
-                const childList =
+                const children =
                     childrenMap[
-                        String(member.id)
-                    ];
+                        String(
+                            member.id
+                        )
+                    ] || [];
 
 
-                if(childList){
+                if(
+                    children.length > 0
+                ){
 
                     stack.push(
-                        ...childList
+                        ...children
                     );
 
                 }
@@ -964,71 +1050,110 @@ async function loadBinaryTree(){
 
 
             return {
-                count,
-                points
+                count:count,
+                points:points
             };
 
         }
 
 
-        /* -------------------------------------
-           10. LEFT STATS
-        ------------------------------------- */
+        /* =====================================
+           11. LEFT TEAM
+        ===================================== */
 
         const leftStats =
-            getSubtreeStats(
+            getTeamStats(
                 leftMember
-                    ? leftMember.id
-                    : null
             );
 
 
-        /* -------------------------------------
-           11. RIGHT STATS
-        ------------------------------------- */
+        /* =====================================
+           12. RIGHT TEAM
+        ===================================== */
 
         const rightStats =
-            getSubtreeStats(
+            getTeamStats(
                 rightMember
-                    ? rightMember.id
-                    : null
             );
 
 
+        /* =====================================
+           13. DISPLAY COUNTS
+        ===================================== */
+
         document
-        .getElementById("leftCount")
+        .getElementById(
+            "leftCount"
+        )
         .innerText =
             leftStats.count;
 
 
         document
-        .getElementById("rightCount")
+        .getElementById(
+            "rightCount"
+        )
         .innerText =
             rightStats.count;
 
 
+        /* =====================================
+           14. DISPLAY BUSINESS POINTS
+        ===================================== */
+
         document
-        .getElementById("leftPoints")
+        .getElementById(
+            "leftPoints"
+        )
         .innerText =
             leftStats.points;
 
 
         document
-        .getElementById("rightPoints")
+        .getElementById(
+            "rightPoints"
+        )
         .innerText =
             rightStats.points;
 
 
-        /* -------------------------------------
-           12. SUCCESS
-        ------------------------------------- */
+        /* =====================================
+           15. SUCCESS
+        ===================================== */
 
         showSuccess(
             "Binary Tree loaded successfully."
         );
 
 
-    }catch(error){
+        console.log(
+            "Current Member:",
+            currentMember
+        );
+
+        console.log(
+            "Left Member:",
+            leftMember
+        );
+
+        console.log(
+            "Right Member:",
+            rightMember
+        );
+
+        console.log(
+            "Left Stats:",
+            leftStats
+        );
+
+        console.log(
+            "Right Stats:",
+            rightStats
+        );
+
+
+    }
+    catch(error){
 
         console.error(
             "Binary Tree Error:",
@@ -1055,4 +1180,5 @@ loadBinaryTree();
 </script>
 
 </body>
-      </html>
+
+</html>
