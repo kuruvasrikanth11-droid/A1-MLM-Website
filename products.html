@@ -5,8 +5,10 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>A1 Products</title>
 
@@ -26,13 +28,16 @@ body{
     color:#172033;
 }
 
+/* HEADER */
+
 header{
     background:#071a3d;
     color:white;
-    padding:18px 6%;
+    padding:16px 6%;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    gap:15px;
 }
 
 .logo{
@@ -41,19 +46,38 @@ header{
     color:#ffb000;
 }
 
-.back{
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.dashboard-btn,
+.cart-btn{
     color:white;
     text-decoration:none;
     background:#0758a8;
-    padding:10px 16px;
-    border-radius:6px;
+    padding:10px 15px;
+    border-radius:7px;
+    font-size:14px;
+    font-weight:bold;
+    border:0;
+    cursor:pointer;
 }
+
+.cart-btn{
+    background:#198754;
+}
+
+/* CONTAINER */
 
 .container{
     max-width:1200px;
     margin:auto;
-    padding:30px 18px;
+    padding:25px 18px 40px;
 }
+
+/* TITLE */
 
 .title{
     text-align:center;
@@ -63,125 +87,171 @@ header{
 .title h1{
     color:#071a3d;
     margin-bottom:8px;
+    font-size:30px;
 }
 
 .title p{
     color:#666;
 }
 
-.error{
+/* SEARCH */
+
+.search-box{
+    background:white;
+    padding:15px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+    margin-bottom:18px;
+}
+
+.search-input{
+    width:100%;
+    padding:14px;
+    border:1px solid #d5dbe5;
+    border-radius:8px;
+    font-size:15px;
+    outline:none;
+}
+
+.search-input:focus{
+    border-color:#0758a8;
+}
+
+/* CATEGORIES */
+
+.categories{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding-bottom:8px;
+    margin-bottom:25px;
+}
+
+.category-btn{
+    border:0;
+    background:white;
+    color:#172033;
+    padding:11px 17px;
+    border-radius:20px;
+    cursor:pointer;
+    white-space:nowrap;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+    font-weight:bold;
+}
+
+.category-btn.active{
+    background:#0758a8;
+    color:white;
+}
+
+/* ERROR */
+
+.error-box{
     display:none;
     background:#ffe5e5;
     color:#b00020;
     padding:15px;
     border-radius:8px;
     margin-bottom:20px;
-    line-height:1.5;
 }
 
-.controls{
-    background:white;
-    padding:18px;
-    border-radius:12px;
-    box-shadow:0 5px 20px rgba(0,0,0,.07);
-    margin-bottom:25px;
-
-    display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:12px;
-}
-
-.controls input,
-.controls select{
-    width:100%;
-    padding:13px;
-    border:1px solid #d5dbe5;
-    border-radius:7px;
-    font-size:14px;
-    outline:none;
-}
+/* LOADING */
 
 .loading{
-    background:white;
-    padding:35px;
-    border-radius:12px;
     text-align:center;
+    padding:40px;
     color:#0758a8;
-    box-shadow:0 5px 20px rgba(0,0,0,.07);
+    font-weight:bold;
 }
 
-.products{
+/* PRODUCTS GRID */
+
+.products-grid{
     display:grid;
     grid-template-columns:
-    repeat(auto-fit,minmax(260px,1fr));
+        repeat(4,1fr);
     gap:20px;
 }
+
+/* PRODUCT CARD */
 
 .product-card{
     background:white;
     border-radius:14px;
     overflow:hidden;
     box-shadow:0 5px 20px rgba(0,0,0,.08);
+    transition:.2s;
+    display:flex;
+    flex-direction:column;
 }
 
-.product-image{
-    height:190px;
-    background:#eef2f7;
+.product-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 25px rgba(0,0,0,.12);
+}
 
+/* IMAGE */
+
+.product-image-box{
+    width:100%;
+    height:210px;
+    background:#f7f9fc;
     display:flex;
     align-items:center;
     justify-content:center;
-
-    color:#888;
-    font-size:14px;
-
     overflow:hidden;
 }
 
-.product-image img{
+.product-image{
     width:100%;
     height:100%;
-    object-fit:cover;
+    object-fit:contain;
+    display:block;
 }
 
-.product-content{
-    padding:20px;
+.no-image{
+    text-align:center;
+    color:#9aa3b2;
+    font-size:50px;
+}
+
+/* PRODUCT INFO */
+
+.product-info{
+    padding:17px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
 }
 
 .product-category{
     color:#0758a8;
-    font-size:13px;
+    font-size:12px;
     font-weight:bold;
     text-transform:uppercase;
-    margin-bottom:8px;
+    margin-bottom:7px;
 }
 
 .product-name{
     color:#071a3d;
-    font-size:20px;
+    font-size:17px;
     font-weight:bold;
-    margin-bottom:10px;
-}
-
-.product-description{
-    color:#666;
-    font-size:14px;
-    line-height:1.5;
-    margin-bottom:15px;
+    line-height:1.35;
+    margin-bottom:12px;
 }
 
 .product-price{
     color:#071a3d;
-    font-size:25px;
+    font-size:23px;
     font-weight:bold;
-    margin-bottom:10px;
+    margin-bottom:8px;
 }
 
 .product-points{
     color:#198754;
-    font-weight:bold;
     font-size:14px;
-    margin-bottom:8px;
+    font-weight:bold;
+    margin-bottom:6px;
 }
 
 .product-stock{
@@ -190,57 +260,155 @@ header{
     margin-bottom:15px;
 }
 
-.order-button{
-    width:100%;
-    padding:12px;
+.out-stock{
+    color:#b00020;
+    font-weight:bold;
+}
+
+/* BUTTONS */
+
+.product-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:auto;
+}
+
+.buy-btn,
+.cart-add-btn{
     border:0;
+    padding:11px 7px;
     border-radius:7px;
-    background:#0758a8;
     color:white;
     font-weight:bold;
     cursor:pointer;
-    font-size:14px;
+    font-size:13px;
 }
 
-.order-button:hover{
+.buy-btn{
+    background:#0758a8;
+}
+
+.buy-btn:hover{
     background:#071a3d;
 }
 
+.cart-add-btn{
+    background:#198754;
+}
+
+.cart-add-btn:hover{
+    background:#146c43;
+}
+
+.disabled-btn{
+    background:#999;
+    cursor:not-allowed;
+}
+
+/* EMPTY */
+
 .empty{
+    grid-column:1/-1;
     background:white;
-    padding:40px;
+    padding:50px 20px;
     border-radius:12px;
     text-align:center;
     color:#666;
-    box-shadow:0 5px 20px rgba(0,0,0,.07);
 }
 
-.notice{
-    margin-top:25px;
-    background:#fff8df;
-    padding:18px;
-    border-radius:8px;
-    color:#555;
-    font-size:13px;
-    line-height:1.6;
+.empty-icon{
+    font-size:50px;
+    margin-bottom:12px;
 }
+
+/* CART POPUP */
+
+.cart-message{
+    display:none;
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#198754;
+    color:white;
+    padding:15px 20px;
+    border-radius:9px;
+    box-shadow:0 5px 20px rgba(0,0,0,.2);
+    z-index:1000;
+    font-weight:bold;
+}
+
+/* FOOTER */
 
 footer{
     background:#041128;
     color:white;
     text-align:center;
     padding:25px;
-    margin-top:30px;
+    margin-top:20px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+    .products-grid{
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
 }
 
 @media(max-width:700px){
 
-    .controls{
+    header{
+        padding:14px;
+    }
+
+    .logo{
+        font-size:25px;
+    }
+
+    .dashboard-btn{
+        display:none;
+    }
+
+    .products-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+        gap:12px;
+    }
+
+    .product-image-box{
+        height:160px;
+    }
+
+    .product-info{
+        padding:12px;
+    }
+
+    .product-name{
+        font-size:15px;
+    }
+
+    .product-price{
+        font-size:19px;
+    }
+
+    .product-buttons{
         grid-template-columns:1fr;
     }
 
-    .products{
-        grid-template-columns:1fr;
+}
+
+@media(max-width:400px){
+
+    .products-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .product-image-box{
+        height:140px;
     }
 
 }
@@ -259,10 +427,23 @@ footer{
 A1
 </div>
 
-<a href="dashboard.html"
-   class="back">
+<div class="header-right">
+
+<a
+    href="dashboard.html"
+    class="dashboard-btn"
+>
 ← Dashboard
 </a>
+
+<button
+    id="cartButton"
+    class="cart-btn"
+>
+🛒 Cart (<span id="cartCount">0</span>)
+</button>
+
+</div>
 
 </header>
 
@@ -283,59 +464,132 @@ Electronic Products & Appliances
 </div>
 
 
-<div id="errorBox"
-     class="error">
-</div>
+<div
+    id="errorBox"
+    class="error-box"
+></div>
 
 
-<div class="controls">
+<!-- SEARCH -->
+
+<div class="search-box">
 
 <input
-    type="text"
+    type="search"
     id="searchInput"
+    class="search-input"
     placeholder="Search products..."
 >
 
-<select id="categoryFilter">
+</div>
 
-<option value="all">
-All Categories
-</option>
 
-</select>
+<!-- CATEGORIES -->
+
+<div
+    id="categories"
+    class="categories"
+>
+
+<button
+    class="category-btn active"
+    data-category="all"
+>
+All
+</button>
+
+<button
+    class="category-btn"
+    data-category="tv"
+>
+TV
+</button>
+
+<button
+    class="category-btn"
+    data-category="fridge"
+>
+Fridge
+</button>
+
+<button
+    class="category-btn"
+    data-category="ac"
+>
+AC
+</button>
+
+<button
+    class="category-btn"
+    data-category="fan"
+>
+Fan
+</button>
+
+<button
+    class="category-btn"
+    data-category="lights"
+>
+Lights
+</button>
+
+<button
+    class="category-btn"
+    data-category="printer"
+>
+Printer
+</button>
+
+<button
+    class="category-btn"
+    data-category="iron"
+>
+Iron Box
+</button>
+
+<button
+    class="category-btn"
+    data-category="cooler"
+>
+Cooler
+</button>
+
+<button
+    class="category-btn"
+    data-category="other"
+>
+Others
+</button>
 
 </div>
 
 
-<div id="loading"
-     class="loading">
+<!-- PRODUCTS -->
 
+<div
+    id="loading"
+    class="loading"
+>
 Loading products...
+</div>
+
+
+<div
+    id="productsGrid"
+    class="products-grid"
+    style="display:none;"
+>
+</div>
+
 
 </div>
 
 
-<div id="productsContainer"
-     class="products"
-     style="display:none;">
-
-</div>
-
-
-<div class="notice">
-
-<strong>Product Information:</strong>
-
-Product prices, stock and Business Points
-are controlled by A1 Enterprises.
-
-Business Points are credited according
-to the company's approved compensation
-rules after a valid product purchase.
-
-</div>
-
-
+<div
+    id="cartMessage"
+    class="cart-message"
+>
+Product added to cart!
 </div>
 
 
@@ -368,37 +622,68 @@ supabase.createClient(
 
 
 /* =========================================
-   PRODUCTS
+   GLOBAL DATA
 ========================================= */
 
 let allProducts = [];
 
+let selectedCategory = "all";
+
+let cart =
+    JSON.parse(
+        localStorage.getItem("a1_cart") ||
+        "[]"
+    );
+
 
 /* =========================================
-   ERROR
+   UPDATE CART COUNT
 ========================================= */
 
-function showError(message){
+function updateCartCount(){
 
-    const box =
-        document.getElementById("errorBox");
+    const total =
+        cart.reduce(
+            function(sum,item){
 
-    box.style.display =
-        "block";
+                return sum +
+                    Number(item.quantity || 0);
 
-    box.innerText =
-        message;
+            },
+            0
+        );
+
+    document
+    .getElementById("cartCount")
+    .innerText =
+        total;
 
 }
 
 
 /* =========================================
-   HTML SAFETY
+   SAVE CART
+========================================= */
+
+function saveCart(){
+
+    localStorage.setItem(
+        "a1_cart",
+        JSON.stringify(cart)
+    );
+
+    updateCartCount();
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
 ========================================= */
 
 function escapeHTML(value){
 
-    return String(value ?? "")
+    return String(value || "")
         .replace(/&/g,"&amp;")
         .replace(/</g,"&lt;")
         .replace(/>/g,"&gt;")
@@ -409,18 +694,410 @@ function escapeHTML(value){
 
 
 /* =========================================
-   PRICE
+   FORMAT PRICE
 ========================================= */
 
 function formatPrice(value){
 
-    return Number(value || 0)
-        .toLocaleString(
-            "en-IN",
-            {
-                maximumFractionDigits:2
+    const number =
+        Number(value || 0);
+
+    return "₹" +
+        number.toLocaleString(
+            "en-IN"
+        );
+
+}
+
+
+/* =========================================
+   IMAGE ERROR
+========================================= */
+
+function imageError(image){
+
+    image.style.display =
+        "none";
+
+    const parent =
+        image.parentElement;
+
+    parent.innerHTML =
+        '<div class="no-image">📦</div>';
+
+}
+
+
+/* =========================================
+   SHOW PRODUCTS
+========================================= */
+
+function displayProducts(){
+
+    const grid =
+        document.getElementById(
+            "productsGrid"
+        );
+
+    const search =
+        document
+        .getElementById("searchInput")
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const filtered =
+        allProducts.filter(
+            function(product){
+
+                const name =
+                    String(
+                        product.product_name || ""
+                    ).toLowerCase();
+
+                const category =
+                    String(
+                        product.category || ""
+                    ).toLowerCase();
+
+                const matchesSearch =
+                    !search ||
+                    name.includes(search) ||
+                    category.includes(search);
+
+                const matchesCategory =
+                    selectedCategory === "all" ||
+                    category.includes(
+                        selectedCategory
+                    );
+
+
+                return (
+                    matchesSearch &&
+                    matchesCategory
+                );
+
             }
         );
+
+
+    if(filtered.length === 0){
+
+        grid.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🛒
+                </div>
+
+                <h3>
+                    No Products Available
+                </h3>
+
+                <p style="margin-top:8px;">
+                    Products will appear here
+                    when A1 products are added.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    grid.innerHTML =
+        filtered.map(
+            function(product){
+
+                const stock =
+                    Number(
+                        product.stock || 0
+                    );
+
+                const image =
+                    product.product_image;
+
+                const imageHTML =
+                    image
+                    ?
+                    `
+                    <img
+                        src="${escapeHTML(image)}"
+                        class="product-image"
+                        alt="${escapeHTML(
+                            product.product_name
+                        )}"
+                        onerror="imageError(this)"
+                    >
+                    `
+                    :
+                    `
+                    <div class="no-image">
+                        📦
+                    </div>
+                    `;
+
+
+                return `
+
+                <div class="product-card">
+
+                    <div class="product-image-box">
+                        ${imageHTML}
+                    </div>
+
+
+                    <div class="product-info">
+
+                        <div class="product-category">
+                            ${escapeHTML(
+                                product.category ||
+                                "Electronics"
+                            )}
+                        </div>
+
+
+                        <div class="product-name">
+                            ${escapeHTML(
+                                product.product_name ||
+                                "A1 Product"
+                            )}
+                        </div>
+
+
+                        <div class="product-price">
+                            ${formatPrice(
+                                product.selling_price
+                            )}
+                        </div>
+
+
+                        <div class="product-points">
+                            ⭐ Business Points:
+                            ${escapeHTML(
+                                product.business_points ||
+                                0
+                            )}
+                        </div>
+
+
+                        <div
+                            class="product-stock ${
+                                stock <= 0
+                                ? "out-stock"
+                                : ""
+                            }"
+                        >
+                            ${
+                                stock > 0
+                                ? "Stock: " + stock
+                                : "Out of Stock"
+                            }
+                        </div>
+
+
+                        <div class="product-buttons">
+
+                            <button
+                                class="buy-btn ${
+                                    stock <= 0
+                                    ? "disabled-btn"
+                                    : ""
+                                }"
+                                ${
+                                    stock <= 0
+                                    ? "disabled"
+                                    : ""
+                                }
+                                onclick="buyNow(
+                                    '${escapeHTML(
+                                        product.product_id
+                                    )}'
+                                )"
+                            >
+                                Buy Now
+                            </button>
+
+
+                            <button
+                                class="cart-add-btn ${
+                                    stock <= 0
+                                    ? "disabled-btn"
+                                    : ""
+                                }"
+                                ${
+                                    stock <= 0
+                                    ? "disabled"
+                                    : ""
+                                }
+                                onclick="addToCart(
+                                    '${escapeHTML(
+                                        product.product_id
+                                    )}'
+                                )"
+                            >
+                                🛒 Add to Cart
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =========================================
+   ADD TO CART
+========================================= */
+
+function addToCart(productId){
+
+    const product =
+        allProducts.find(
+            function(item){
+
+                return item.product_id ===
+                    productId;
+
+            }
+        );
+
+
+    if(!product){
+
+        alert(
+            "Product not found."
+        );
+
+        return;
+
+    }
+
+
+    const stock =
+        Number(
+            product.stock || 0
+        );
+
+
+    if(stock <= 0){
+
+        alert(
+            "This product is currently out of stock."
+        );
+
+        return;
+
+    }
+
+
+    const existing =
+        cart.find(
+            function(item){
+
+                return item.product_id ===
+                    productId;
+
+            }
+        );
+
+
+    if(existing){
+
+        if(
+            existing.quantity >=
+            stock
+        ){
+
+            alert(
+                "Maximum available stock reached."
+            );
+
+            return;
+
+        }
+
+        existing.quantity += 1;
+
+    }else{
+
+        cart.push({
+
+            product_id:
+                product.product_id,
+
+            product_name:
+                product.product_name,
+
+            selling_price:
+                Number(
+                    product.selling_price ||
+                    0
+                ),
+
+            business_points:
+                Number(
+                    product.business_points ||
+                    0
+                ),
+
+            product_image:
+                product.product_image ||
+                "",
+
+            quantity:1
+
+        });
+
+    }
+
+
+    saveCart();
+
+
+    const message =
+        document.getElementById(
+            "cartMessage"
+        );
+
+
+    message.style.display =
+        "block";
+
+
+    setTimeout(
+        function(){
+
+            message.style.display =
+                "none";
+
+        },
+        1800
+    );
+
+}
+
+
+/* =========================================
+   BUY NOW
+========================================= */
+
+function buyNow(productId){
+
+    addToCart(productId);
 
 }
 
@@ -432,53 +1109,22 @@ function formatPrice(value){
 async function loadProducts(){
 
     const loading =
-        document.getElementById("loading");
-
-    const container =
         document.getElementById(
-            "productsContainer"
+            "loading"
+        );
+
+    const grid =
+        document.getElementById(
+            "productsGrid"
+        );
+
+    const errorBox =
+        document.getElementById(
+            "errorBox"
         );
 
 
     try{
-
-        /* =========================
-           CHECK LOGIN
-        ========================= */
-
-        const {
-            data:userData,
-            error:userError
-        } =
-        await supabaseClient
-        .auth
-        .getUser();
-
-
-        if(userError){
-
-            window.location.href =
-                "login.html";
-
-            return;
-
-        }
-
-
-        if(!userData.user){
-
-            window.location.href =
-                "login.html";
-
-            return;
-
-        }
-
-
-        /* =========================
-           LOAD ALL PRODUCTS
-           NO STATUS FILTER
-        ========================= */
 
         const {
             data,
@@ -487,7 +1133,21 @@ async function loadProducts(){
         await supabaseClient
         .from("products")
         .select(
-            "id, product_id, product_name, category, description, selling_price, business_points, stock, product_image, status, created_at"
+            `
+            product_id,
+            product_name,
+            category,
+            description,
+            selling_price,
+            business_points,
+            stock,
+            product_image,
+            status
+            `
+        )
+        .eq(
+            "status",
+            "active"
         )
         .order(
             "created_at",
@@ -508,47 +1168,33 @@ async function loadProducts(){
             data || [];
 
 
-        /* =========================
-           CATEGORIES
-        ========================= */
-
-        createCategories(
-            allProducts
-        );
-
-
-        /* =========================
-           DISPLAY
-        ========================= */
-
-        renderProducts(
-            allProducts
-        );
-
-
         loading.style.display =
             "none";
 
-        container.style.display =
+
+        grid.style.display =
             "grid";
+
+
+        displayProducts();
 
 
     }catch(error){
 
-        console.error(
-            "Products error:",
-            error
-        );
+        console.error(error);
 
 
         loading.style.display =
             "none";
 
 
-        showError(
+        errorBox.style.display =
+            "block";
+
+
+        errorBox.innerText =
             "Unable to load products: " +
-            error.message
-        );
+            error.message;
 
     }
 
@@ -556,393 +1202,26 @@ async function loadProducts(){
 
 
 /* =========================================
-   CATEGORIES
-========================================= */
-
-function createCategories(products){
-
-    const select =
-        document.getElementById(
-            "categoryFilter"
-        );
-
-
-    const categories =
-        [
-            ...new Set(
-                products
-                .map(
-                    product =>
-                        product.category
-                )
-                .filter(Boolean)
-            )
-        ]
-        .sort();
-
-
-    select.innerHTML = `
-
-        <option value="all">
-            All Categories
-        </option>
-
-    `;
-
-
-    categories.forEach(
-        category => {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-            option.value =
-                category;
-
-            option.textContent =
-                category;
-
-            select.appendChild(
-                option
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   DISPLAY PRODUCTS
-========================================= */
-
-function renderProducts(products){
-
-    const container =
-        document.getElementById(
-            "productsContainer"
-        );
-
-
-    if(!products.length){
-
-        container.innerHTML = `
-
-            <div class="empty">
-
-                <h2>
-                    No Products Available
-                </h2>
-
-                <p style="margin-top:10px;">
-                    Products will appear here
-                    when A1 products are added
-                    to the system.
-                </p>
-
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        products
-        .map(
-            product => {
-
-                const stock =
-                    Number(
-                        product.stock || 0
-                    );
-
-
-                const outOfStock =
-                    stock <= 0;
-
-
-                let imageHTML = `
-
-                    <span>
-                        No Product Image
-                    </span>
-
-                `;
-
-
-                if(product.product_image){
-
-                    imageHTML = `
-
-                        <img
-                            src="${escapeHTML(
-                                product.product_image
-                            )}"
-                            alt="${escapeHTML(
-                                product.product_name
-                            )}"
-                        >
-
-                    `;
-
-                }
-
-
-                return `
-
-                <div class="product-card">
-
-
-                    <div class="product-image">
-
-                        ${imageHTML}
-
-                    </div>
-
-
-                    <div class="product-content">
-
-
-                        <div class="product-category">
-
-                            ${escapeHTML(
-                                product.category ||
-                                "Electronic"
-                            )}
-
-                        </div>
-
-
-                        <div class="product-name">
-
-                            ${escapeHTML(
-                                product.product_name ||
-                                "A1 Product"
-                            )}
-
-                        </div>
-
-
-                        <div class="product-description">
-
-                            ${escapeHTML(
-                                product.description ||
-                                "A1 electronic product."
-                            )}
-
-                        </div>
-
-
-                        <div class="product-price">
-
-                            ₹${formatPrice(
-                                product.selling_price
-                            )}
-
-                        </div>
-
-
-                        <div class="product-points">
-
-                            Business Points:
-                            ${formatPrice(
-                                product.business_points
-                            )}
-
-                        </div>
-
-
-                        <div class="product-stock">
-
-                            ${
-                                outOfStock
-                                ?
-                                "Out of Stock"
-                                :
-                                "Stock Available: " +
-                                stock
-                            }
-
-                        </div>
-
-
-                        <button
-                            class="order-button"
-                            ${
-                                outOfStock
-                                ?
-                                "disabled"
-                                :
-                                ""
-                            }
-                            onclick="selectProduct(
-                                '${escapeHTML(
-                                    product.product_id
-                                )}'
-                            )"
-                        >
-
-                            ${
-                                outOfStock
-                                ?
-                                "Out of Stock"
-                                :
-                                "Order Product"
-                            }
-
-                        </button>
-
-
-                    </div>
-
-
-                </div>
-
-                `;
-
-            }
-        )
-        .join("");
-
-}
-
-
-/* =========================================
-   ORDER BUTTON
-========================================= */
-
-function selectProduct(productId){
-
-    alert(
-        "Product selected: " +
-        productId +
-        "\n\nOrder system will be connected next."
-    );
-
-}
-
-
-/* =========================================
-   SEARCH + CATEGORY
-========================================= */
-
-function filterProducts(){
-
-    const search =
-        document
-        .getElementById(
-            "searchInput"
-        )
-        .value
-        .trim()
-        .toLowerCase();
-
-
-    const category =
-        document
-        .getElementById(
-            "categoryFilter"
-        )
-        .value;
-
-
-    const filtered =
-        allProducts.filter(
-            product => {
-
-                const name =
-                    String(
-                        product.product_name ||
-                        ""
-                    )
-                    .toLowerCase();
-
-
-                const description =
-                    String(
-                        product.description ||
-                        ""
-                    )
-                    .toLowerCase();
-
-
-                const productId =
-                    String(
-                        product.product_id ||
-                        ""
-                    )
-                    .toLowerCase();
-
-
-                const productCategory =
-                    String(
-                        product.category ||
-                        ""
-                    );
-
-
-                const searchMatch =
-                    !search ||
-                    name.includes(search) ||
-                    description.includes(search) ||
-                    productId.includes(search);
-
-
-                const categoryMatch =
-                    category === "all" ||
-                    productCategory === category;
-
-
-                return (
-                    searchMatch &&
-                    categoryMatch
-                );
-
-            }
-        );
-
-
-    renderProducts(
-        filtered
-    );
-
-}
-
-
-/* =========================================
-   EVENTS
+   SEARCH
 ========================================= */
 
 document
 .getElementById("searchInput")
 .addEventListener(
     "input",
-    filterProducts
-);
-
-
-document
-.getElementById("categoryFilter")
-.addEventListener(
-    "change",
-    filterProducts
+    displayProducts
 );
 
 
 /* =========================================
-   START
+   CATEGORY FILTER
 ========================================= */
 
-loadProducts();
+document
+.querySelectorAll(".category-btn")
+.forEach(
+    function(button){
 
-</script>
-
-
-</body>
-
-    </html>
+        button.addEventListener(
+            "click",
+            function()
