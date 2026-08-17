@@ -5,8 +5,10 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>A1 Products</title>
 
@@ -69,7 +71,7 @@ header{
     color:#666;
 }
 
-.toolbar{
+.controls{
     background:white;
     padding:18px;
     border-radius:12px;
@@ -77,31 +79,31 @@ header{
     margin-bottom:25px;
     display:grid;
     grid-template-columns:2fr 1fr;
-    gap:15px;
+    gap:12px;
 }
 
-input,
-select{
+.controls input,
+.controls select{
     width:100%;
-    padding:12px;
+    padding:13px;
     border:1px solid #d5dbe5;
     border-radius:7px;
-    font-size:15px;
+    font-size:14px;
     outline:none;
 }
 
-input:focus,
-select:focus{
+.controls input:focus,
+.controls select:focus{
     border-color:#0758a8;
 }
 
 .loading{
-    text-align:center;
     background:white;
-    padding:35px;
+    padding:30px;
     border-radius:12px;
+    text-align:center;
     color:#0758a8;
-    font-weight:bold;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
 }
 
 .error{
@@ -113,20 +115,6 @@ select:focus{
     margin-bottom:20px;
 }
 
-.empty{
-    background:white;
-    padding:45px 20px;
-    border-radius:12px;
-    box-shadow:0 5px 20px rgba(0,0,0,.07);
-    text-align:center;
-    color:#666;
-}
-
-.empty h2{
-    color:#071a3d;
-    margin-bottom:10px;
-}
-
 .products{
     display:grid;
     grid-template-columns:
@@ -134,25 +122,26 @@ select:focus{
     gap:20px;
 }
 
-.product{
+.product-card{
     background:white;
     border-radius:14px;
     overflow:hidden;
     box-shadow:0 5px 20px rgba(0,0,0,.08);
-    transition:.2s;
+    transition:transform .2s ease;
 }
 
-.product:hover{
+.product-card:hover{
     transform:translateY(-3px);
 }
 
 .product-image{
-    width:100%;
-    height:210px;
+    height:190px;
     background:#eef2f7;
     display:flex;
     align-items:center;
     justify-content:center;
+    color:#999;
+    font-size:15px;
     overflow:hidden;
 }
 
@@ -162,109 +151,107 @@ select:focus{
     object-fit:cover;
 }
 
-.no-image{
-    color:#999;
-    font-size:15px;
+.product-content{
+    padding:20px;
 }
 
-.product-body{
-    padding:18px;
-}
-
-.category{
+.product-category{
     color:#0758a8;
     font-size:13px;
     font-weight:bold;
     margin-bottom:8px;
+    text-transform:uppercase;
 }
 
 .product-name{
     color:#071a3d;
     font-size:20px;
     font-weight:bold;
-    margin-bottom:8px;
+    margin-bottom:10px;
 }
 
-.description{
+.product-description{
     color:#666;
     font-size:14px;
     line-height:1.5;
-    min-height:42px;
     margin-bottom:15px;
 }
 
-.price{
+.product-price{
     color:#071a3d;
-    font-size:23px;
+    font-size:25px;
     font-weight:bold;
-    margin-bottom:8px;
+    margin-bottom:10px;
 }
 
-.bp{
+.product-points{
     color:#198754;
-    font-size:14px;
     font-weight:bold;
+    font-size:14px;
     margin-bottom:8px;
 }
 
-.stock{
-    font-size:13px;
+.product-stock{
     color:#666;
+    font-size:13px;
     margin-bottom:15px;
 }
 
-.stock.available{
-    color:#198754;
-}
-
-.stock.out{
-    color:#b00020;
-    font-weight:bold;
-}
-
-.status{
-    display:inline-block;
-    padding:5px 9px;
-    border-radius:20px;
-    background:#e7f8ed;
-    color:#146c2e;
-    font-size:12px;
-    font-weight:bold;
-}
-
-.order-btn{
+.order-button{
     width:100%;
-    border:none;
+    padding:12px;
+    border:0;
+    border-radius:7px;
     background:#0758a8;
     color:white;
-    padding:12px;
-    border-radius:7px;
-    font-size:15px;
     font-weight:bold;
     cursor:pointer;
-    margin-top:12px;
+    font-size:14px;
 }
 
-.order-btn:hover{
-    background:#064986;
+.order-button:hover{
+    background:#071a3d;
 }
 
-.order-btn:disabled{
-    background:#aaa;
+.order-button:disabled{
+    background:#999;
     cursor:not-allowed;
 }
 
+.empty{
+    background:white;
+    padding:40px;
+    border-radius:12px;
+    text-align:center;
+    color:#666;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.notice{
+    margin-top:25px;
+    background:#fff8df;
+    padding:18px;
+    border-radius:8px;
+    color:#555;
+    font-size:13px;
+    line-height:1.6;
+}
+
 footer{
-    margin-top:35px;
     background:#041128;
     color:white;
     text-align:center;
     padding:25px;
+    margin-top:30px;
 }
 
-@media(max-width:650px){
+@media(max-width:700px){
 
-    .toolbar{
+    .controls{
+        grid-template-columns:1fr;
+    }
+
+    .products{
         grid-template-columns:1fr;
     }
 
@@ -317,7 +304,9 @@ Electronic Products & Appliances
 </div>
 
 
-<div class="toolbar">
+<!-- SEARCH -->
+
+<div class="controls">
 
 <input
     type="text"
@@ -325,9 +314,10 @@ Electronic Products & Appliances
     placeholder="Search products..."
 >
 
+
 <select id="categoryFilter">
 
-<option value="">
+<option value="all">
 All Categories
 </option>
 
@@ -335,6 +325,8 @@ All Categories
 
 </div>
 
+
+<!-- LOADING -->
 
 <div
     id="loading"
@@ -344,29 +336,29 @@ Loading products...
 </div>
 
 
-<div
-    id="emptyBox"
-    class="empty"
-    style="display:none;"
->
-
-<h2>
-No Products Available
-</h2>
-
-<p>
-Products will appear here when A1 products
-are added to the system.
-</p>
-
-</div>
-
+<!-- PRODUCTS -->
 
 <div
-    id="productsGrid"
+    id="productsContainer"
     class="products"
     style="display:none;"
 >
+</div>
+
+
+<!-- NOTICE -->
+
+<div class="notice">
+
+<strong>Product Information:</strong>
+
+Product prices, stock and Business Points
+are controlled by A1 Enterprises.
+
+Business Points are credited according
+to the company's approved compensation
+rules after a valid product purchase.
+
 </div>
 
 
@@ -385,7 +377,7 @@ are added to the system.
 <script>
 
 /* =========================================
-   SUPABASE
+   SUPABASE CONNECTION
 ========================================= */
 
 const SUPABASE_URL =
@@ -402,10 +394,29 @@ supabase.createClient(
 
 
 /* =========================================
-   VARIABLES
+   GLOBAL PRODUCTS
 ========================================= */
 
 let allProducts = [];
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+function showError(message){
+
+    const errorBox =
+        document.getElementById(
+            "errorBox"
+        );
+
+    errorBox.style.display =
+        "block";
+
+    errorBox.innerText =
+        message;
+}
 
 
 /* =========================================
@@ -425,25 +436,47 @@ function escapeHTML(value){
 
 
 /* =========================================
+   FORMAT PRICE
+========================================= */
+
+function formatPrice(value){
+
+    const number =
+        Number(value || 0);
+
+    return number.toLocaleString(
+        "en-IN",
+        {
+            minimumFractionDigits:0,
+            maximumFractionDigits:2
+        }
+    );
+
+}
+
+
+/* =========================================
    LOAD PRODUCTS
 ========================================= */
 
 async function loadProducts(){
 
     const loading =
-        document.getElementById("loading");
+        document.getElementById(
+            "loading"
+        );
 
-    const errorBox =
-        document.getElementById("errorBox");
-
-    const emptyBox =
-        document.getElementById("emptyBox");
-
-    const grid =
-        document.getElementById("productsGrid");
+    const container =
+        document.getElementById(
+            "productsContainer"
+        );
 
 
     try{
+
+        /* =========================
+           CHECK LOGIN
+        ========================= */
 
         const {
             data:userData,
@@ -454,7 +487,7 @@ async function loadProducts(){
         .getUser();
 
 
-        if(userError || !userData.user){
+        if(userError){
 
             window.location.href =
                 "login.html";
@@ -464,26 +497,33 @@ async function loadProducts(){
         }
 
 
+        if(!userData.user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        /* =========================
+           GET PRODUCTS
+        ========================= */
+
         const {
             data,
             error
         } =
         await supabaseClient
         .from("products")
-        .select(`
-            id,
-            product_id,
-            product_name,
-            category,
-            description,
-            selling_price,
-            business_points,
-            stock,
-            product_image,
-            status,
-            created_at
-        `)
-        .eq("status","active")
+        .select(
+            "id, product_id, product_name, category, description, selling_price, business_points, stock, product_image, status, created_at"
+        )
+        .eq(
+            "status",
+            "active"
+        )
         .order(
             "created_at",
             {
@@ -503,39 +543,35 @@ async function loadProducts(){
             data || [];
 
 
-        loading.style.display =
-            "none";
-
+        /* =========================
+           CREATE CATEGORIES
+        ========================= */
 
         createCategories(
             allProducts
         );
 
 
-        if(allProducts.length === 0){
-
-            emptyBox.style.display =
-                "block";
-
-            return;
-
-        }
-
-
-        grid.style.display =
-            "grid";
-
+        /* =========================
+           DISPLAY
+        ========================= */
 
         renderProducts(
             allProducts
         );
 
 
-    }
-    catch(error){
+        loading.style.display =
+            "none";
+
+        container.style.display =
+            "grid";
+
+
+    }catch(error){
 
         console.error(
-            "Products Error:",
+            "Products error:",
             error
         );
 
@@ -544,13 +580,10 @@ async function loadProducts(){
             "none";
 
 
-        errorBox.style.display =
-            "block";
-
-
-        errorBox.innerText =
+        showError(
             "Unable to load products: " +
-            error.message;
+            error.message
+        );
 
     }
 
@@ -558,7 +591,7 @@ async function loadProducts(){
 
 
 /* =========================================
-   CATEGORIES
+   CREATE CATEGORIES
 ========================================= */
 
 function createCategories(products){
@@ -581,6 +614,15 @@ function createCategories(products){
             )
         ]
         .sort();
+
+
+    select.innerHTML = `
+
+        <option value="all">
+            All Categories
+        </option>
+
+    `;
 
 
     categories.forEach(
@@ -613,51 +655,45 @@ function createCategories(products){
 
 function renderProducts(products){
 
-    const grid =
+    const container =
         document.getElementById(
-            "productsGrid"
-        );
-
-    const emptyBox =
-        document.getElementById(
-            "emptyBox"
+            "productsContainer"
         );
 
 
-    if(products.length === 0){
+    if(!products.length){
 
-        grid.innerHTML = "";
+        container.innerHTML = `
 
-        grid.style.display =
-            "none";
+            <div class="empty">
 
-        emptyBox.style.display =
-            "block";
+                <h2>
+                    No Products Available
+                </h2>
 
-        emptyBox.querySelector("h2")
-            .innerText =
-            "No Matching Products";
+                <p style="margin-top:10px;">
+                    Products will appear here
+                    when A1 products are added
+                    to the system.
+                </p>
 
-        emptyBox.querySelector("p")
-            .innerText =
-            "Try another search or category.";
+            </div>
+
+        `;
 
         return;
 
     }
 
 
-    emptyBox.style.display =
-        "none";
-
-    grid.style.display =
-        "grid";
-
-
-    grid.innerHTML =
+    container.innerHTML =
         products
         .map(
             product => {
+
+                const image =
+                    product.product_image;
+
 
                 const stock =
                     Number(
@@ -665,25 +701,13 @@ function renderProducts(products){
                     );
 
 
-                const price =
-                    Number(
-                        product.selling_price || 0
-                    );
-
-
-                const bp =
-                    Number(
-                        product.business_points || 0
-                    );
-
-
-                const image =
-                    product.product_image;
+                const isOutOfStock =
+                    stock <= 0;
 
 
                 return `
 
-                <div class="product">
+                <div class="product-card">
 
                     <div class="product-image">
 
@@ -698,22 +722,22 @@ function renderProducts(products){
                             `
                             :
                             `
-                            <div class="no-image">
-                                Product Image
-                            </div>
+                            <span>
+                                No Product Image
+                            </span>
                             `
                         }
 
                     </div>
 
 
-                    <div class="product-body">
+                    <div class="product-content">
 
-                        <div class="category">
+                        <div class="product-category">
 
                             ${escapeHTML(
                                 product.category ||
-                                "Electronics"
+                                "Electronic"
                             )}
 
                         </div>
@@ -729,78 +753,67 @@ function renderProducts(products){
                         </div>
 
 
-                        <div class="description">
+                        <div class="product-description">
 
                             ${escapeHTML(
                                 product.description ||
-                                "No description available."
+                                "A1 electronic product."
                             )}
 
                         </div>
 
 
-                        <div class="price">
+                        <div class="product-price">
 
-                            ₹${price.toLocaleString(
-                                "en-IN",
-                                {
-                                    minimumFractionDigits:2,
-                                    maximumFractionDigits:2
-                                }
+                            ₹${formatPrice(
+                                product.selling_price
                             )}
 
                         </div>
 
 
-                        <div class="bp">
+                        <div class="product-points">
 
                             Business Points:
-                            ${bp}
+                            ${formatPrice(
+                                product.business_points
+                            )}
 
                         </div>
 
 
-                        <div
-                            class="stock ${
-                                stock > 0
-                                ? "available"
-                                : "out"
-                            }"
-                        >
+                        <div class="product-stock">
 
                             ${
-                                stock > 0
-                                ? "Stock Available: " + stock
-                                : "Out of Stock"
+                                isOutOfStock
+                                ?
+                                "Out of Stock"
+                                :
+                                "Stock Available: " +
+                                stock
                             }
 
                         </div>
-
-
-                        <span class="status">
-
-                            Active
-
-                        </span>
 
 
                         <button
-                            class="order-btn"
+                            class="order-button"
                             ${
-                                stock <= 0
-                                ? "disabled"
-                                : ""
+                                isOutOfStock
+                                ?
+                                "disabled"
+                                :
+                                ""
                             }
-                            onclick="orderProduct('${escapeHTML(
-                                product.product_id ||
-                                product.id
-                            )}')"
+                            onclick="productMessage('${escapeHTML(product.product_id)}')"
                         >
 
                             ${
-                                stock > 0
-                                ? "Order Product"
-                                : "Out of Stock"
+                                isOutOfStock
+                                ?
+                                "Out of Stock"
+                                :
+                                "Order Product"
                             }
 
                         </button>
@@ -819,7 +832,22 @@ function renderProducts(products){
 
 
 /* =========================================
-   SEARCH + CATEGORY
+   PRODUCT BUTTON
+========================================= */
+
+function productMessage(productId){
+
+    alert(
+        "Product selected: " +
+        productId +
+        "\n\nOrder system will be connected next."
+    );
+
+}
+
+
+/* =========================================
+   FILTER PRODUCTS
 ========================================= */
 
 function filterProducts(){
@@ -830,8 +858,8 @@ function filterProducts(){
             "searchInput"
         )
         .value
-        .toLowerCase()
-        .trim();
+        .trim()
+        .toLowerCase();
 
 
     const category =
@@ -846,23 +874,47 @@ function filterProducts(){
         allProducts.filter(
             product => {
 
-                const text =
-                    `
-                    ${product.product_name || ""}
-                    ${product.category || ""}
-                    ${product.description || ""}
-                    `
+                const name =
+                    String(
+                        product.product_name ||
+                        ""
+                    )
                     .toLowerCase();
+
+
+                const description =
+                    String(
+                        product.description ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+                const productId =
+                    String(
+                        product.product_id ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+                const productCategory =
+                    String(
+                        product.category ||
+                        ""
+                    );
 
 
                 const matchesSearch =
                     !search ||
-                    text.includes(search);
+                    name.includes(search) ||
+                    description.includes(search) ||
+                    productId.includes(search);
 
 
                 const matchesCategory =
-                    !category ||
-                    product.category === category;
+                    category === "all" ||
+                    productCategory === category;
 
 
                 return (
@@ -880,6 +932,10 @@ function filterProducts(){
 
 }
 
+
+/* =========================================
+   SEARCH EVENTS
+========================================= */
 
 document
 .getElementById(
@@ -902,26 +958,6 @@ document
 
 
 /* =========================================
-   ORDER BUTTON
-========================================= */
-
-function orderProduct(productId){
-
-    /*
-       Checkout system will be connected
-       in the next step.
-    */
-
-    window.location.href =
-        "checkout.html?product=" +
-        encodeURIComponent(
-            productId
-        );
-
-}
-
-
-/* =========================================
    START
 ========================================= */
 
@@ -932,4 +968,4 @@ loadProducts();
 
 </body>
 
-  </html>
+</html>
