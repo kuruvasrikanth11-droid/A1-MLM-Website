@@ -5,10 +5,8 @@
 
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>A1 Income</title>
 
@@ -74,7 +72,8 @@ header{
 .loading{
     text-align:center;
     padding:25px;
-    color:#666;
+    color:#0758a8;
+    font-weight:bold;
 }
 
 .error{
@@ -84,6 +83,17 @@ header{
     padding:15px;
     border-radius:8px;
     margin-bottom:20px;
+}
+
+.success{
+    display:none;
+    background:#e7f8ed;
+    color:#146c2e;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+    text-align:center;
+    font-weight:bold;
 }
 
 .cards{
@@ -153,11 +163,29 @@ th{
 .notice{
     margin-top:25px;
     background:#fff8df;
-    padding:15px;
+    padding:18px;
     border-radius:8px;
     font-size:13px;
     color:#555;
-    line-height:1.5;
+    line-height:1.6;
+}
+
+.member-info{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+    margin-bottom:25px;
+}
+
+.member-info h2{
+    color:#071a3d;
+    margin-bottom:10px;
+}
+
+.member-info p{
+    color:#666;
+    line-height:1.7;
 }
 
 footer{
@@ -166,6 +194,14 @@ footer{
     color:white;
     text-align:center;
     padding:25px;
+}
+
+@media(max-width:500px){
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
 }
 
 </style>
@@ -219,7 +255,15 @@ Loading income information...
 <div
     id="errorBox"
     class="error"
-></div>
+>
+</div>
+
+
+<div
+    id="successBox"
+    class="success"
+>
+</div>
 
 
 <div
@@ -227,6 +271,35 @@ Loading income information...
     style="display:none;"
 >
 
+
+<!-- MEMBER INFORMATION -->
+
+<div class="member-info">
+
+<h2 id="memberName">
+A1 Member
+</h2>
+
+<p>
+
+Member ID:
+<strong id="memberCode">
+Loading...
+</strong>
+
+<br>
+
+Email:
+<strong id="memberEmail">
+Loading...
+</strong>
+
+</p>
+
+</div>
+
+
+<!-- INCOME CARDS -->
 
 <div class="cards">
 
@@ -298,6 +371,8 @@ Binary Income
 </div>
 
 
+<!-- INCOME HISTORY -->
+
 <div class="table-box">
 
 <h2 style="margin-bottom:20px;">
@@ -349,19 +424,28 @@ No income records available yet.
 
 </table>
 
-
 </div>
 
 
+<!-- NOTICE -->
+
 <div class="notice">
 
-<strong>Important:</strong>
+<strong>Income System:</strong>
 
-Your income page is connected to your A1 member
-authentication. Actual commissions, binary income,
-referral income and withdrawals will be displayed
-after the A1 income database and final compensation
-rules are implemented.
+Your A1 account is securely authenticated
+using Supabase.
+
+Your income page is ready for the A1
+commission system.
+
+Referral income, binary income,
+withdrawals and income history will be
+shown after the official A1 compensation
+rules and income database are implemented.
+
+No income amount is generated automatically
+until those rules are configured.
 
 </div>
 
@@ -384,16 +468,14 @@ rules are implemented.
 <script>
 
 /* =========================================
-   A1 SUPABASE CONNECTION
-   ========================================= */
+   A1 SUPABASE
+========================================= */
 
 const SUPABASE_URL =
 "https://rtnxobtczeaxtpxgvfpb.supabase.co";
 
-
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_f8QIMjFi5Zm2a10LcODEPg_z8EOWM3_";
-
 
 const supabaseClient =
 supabase.createClient(
@@ -404,32 +486,47 @@ supabase.createClient(
 
 /* =========================================
    LOAD INCOME PAGE
-   ========================================= */
+========================================= */
 
 async function loadIncome(){
 
     const loading =
-        document.getElementById("loading");
+        document.getElementById(
+            "loading"
+        );
 
     const content =
-        document.getElementById("incomeContent");
+        document.getElementById(
+            "incomeContent"
+        );
 
     const errorBox =
-        document.getElementById("errorBox");
+        document.getElementById(
+            "errorBox"
+        );
+
+    const successBox =
+        document.getElementById(
+            "successBox"
+        );
 
 
     try{
 
+        /* ==============================
+           GET LOGGED-IN USER
+        ============================== */
+
         const {
-            data,
-            error
+            data:userData,
+            error:userError
         } =
-            await supabaseClient
-            .auth
-            .getUser();
+        await supabaseClient
+        .auth
+        .getUser();
 
 
-        if(error || !data.user){
+        if(userError){
 
             window.location.href =
                 "login.html";
@@ -439,50 +536,185 @@ async function loadIncome(){
         }
 
 
-        /*
-          Member is authenticated.
+        const user =
+            userData.user;
 
-          Income records will be loaded from the
-          income database after the income table
-          is created.
-        */
+
+        if(!user){
+
+            window.location.href =
+                "login.html";
+
+            return;
+
+        }
+
+
+        /* ==============================
+           GET MEMBER RECORD
+        ============================== */
+
+        const {
+            data:member,
+            error:memberError
+        } =
+        await supabaseClient
+        .from("members")
+        .select(`
+            id,
+            member_code,
+            full_name,
+            email,
+            business_points,
+            status
+        `)
+        .eq(
+            "email",
+            user.email
+        )
+        .maybeSingle();
+
+
+        if(memberError){
+
+            throw memberError;
+
+        }
+
+
+        if(!member){
+
+            throw new Error(
+                "Member record not found."
+            );
+
+        }
+
+
+        /* ==============================
+           MEMBER INFORMATION
+        ============================== */
+
+        document
+        .getElementById(
+            "memberName"
+        )
+        .innerText =
+            member.full_name ||
+            "A1 Member";
 
 
         document
-        .getElementById("totalIncome")
+        .getElementById(
+            "memberCode"
+        )
+        .innerText =
+            member.member_code ||
+            "Not assigned";
+
+
+        document
+        .getElementById(
+            "memberEmail"
+        )
+        .innerText =
+            member.email ||
+            user.email;
+
+
+        /* ==============================
+           CURRENT INCOME VALUES
+           
+           Income database is not created
+           yet, so values remain ₹0.
+        ============================== */
+
+        document
+        .getElementById(
+            "totalIncome"
+        )
         .innerText =
             "₹0";
 
 
         document
-        .getElementById("availableBalance")
+        .getElementById(
+            "availableBalance"
+        )
         .innerText =
             "₹0";
 
 
         document
-        .getElementById("referralIncome")
+        .getElementById(
+            "referralIncome"
+        )
         .innerText =
             "₹0";
 
 
         document
-        .getElementById("binaryIncome")
+        .getElementById(
+            "binaryIncome"
+        )
         .innerText =
             "₹0";
 
+
+        /* ==============================
+           EMPTY INCOME HISTORY
+        ============================== */
+
+        document
+        .getElementById(
+            "incomeTable"
+        )
+        .innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="4"
+                    class="empty"
+                >
+                    No income records available yet.
+                </td>
+
+            </tr>
+
+        `;
+
+
+        /* ==============================
+           SHOW PAGE
+        ============================== */
 
         loading.style.display =
             "none";
 
-
         content.style.display =
             "block";
 
+        successBox.style.display =
+            "block";
 
-    }catch(error){
+        successBox.innerText =
+            "Income page loaded successfully.";
 
-        console.error(error);
+
+        console.log(
+            "A1 Income Member:",
+            member
+        );
+
+
+    }
+    catch(error){
+
+        console.error(
+            "Income Error:",
+            error
+        );
 
 
         loading.style.display =
@@ -494,12 +726,17 @@ async function loadIncome(){
 
 
         errorBox.innerText =
-            "Unable to load income information.";
+            "Unable to load income information: " +
+            error.message;
 
     }
 
 }
 
+
+/* =========================================
+   START
+========================================= */
 
 loadIncome();
 
