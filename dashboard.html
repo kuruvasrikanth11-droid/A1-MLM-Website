@@ -135,6 +135,7 @@ header{
     margin-top:8px;
 }
 
+
 /* =========================================
    REFERRAL BOX
 ========================================= */
@@ -210,6 +211,11 @@ header{
     font-weight:bold;
 }
 
+
+/* =========================================
+   MENU
+========================================= */
+
 .menu{
     display:grid;
     grid-template-columns:
@@ -231,6 +237,11 @@ header{
     background:#071a3d;
 }
 
+
+/* =========================================
+   ERROR
+========================================= */
+
 .error-box{
     display:none;
     background:#ffe5e5;
@@ -239,6 +250,11 @@ header{
     border-radius:8px;
     margin-bottom:20px;
 }
+
+
+/* =========================================
+   NOTICE
+========================================= */
 
 .notice{
     margin-top:30px;
@@ -250,6 +266,11 @@ header{
     line-height:1.5;
 }
 
+
+/* =========================================
+   FOOTER
+========================================= */
+
 footer{
     background:#041128;
     color:white;
@@ -257,6 +278,11 @@ footer{
     padding:25px;
     margin-top:30px;
 }
+
+
+/* =========================================
+   MOBILE
+========================================= */
 
 @media(max-width:650px){
 
@@ -274,7 +300,9 @@ footer{
 
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -301,6 +329,10 @@ Logout
 >
 </div>
 
+
+<!-- =====================================
+     MEMBER INFORMATION
+===================================== -->
 
 <div class="welcome">
 
@@ -357,10 +389,13 @@ My Referral Link
 </h2>
 
 <p class="referral-description">
+
 Share your A1 Enterprises referral link.
+
 When a new member opens this link,
 your Member Code will be automatically
 used as their Sponsor Code.
+
 </p>
 
 
@@ -405,11 +440,18 @@ Referral link copied successfully!
 </div>
 
 
+<!-- =====================================
+     DASHBOARD CARDS
+===================================== -->
+
 <div class="cards">
 
+
 <div class="card">
 
-<h3>Total Income</h3>
+<h3>
+Total Income
+</h3>
 
 <div class="amount">
 ₹0
@@ -420,7 +462,9 @@ Referral link copied successfully!
 
 <div class="card">
 
-<h3>Available Balance</h3>
+<h3>
+Available Balance
+</h3>
 
 <div class="amount">
 ₹0
@@ -431,7 +475,9 @@ Referral link copied successfully!
 
 <div class="card">
 
-<h3>Total Members</h3>
+<h3>
+Total Members
+</h3>
 
 <div class="amount">
 0
@@ -442,7 +488,9 @@ Referral link copied successfully!
 
 <div class="card">
 
-<h3>Business Points</h3>
+<h3>
+Business Points
+</h3>
 
 <div class="amount">
 0
@@ -450,16 +498,26 @@ Referral link copied successfully!
 
 </div>
 
+
 </div>
 
+
+<!-- =====================================
+     TEAM
+===================================== -->
 
 <div class="team">
 
+
 <div class="team-card">
 
-<h2>Left Team</h2>
+<h2>
+Left Team
+</h2>
 
-<p>Total Members</p>
+<p>
+Total Members
+</p>
 
 <div class="team-number">
 0
@@ -470,9 +528,13 @@ Referral link copied successfully!
 
 <div class="team-card">
 
-<h2>Right Team</h2>
+<h2>
+Right Team
+</h2>
 
-<p>Total Members</p>
+<p>
+Total Members
+</p>
 
 <div class="team-number">
 0
@@ -480,37 +542,60 @@ Referral link copied successfully!
 
 </div>
 
+
 </div>
 
+
+<!-- =====================================
+     DASHBOARD MENU
+===================================== -->
 
 <div class="menu">
+
 
 <a href="profile.html">
 My Profile
 </a>
 
+
 <a href="binary.html">
 Binary Tree
 </a>
+
 
 <a href="income.html">
 Income
 </a>
 
+
+<!-- NEW PRODUCTS OPTION -->
+
+<a href="products.html">
+🛒 Products
+</a>
+
+
 <a href="transactions.html">
 Transactions
 </a>
+
 
 <a href="rewards.html">
 Awards & Rewards
 </a>
 
+
 <a href="support.html">
 Support
 </a>
 
+
 </div>
 
+
+<!-- =====================================
+     NOTICE
+===================================== -->
 
 <div class="notice">
 
@@ -521,6 +606,9 @@ using Supabase.
 
 Your member information is loaded from
 the A1 members database.
+
+Products are displayed from the A1
+products database.
 
 </div>
 
@@ -546,8 +634,10 @@ the A1 members database.
 const SUPABASE_URL =
 "https://rtnxobtczeaxtpxgvfpb.supabase.co";
 
+
 const SUPABASE_PUBLISHABLE_KEY =
 "sb_publishable_f8QIMjFi5Zm2a10LcODEPg_z8EOWM3_";
+
 
 const supabaseClient =
 supabase.createClient(
@@ -563,13 +653,16 @@ supabase.createClient(
 function showError(message){
 
     const box =
-        document.getElementById("errorBox");
+        document.getElementById(
+            "errorBox"
+        );
 
     box.style.display =
         "block";
 
     box.innerText =
         message;
+
 }
 
 
@@ -587,10 +680,13 @@ function createReferralLink(memberCode){
             "index.html"
         );
 
+
     return (
         baseUrl +
         "?ref=" +
-        encodeURIComponent(memberCode)
+        encodeURIComponent(
+            memberCode
+        )
     );
 
 }
@@ -605,6 +701,7 @@ function setReferralLink(memberCode){
     if(!memberCode){
 
         return;
+
     }
 
 
@@ -615,7 +712,9 @@ function setReferralLink(memberCode){
 
 
     document
-    .getElementById("referralLink")
+    .getElementById(
+        "referralLink"
+    )
     .value =
         link;
 
@@ -630,7 +729,9 @@ function setReferralLink(memberCode){
 ========================================= */
 
 document
-.getElementById("copyReferralButton")
+.getElementById(
+    "copyReferralButton"
+)
 .addEventListener(
     "click",
     async function(){
@@ -649,7 +750,9 @@ document
 
         try{
 
-            await navigator.clipboard.writeText(
+            await navigator
+            .clipboard
+            .writeText(
                 input.value
             );
 
@@ -696,7 +799,9 @@ document
 ========================================= */
 
 document
-.getElementById("whatsappButton")
+.getElementById(
+    "whatsappButton"
+)
 .addEventListener(
     "click",
     function(){
@@ -731,7 +836,9 @@ document
 
         const whatsappUrl =
             "https://wa.me/?text=" +
-            encodeURIComponent(text);
+            encodeURIComponent(
+                text
+            );
 
 
         window.open(
@@ -750,8 +857,6 @@ document
 async function loadMember(){
 
     try{
-
-        /* Get logged-in user */
 
         const {
             data: userData,
@@ -786,7 +891,9 @@ async function loadMember(){
         }
 
 
-        /* Find member using email */
+        /* =====================================
+           FIND MEMBER USING EMAIL
+        ===================================== */
 
         const {
             data: member,
@@ -795,18 +902,25 @@ async function loadMember(){
         await supabaseClient
         .from("members")
         .select("*")
-        .eq("email", user.email)
+        .eq(
+            "email",
+            user.email
+        )
         .maybeSingle();
 
 
         if(memberError){
 
-            console.error(memberError);
+            console.error(
+                memberError
+            );
+
 
             showError(
                 "Member information could not be loaded: " +
                 memberError.message
             );
+
 
             return;
 
@@ -819,6 +933,7 @@ async function loadMember(){
                 "Your login is successful, but your member record was not found."
             );
 
+
             return;
 
         }
@@ -829,21 +944,27 @@ async function loadMember(){
         ===================================== */
 
         document
-        .getElementById("memberName")
+        .getElementById(
+            "memberName"
+        )
         .innerText =
             member.full_name ||
             "A1 Member";
 
 
         document
-        .getElementById("memberId")
+        .getElementById(
+            "memberId"
+        )
         .innerText =
             member.member_code ||
             "Not assigned";
 
 
         document
-        .getElementById("memberEmail")
+        .getElementById(
+            "memberEmail"
+        )
         .innerText =
             member.email ||
             user.email ||
@@ -851,7 +972,9 @@ async function loadMember(){
 
 
         document
-        .getElementById("memberMobile")
+        .getElementById(
+            "memberMobile"
+        )
         .innerText =
             member.mobile ||
             member.phone ||
@@ -859,35 +982,43 @@ async function loadMember(){
 
 
         document
-        .getElementById("referralCode")
+        .getElementById(
+            "referralCode"
+        )
         .innerText =
             member.referral_code ||
             "Not assigned";
 
 
         document
-        .getElementById("sponsorCode")
+        .getElementById(
+            "sponsorCode"
+        )
         .innerText =
             member.sponsor_code ||
             "Not assigned";
 
 
         document
-        .getElementById("placementSide")
+        .getElementById(
+            "placementSide"
+        )
         .innerText =
             member.placement_side ||
             "Not assigned";
 
 
         document
-        .getElementById("memberStatus")
+        .getElementById(
+            "memberStatus"
+        )
         .innerText =
             member.status ||
             "Active";
 
 
         /* =====================================
-           CREATE MEMBER REFERRAL LINK
+           REFERRAL LINK
         ===================================== */
 
         setReferralLink(
@@ -897,7 +1028,10 @@ async function loadMember(){
 
     }catch(error){
 
-        console.error(error);
+        console.error(
+            error
+        );
+
 
         showError(
             "Something went wrong: " +
@@ -914,7 +1048,9 @@ async function loadMember(){
 ========================================= */
 
 document
-.getElementById("logoutButton")
+.getElementById(
+    "logoutButton"
+)
 .addEventListener(
     "click",
     async function(){
@@ -954,6 +1090,7 @@ loadMember();
 
 </script>
 
+
 </body>
 
-      </html>
+    </html>
