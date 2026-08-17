@@ -8,6 +8,8 @@
 
 <title>A1 Checkout</title>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 
 *{
@@ -25,7 +27,7 @@ body{
 header{
     background:#071a3d;
     color:white;
-    padding:16px 6%;
+    padding:15px 6%;
     display:flex;
     justify-content:space-between;
     align-items:center;
@@ -82,7 +84,6 @@ header{
 .box h2{
     color:#071a3d;
     margin-bottom:18px;
-    font-size:20px;
 }
 
 .product{
@@ -162,8 +163,28 @@ header{
     cursor:pointer;
 }
 
-.checkout-btn:hover{
-    opacity:.9;
+.checkout-btn:disabled{
+    background:#999;
+    cursor:not-allowed;
+}
+
+.message{
+    display:none;
+    margin-top:15px;
+    padding:14px;
+    border-radius:7px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.success{
+    background:#e8f7ef;
+    color:#146c43;
+}
+
+.error{
+    background:#ffe5e5;
+    color:#b00020;
 }
 
 .empty{
@@ -185,38 +206,14 @@ header{
     font-weight:bold;
 }
 
-.message{
-    display:none;
-    margin-top:15px;
-    padding:12px;
-    background:#e8f7ef;
-    color:#146c43;
-    border-radius:7px;
-    text-align:center;
-    font-weight:bold;
-}
-
-footer{
-    background:#041128;
-    color:white;
-    text-align:center;
-    padding:25px;
-    margin-top:20px;
-}
-
 @media(max-width:700px){
-
-    header{
-        padding:14px;
-    }
 
     .layout{
         grid-template-columns:1fr;
     }
 
-    .product-image{
-        width:70px;
-        height:70px;
+    header{
+        padding:14px;
     }
 
 }
@@ -341,10 +338,17 @@ Place Order
 
 
 <div
-    id="message"
-    class="message"
+    id="successMessage"
+    class="message success"
 >
-Order process will be connected next.
+Order placed successfully! 🎉
+</div>
+
+
+<div
+    id="errorMessage"
+    class="message error"
+>
 </div>
 
 </div>
@@ -354,22 +358,32 @@ Order process will be connected next.
 
 
 </div>
-
-
-<footer>
-
-<p>
-© 2026 A1 Enterprises Pvt. Ltd.
-</p>
-
-</footer>
 
 
 <script>
 
-/* ================================
-   GET CART
-================================ */
+
+/* =====================================
+   SUPABASE CONNECTION
+===================================== */
+
+const SUPABASE_URL =
+"https://rtnxobtczeaxtpxgvfpb.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+"sb_publishable_f8QIMjFi5Zm2a10LcODEPg_z8EOWM3_";
+
+
+const supabaseClient =
+supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+);
+
+
+/* =====================================
+   CART
+===================================== */
 
 let cart =
 JSON.parse(
@@ -377,9 +391,9 @@ JSON.parse(
 );
 
 
-/* ================================
-   PRICE FORMAT
-================================ */
+/* =====================================
+   PRICE
+===================================== */
 
 function formatPrice(value){
 
@@ -390,9 +404,9 @@ function formatPrice(value){
 }
 
 
-/* ================================
+/* =====================================
    SHOW CHECKOUT
-================================ */
+===================================== */
 
 function renderCheckout(){
 
@@ -522,9 +536,7 @@ function renderCheckout(){
                 <div class="product">
 
                     <div class="product-image">
-
                         ${image}
-
                     </div>
 
 
@@ -600,28 +612,223 @@ function renderCheckout(){
 }
 
 
-/* ================================
-   PLACE ORDER BUTTON
-================================ */
+/* =====================================
+   PLACE ORDER
+===================================== */
+
+async function placeOrder(){
+
+    const button =
+        document.getElementById(
+            "placeOrder"
+        );
+
+    const success =
+        document.getElementById(
+            "successMessage"
+        );
+
+    const errorBox =
+        document.getElementById(
+            "errorMessage"
+        );
+
+
+    success.style.display =
+        "none";
+
+    errorBox.style.display =
+        "none";
+
+
+    if(cart.length === 0){
+
+        errorBox.innerText =
+            "Your cart is empty.";
+
+        errorBox.style.display =
+            "block";
+
+        return;
+
+    }
+
+
+    button.disabled = true;
+
+    button.innerText =
+        "Placing Order...";
+
+
+    try{
+
+        /* Get logged-in user */
+
+        const {
+            data: userData
+        } =
+            await supabaseClient
+            .auth
+            .getUser();
+
+
+        let memberId =
+            "GUEST";
+
+
+        if(
+            userData &&
+            userData.user
+        ){
+
+            memberId =
+                userData.user.id;
+
+        }
+
+
+        /* Calculate totals */
+
+        let totalAmount = 0;
+
+        let totalPoints = 0;
+
+
+        cart.forEach(
+            function(item){
+
+                const quantity =
+                    Number(
+                        item.quantity || 1
+                    );
+
+
+                totalAmount +=
+                    Number(
+                        item.selling_price || 0
+                    ) *
+                    quantity;
+
+
+                totalPoints +=
+                    Number(
+                        item.business_points || 0
+                    ) *
+                    quantity;
+
+            }
+        );
+
+
+        /* Save order */
+
+        const result =
+            await supabaseClient
+            .from("orders")
+            .insert({
+
+                member_id:
+                    memberId,
+
+                total_amount:
+                    totalAmount,
+
+                total_points:
+                    totalPoints,
+
+                status:
+                    "Pending"
+
+            })
+            .select();
+
+
+        if(result.error){
+
+            throw result.error;
+
+        }
+
+
+        /* Clear cart */
+
+        localStorage.removeItem(
+            "a1_cart"
+        );
+
+
+        cart = [];
+
+
+        button.style.display =
+            "none";
+
+
+        success.innerHTML =
+            "Order placed successfully! 🎉";
+
+
+        success.style.display =
+            "block";
+
+
+        if(
+            result.data &&
+            result.data.length > 0
+        ){
+
+            success.innerHTML =
+                "Order placed successfully! 🎉<br><br>" +
+                "Your Order ID: " +
+                result.data[0].id;
+
+        }
+
+
+    }catch(error){
+
+        console.error(
+            "Order error:",
+            error
+        );
+
+
+        errorBox.innerText =
+            "Unable to place order: " +
+            error.message;
+
+
+        errorBox.style.display =
+            "block";
+
+
+        button.disabled =
+            false;
+
+
+        button.innerText =
+            "Place Order";
+
+    }
+
+}
+
+
+/* =====================================
+   BUTTON
+===================================== */
 
 document
 .getElementById("placeOrder")
 .addEventListener(
     "click",
-    function(){
-
-        document.getElementById(
-            "message"
-        ).style.display =
-            "block";
-
-    }
+    placeOrder
 );
 
 
-/* ================================
+/* =====================================
    START
-================================ */
+===================================== */
 
 renderCheckout();
 
