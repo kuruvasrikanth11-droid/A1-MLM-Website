@@ -5,10 +5,8 @@
 
 <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>A1 Products</title>
 
@@ -71,12 +69,23 @@ header{
     color:#666;
 }
 
+.error{
+    display:none;
+    background:#ffe5e5;
+    color:#b00020;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+    line-height:1.5;
+}
+
 .controls{
     background:white;
     padding:18px;
     border-radius:12px;
     box-shadow:0 5px 20px rgba(0,0,0,.07);
     margin-bottom:25px;
+
     display:grid;
     grid-template-columns:2fr 1fr;
     gap:12px;
@@ -92,33 +101,19 @@ header{
     outline:none;
 }
 
-.controls input:focus,
-.controls select:focus{
-    border-color:#0758a8;
-}
-
 .loading{
     background:white;
-    padding:30px;
+    padding:35px;
     border-radius:12px;
     text-align:center;
     color:#0758a8;
     box-shadow:0 5px 20px rgba(0,0,0,.07);
 }
 
-.error{
-    display:none;
-    background:#ffe5e5;
-    color:#b00020;
-    padding:15px;
-    border-radius:8px;
-    margin-bottom:20px;
-}
-
 .products{
     display:grid;
     grid-template-columns:
-    repeat(auto-fit,minmax(250px,1fr));
+    repeat(auto-fit,minmax(260px,1fr));
     gap:20px;
 }
 
@@ -127,21 +122,19 @@ header{
     border-radius:14px;
     overflow:hidden;
     box-shadow:0 5px 20px rgba(0,0,0,.08);
-    transition:transform .2s ease;
-}
-
-.product-card:hover{
-    transform:translateY(-3px);
 }
 
 .product-image{
     height:190px;
     background:#eef2f7;
+
     display:flex;
     align-items:center;
     justify-content:center;
-    color:#999;
-    font-size:15px;
+
+    color:#888;
+    font-size:14px;
+
     overflow:hidden;
 }
 
@@ -159,8 +152,8 @@ header{
     color:#0758a8;
     font-size:13px;
     font-weight:bold;
-    margin-bottom:8px;
     text-transform:uppercase;
+    margin-bottom:8px;
 }
 
 .product-name{
@@ -211,11 +204,6 @@ header{
 
 .order-button:hover{
     background:#071a3d;
-}
-
-.order-button:disabled{
-    background:#999;
-    cursor:not-allowed;
 }
 
 .empty{
@@ -271,10 +259,8 @@ footer{
 A1
 </div>
 
-<a
-    href="dashboard.html"
-    class="back"
->
+<a href="dashboard.html"
+   class="back">
 ← Dashboard
 </a>
 
@@ -297,14 +283,10 @@ Electronic Products & Appliances
 </div>
 
 
-<div
-    id="errorBox"
-    class="error"
->
+<div id="errorBox"
+     class="error">
 </div>
 
-
-<!-- SEARCH -->
 
 <div class="controls">
 
@@ -313,7 +295,6 @@ Electronic Products & Appliances
     id="searchInput"
     placeholder="Search products..."
 >
-
 
 <select id="categoryFilter">
 
@@ -326,27 +307,20 @@ All Categories
 </div>
 
 
-<!-- LOADING -->
+<div id="loading"
+     class="loading">
 
-<div
-    id="loading"
-    class="loading"
->
 Loading products...
+
 </div>
 
 
-<!-- PRODUCTS -->
+<div id="productsContainer"
+     class="products"
+     style="display:none;">
 
-<div
-    id="productsContainer"
-    class="products"
-    style="display:none;"
->
 </div>
 
-
-<!-- NOTICE -->
 
 <div class="notice">
 
@@ -377,7 +351,7 @@ rules after a valid product purchase.
 <script>
 
 /* =========================================
-   SUPABASE CONNECTION
+   SUPABASE
 ========================================= */
 
 const SUPABASE_URL =
@@ -394,7 +368,7 @@ supabase.createClient(
 
 
 /* =========================================
-   GLOBAL PRODUCTS
+   PRODUCTS
 ========================================= */
 
 let allProducts = [];
@@ -406,16 +380,15 @@ let allProducts = [];
 
 function showError(message){
 
-    const errorBox =
-        document.getElementById(
-            "errorBox"
-        );
+    const box =
+        document.getElementById("errorBox");
 
-    errorBox.style.display =
+    box.style.display =
         "block";
 
-    errorBox.innerText =
+    box.innerText =
         message;
+
 }
 
 
@@ -436,21 +409,18 @@ function escapeHTML(value){
 
 
 /* =========================================
-   FORMAT PRICE
+   PRICE
 ========================================= */
 
 function formatPrice(value){
 
-    const number =
-        Number(value || 0);
-
-    return number.toLocaleString(
-        "en-IN",
-        {
-            minimumFractionDigits:0,
-            maximumFractionDigits:2
-        }
-    );
+    return Number(value || 0)
+        .toLocaleString(
+            "en-IN",
+            {
+                maximumFractionDigits:2
+            }
+        );
 
 }
 
@@ -462,9 +432,7 @@ function formatPrice(value){
 async function loadProducts(){
 
     const loading =
-        document.getElementById(
-            "loading"
-        );
+        document.getElementById("loading");
 
     const container =
         document.getElementById(
@@ -508,7 +476,8 @@ async function loadProducts(){
 
 
         /* =========================
-           GET PRODUCTS
+           LOAD ALL PRODUCTS
+           NO STATUS FILTER
         ========================= */
 
         const {
@@ -519,10 +488,6 @@ async function loadProducts(){
         .from("products")
         .select(
             "id, product_id, product_name, category, description, selling_price, business_points, stock, product_image, status, created_at"
-        )
-        .eq(
-            "status",
-            "active"
         )
         .order(
             "created_at",
@@ -544,7 +509,7 @@ async function loadProducts(){
 
 
         /* =========================
-           CREATE CATEGORIES
+           CATEGORIES
         ========================= */
 
         createCategories(
@@ -591,7 +556,7 @@ async function loadProducts(){
 
 
 /* =========================================
-   CREATE CATEGORIES
+   CATEGORIES
 ========================================= */
 
 function createCategories(products){
@@ -650,7 +615,7 @@ function createCategories(products){
 
 
 /* =========================================
-   RENDER PRODUCTS
+   DISPLAY PRODUCTS
 ========================================= */
 
 function renderProducts(products){
@@ -691,47 +656,57 @@ function renderProducts(products){
         .map(
             product => {
 
-                const image =
-                    product.product_image;
-
-
                 const stock =
                     Number(
                         product.stock || 0
                     );
 
 
-                const isOutOfStock =
+                const outOfStock =
                     stock <= 0;
+
+
+                let imageHTML = `
+
+                    <span>
+                        No Product Image
+                    </span>
+
+                `;
+
+
+                if(product.product_image){
+
+                    imageHTML = `
+
+                        <img
+                            src="${escapeHTML(
+                                product.product_image
+                            )}"
+                            alt="${escapeHTML(
+                                product.product_name
+                            )}"
+                        >
+
+                    `;
+
+                }
 
 
                 return `
 
                 <div class="product-card">
 
+
                     <div class="product-image">
 
-                        ${
-                            image
-                            ?
-                            `
-                            <img
-                                src="${escapeHTML(image)}"
-                                alt="${escapeHTML(product.product_name)}"
-                            >
-                            `
-                            :
-                            `
-                            <span>
-                                No Product Image
-                            </span>
-                            `
-                        }
+                        ${imageHTML}
 
                     </div>
 
 
                     <div class="product-content">
+
 
                         <div class="product-category">
 
@@ -785,7 +760,7 @@ function renderProducts(products){
                         <div class="product-stock">
 
                             ${
-                                isOutOfStock
+                                outOfStock
                                 ?
                                 "Out of Stock"
                                 :
@@ -799,17 +774,21 @@ function renderProducts(products){
                         <button
                             class="order-button"
                             ${
-                                isOutOfStock
+                                outOfStock
                                 ?
                                 "disabled"
                                 :
                                 ""
                             }
-                            onclick="productMessage('${escapeHTML(product.product_id)}')"
+                            onclick="selectProduct(
+                                '${escapeHTML(
+                                    product.product_id
+                                )}'
+                            )"
                         >
 
                             ${
-                                isOutOfStock
+                                outOfStock
                                 ?
                                 "Out of Stock"
                                 :
@@ -818,7 +797,9 @@ function renderProducts(products){
 
                         </button>
 
+
                     </div>
+
 
                 </div>
 
@@ -832,10 +813,10 @@ function renderProducts(products){
 
 
 /* =========================================
-   PRODUCT BUTTON
+   ORDER BUTTON
 ========================================= */
 
-function productMessage(productId){
+function selectProduct(productId){
 
     alert(
         "Product selected: " +
@@ -847,7 +828,7 @@ function productMessage(productId){
 
 
 /* =========================================
-   FILTER PRODUCTS
+   SEARCH + CATEGORY
 ========================================= */
 
 function filterProducts(){
@@ -905,21 +886,21 @@ function filterProducts(){
                     );
 
 
-                const matchesSearch =
+                const searchMatch =
                     !search ||
                     name.includes(search) ||
                     description.includes(search) ||
                     productId.includes(search);
 
 
-                const matchesCategory =
+                const categoryMatch =
                     category === "all" ||
                     productCategory === category;
 
 
                 return (
-                    matchesSearch &&
-                    matchesCategory
+                    searchMatch &&
+                    categoryMatch
                 );
 
             }
@@ -934,13 +915,11 @@ function filterProducts(){
 
 
 /* =========================================
-   SEARCH EVENTS
+   EVENTS
 ========================================= */
 
 document
-.getElementById(
-    "searchInput"
-)
+.getElementById("searchInput")
 .addEventListener(
     "input",
     filterProducts
@@ -948,9 +927,7 @@ document
 
 
 document
-.getElementById(
-    "categoryFilter"
-)
+.getElementById("categoryFilter")
 .addEventListener(
     "change",
     filterProducts
@@ -968,4 +945,4 @@ loadProducts();
 
 </body>
 
-</html>
+    </html>
