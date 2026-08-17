@@ -1,1 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>A1 Checkout</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f3f6fb;
+    color:#172033;
+}
+
+header{
+    background:#071a3d;
+    color:white;
+    padding:16px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    color:#ffb000;
+    font-size:30px;
+    font-weight:bold;
+}
+
+.back{
+    background:#0758a8;
+    color:white;
+    text-decoration:none;
+    padding:10px 15px;
+    border-radius:7px;
+    font-weight:bold;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:30px 18px 50px;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.title h1{
+    color:#071a3d;
+    margin-bottom:8px;
+}
+
+.title p{
+    color:#666;
+}
+
+.layout{
+    display:grid;
+    grid-template-columns:1.4fr .8fr;
+    gap:20px;
+}
+
+.box{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.box h2{
+    color:#071a3d;
+    margin-bottom:18px;
+    font-size:20px;
+}
+
+.product{
+    display:flex;
+    gap:15px;
+    padding:15px 0;
+    border-bottom:1px solid #eee;
+}
+
+.product-image{
+    width:80px;
+    height:80px;
+    background:#f7f9fc;
+    border-radius:8px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    flex-shrink:0;
+}
+
+.product-image img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.no-image{
+    font-size:35px;
+}
+
+.product-name{
+    font-weight:bold;
+    color:#071a3d;
+    margin-bottom:7px;
+}
+
+.product-details{
+    color:#666;
+    font-size:14px;
+    line-height:1.7;
+}
+
+.points{
+    color:#198754;
+    font-weight:bold;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+    color:#555;
+}
+
+.total{
+    border-top:1px solid #ddd;
+    margin-top:10px;
+    padding-top:15px;
+    display:flex;
+    justify-content:space-between;
+    font-size:22px;
+    font-weight:bold;
+    color:#071a3d;
+}
+
+.checkout-btn{
+    width:100%;
+    border:0;
+    background:#198754;
+    color:white;
+    padding:14px;
+    margin-top:20px;
+    border-radius:8px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.checkout-btn:hover{
+    opacity:.9;
+}
+
+.empty{
+    background:white;
+    border-radius:12px;
+    padding:50px 20px;
+    text-align:center;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.shop{
+    display:inline-block;
+    margin-top:18px;
+    background:#0758a8;
+    color:white;
+    text-decoration:none;
+    padding:11px 16px;
+    border-radius:7px;
+    font-weight:bold;
+}
+
+.message{
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    background:#e8f7ef;
+    color:#146c43;
+    border-radius:7px;
+    text-align:center;
+    font-weight:bold;
+}
+
+footer{
+    background:#041128;
+    color:white;
+    text-align:center;
+    padding:25px;
+    margin-top:20px;
+}
+
+@media(max-width:700px){
+
+    header{
+        padding:14px;
+    }
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .product-image{
+        width:70px;
+        height:70px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+A1
+</div>
+
+<a
+    href="cart.html"
+    class="back"
+>
+← Back to Cart
+</a>
+
+</header>
+
+
+<div class="container">
+
+
+<div class="title">
+
+<h1>
+📦 Checkout
+</h1>
+
+<p>
+Review your order before placing it
+</p>
+
+</div>
+
+
+<div id="emptyCart"></div>
+
+
+<div
+    id="checkoutArea"
+    class="layout"
+    style="display:none;"
+>
+
+
+<div class="box">
+
+<h2>
+Your Products
+</h2>
+
+<div id="products"></div>
+
+</div>
+
+
+<div class="box">
+
+<h2>
+Order Summary
+</h2>
+
+
+<div class="row">
+
+<span>
+Total Items
+</span>
+
+<strong id="totalItems">
+0
+</strong>
+
+</div>
+
+
+<div class="row">
+
+<span>
+Business Points
+</span>
+
+<strong
+    id="totalPoints"
+    class="points"
+>
+0
+</strong>
+
+</div>
+
+
+<div class="total">
+
+<span>
+Total
+</span>
+
+<span id="totalAmount">
+₹0
+</span>
+
+</div>
+
+
+<button
+    type="button"
+    class="checkout-btn"
+    id="placeOrder"
+>
+Place Order
+</button>
+
+
+<div
+    id="message"
+    class="message"
+>
+Order process will be connected next.
+</div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<footer>
+
+<p>
+© 2026 A1 Enterprises Pvt. Ltd.
+</p>
+
+</footer>
+
+
+<script>
+
+/* ================================
+   GET CART
+================================ */
+
+let cart =
+JSON.parse(
+    localStorage.getItem("a1_cart") || "[]"
+);
+
+
+/* ================================
+   PRICE FORMAT
+================================ */
+
+function formatPrice(value){
+
+    return "₹" +
+        Number(value || 0)
+        .toLocaleString("en-IN");
+
+}
+
+
+/* ================================
+   SHOW CHECKOUT
+================================ */
+
+function renderCheckout(){
+
+    const empty =
+        document.getElementById(
+            "emptyCart"
+        );
+
+    const area =
+        document.getElementById(
+            "checkoutArea"
+        );
+
+
+    if(cart.length === 0){
+
+        area.style.display =
+            "none";
+
+
+        empty.innerHTML = `
+
+            <div class="empty">
+
+                <div style="font-size:55px;">
+                    🛒
+                </div>
+
+                <h2>
+                    Your Cart is Empty
+                </h2>
+
+                <p style="margin-top:8px;">
+                    Please add a product
+                    before checkout.
+                </p>
+
+                <a
+                    href="products.html"
+                    class="shop"
+                >
+                    Browse Products
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    empty.innerHTML = "";
+
+    area.style.display =
+        "grid";
+
+
+    let html = "";
+
+    let totalItems = 0;
+
+    let totalPoints = 0;
+
+    let totalAmount = 0;
+
+
+    cart.forEach(
+        function(item){
+
+            const quantity =
+                Number(
+                    item.quantity || 1
+                );
+
+
+            const price =
+                Number(
+                    item.selling_price || 0
+                );
+
+
+            const points =
+                Number(
+                    item.business_points || 0
+                );
+
+
+            totalItems +=
+                quantity;
+
+
+            totalPoints +=
+                points * quantity;
+
+
+            totalAmount +=
+                price * quantity;
+
+
+            let image = `
+
+                <div class="no-image">
+                    📦
+                </div>
+
+            `;
+
+
+            if(item.product_image){
+
+                image = `
+
+                    <img
+                        src="${item.product_image}"
+                        alt="Product"
+                    >
+
+                `;
+
+            }
+
+
+            html += `
+
+                <div class="product">
+
+                    <div class="product-image">
+
+                        ${image}
+
+                    </div>
+
+
+                    <div>
+
+                        <div class="product-name">
+
+                            ${
+                                item.product_name ||
+                                "A1 Product"
+                            }
+
+                        </div>
+
+
+                        <div class="product-details">
+
+                            Price:
+                            ${
+                                formatPrice(price)
+                            }
+
+                            <br>
+
+                            Quantity:
+                            ${quantity}
+
+                            <br>
+
+                            <span class="points">
+
+                                Business Points:
+                                ${
+                                    points * quantity
+                                }
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    document.getElementById(
+        "products"
+    ).innerHTML = html;
+
+
+    document.getElementById(
+        "totalItems"
+    ).innerText =
+        totalItems;
+
+
+    document.getElementById(
+        "totalPoints"
+    ).innerText =
+        totalPoints;
+
+
+    document.getElementById(
+        "totalAmount"
+    ).innerText =
+        formatPrice(totalAmount);
+
+}
+
+
+/* ================================
+   PLACE ORDER BUTTON
+================================ */
+
+document
+.getElementById("placeOrder")
+.addEventListener(
+    "click",
+    function(){
+
+        document.getElementById(
+            "message"
+        ).style.display =
+            "block";
+
+    }
+);
+
+
+/* ================================
+   START
+================================ */
+
+renderCheckout();
+
+</script>
+
+
+</body>
+
+</html>
