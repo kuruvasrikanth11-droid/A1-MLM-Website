@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>A1 Binary Tree</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-
 *{
     margin:0;
     padding:0;
@@ -69,20 +64,21 @@ header{
     color:#666;
 }
 
+.success-box{
+    display:none;
+    background:#e7f8ed;
+    color:#146c2e;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+    text-align:center;
+    font-weight:bold;
+}
+
 .error-box{
     display:none;
     background:#ffe5e5;
     color:#b00020;
-    padding:15px;
-    border-radius:8px;
-    margin-bottom:20px;
-    line-height:1.5;
-}
-
-.success-box{
-    display:none;
-    background:#e8f8ee;
-    color:#126b35;
     padding:15px;
     border-radius:8px;
     margin-bottom:20px;
@@ -178,11 +174,6 @@ header{
     line-height:1.7;
 }
 
-.loading{
-    color:#0758a8;
-    font-weight:bold;
-}
-
 .stats{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -220,6 +211,11 @@ header{
     line-height:1.6;
 }
 
+.loading{
+    color:#0758a8;
+    font-weight:bold;
+}
+
 footer{
     background:#041128;
     color:white;
@@ -240,8 +236,14 @@ footer{
 
 }
 
-</style>
+@media(max-width:450px){
 
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+}
+</style>
 </head>
 
 <body>
@@ -252,13 +254,11 @@ footer{
 A1
 </div>
 
-<a href="dashboard.html"
-   class="back-btn">
+<a href="dashboard.html" class="back-btn">
 Dashboard
 </a>
 
 </header>
-
 
 <div class="container">
 
@@ -274,16 +274,12 @@ A1 Member Network Structure
 
 </div>
 
-
-<div id="errorBox"
-     class="error-box">
+<div id="successBox" class="success-box">
+Binary Tree loaded successfully.
 </div>
 
-
-<div id="successBox"
-     class="success-box">
+<div id="errorBox" class="error-box">
 </div>
-
 
 <div class="root-card">
 
@@ -291,21 +287,17 @@ A1 Member Network Structure
 A1 MEMBER
 </div>
 
-<div id="rootName"
-     class="member-name">
+<div id="rootName" class="member-name">
 Loading...
 </div>
 
-<div id="rootCode"
-     class="member-code">
+<div id="rootCode" class="member-code">
 Loading...
 </div>
 
 </div>
-
 
 <div class="tree">
-
 
 <div class="branch">
 
@@ -313,8 +305,7 @@ Loading...
 LEFT
 </div>
 
-<div id="leftPosition"
-     class="position">
+<div id="leftPosition" class="position">
 
 <div class="loading">
 Loading...
@@ -323,7 +314,6 @@ Loading...
 </div>
 
 </div>
-
 
 <div class="branch">
 
@@ -331,8 +321,7 @@ Loading...
 RIGHT
 </div>
 
-<div id="rightPosition"
-     class="position">
+<div id="rightPosition" class="position">
 
 <div class="loading">
 Loading...
@@ -343,7 +332,6 @@ Loading...
 </div>
 
 </div>
-
 
 <div class="stats">
 
@@ -353,13 +341,11 @@ Loading...
 Total Left Members
 </h3>
 
-<div id="leftCount"
-     class="stat-number">
+<div id="leftCount" class="stat-number">
 0
 </div>
 
 </div>
-
 
 <div class="stat">
 
@@ -367,13 +353,11 @@ Total Left Members
 Total Right Members
 </h3>
 
-<div id="rightCount"
-     class="stat-number">
+<div id="rightCount" class="stat-number">
 0
 </div>
 
 </div>
-
 
 <div class="stat">
 
@@ -381,13 +365,11 @@ Total Right Members
 Left Business Points
 </h3>
 
-<div id="leftPoints"
-     class="stat-number">
+<div id="leftPoints" class="stat-number">
 0
 </div>
 
 </div>
-
 
 <div class="stat">
 
@@ -395,8 +377,7 @@ Left Business Points
 Right Business Points
 </h3>
 
-<div id="rightPoints"
-     class="stat-number">
+<div id="rightPoints" class="stat-number">
 0
 </div>
 
@@ -404,24 +385,21 @@ Right Business Points
 
 </div>
 
-
 <div class="notice">
 
 <strong>Binary Tree:</strong>
 
 Members are connected using
-<code>parent_member_id</code>
-and
+<code>parent_member_id</code> and
 <code>placement_side</code>.
 
-The system automatically finds the
-member UUID from the database record
-without depending on a fixed column name.
+The current member's actual database
+<code>id</code> is used to find direct
+LEFT and RIGHT members.
 
 </div>
 
 </div>
-
 
 <footer>
 
@@ -430,7 +408,6 @@ without depending on a fixed column name.
 </p>
 
 </footer>
-
 
 <script>
 
@@ -452,79 +429,17 @@ window.supabase.createClient(
 
 
 /* =========================================
-   UUID CHECK
-========================================= */
-
-function isUUID(value){
-
-    if(typeof value !== "string"){
-        return false;
-    }
-
-    const pattern =
-    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
-    return pattern.test(
-        value.trim()
-    );
-}
-
-
-/* =========================================
-   FIND UUIDs IN MEMBER RECORD
-========================================= */
-
-function getUUIDValues(member){
-
-    const values = [];
-
-    if(!member){
-        return values;
-    }
-
-    Object.keys(member).forEach(
-        function(key){
-
-            const value =
-                member[key];
-
-            if(
-                typeof value === "string" &&
-                isUUID(value)
-            ){
-
-                if(
-                    !values.includes(value)
-                ){
-
-                    values.push(value);
-                }
-
-            }
-
-        }
-    );
-
-    return values;
-}
-
-
-/* =========================================
    SHOW ERROR
 ========================================= */
 
 function showError(message){
 
     const box =
-        document.getElementById(
-            "errorBox"
-        );
+        document.getElementById("errorBox");
 
-    box.style.display =
-        "block";
+    box.style.display = "block";
 
-    box.innerText =
-        message;
+    box.innerText = message;
 
 }
 
@@ -536,21 +451,17 @@ function showError(message){
 function showSuccess(message){
 
     const box =
-        document.getElementById(
-            "successBox"
-        );
+        document.getElementById("successBox");
 
-    box.style.display =
-        "block";
+    box.style.display = "block";
 
-    box.innerText =
-        message;
+    box.innerText = message;
 
 }
 
 
 /* =========================================
-   ESCAPE HTML
+   HTML SAFETY
 ========================================= */
 
 function escapeHTML(value){
@@ -566,23 +477,6 @@ function escapeHTML(value){
 
 
 /* =========================================
-   NORMALIZE UUID
-========================================= */
-
-function normalizeUUID(value){
-
-    if(!value){
-        return "";
-    }
-
-    return String(value)
-        .trim()
-        .toLowerCase();
-
-}
-
-
-/* =========================================
    LOAD BINARY TREE
 ========================================= */
 
@@ -590,24 +484,21 @@ async function loadBinaryTree(){
 
     try{
 
-        /* -----------------------------
-           GET LOGGED IN USER
-        ----------------------------- */
+        /* -------------------------------------
+           1. GET LOGGED-IN USER
+        ------------------------------------- */
 
         const {
             data: userData,
             error: userError
         } =
-        await supabaseClient
-        .auth
-        .getUser();
+        await supabaseClient.auth.getUser();
 
 
         if(userError){
 
-            showError(
-                "Login information could not be loaded."
-            );
+            window.location.href =
+                "login.html";
 
             return;
 
@@ -628,9 +519,18 @@ async function loadBinaryTree(){
         }
 
 
-        /* -----------------------------
-           GET CURRENT MEMBER
-        ----------------------------- */
+        /* -------------------------------------
+           2. GET CURRENT MEMBER
+           
+           Database columns:
+           id
+           member_code
+           full_name
+           email
+           parent_member_id
+           placement_side
+           business_points
+        ------------------------------------- */
 
         const {
             data: currentMember,
@@ -638,7 +538,16 @@ async function loadBinaryTree(){
         } =
         await supabaseClient
         .from("members")
-        .select("*")
+        .select(`
+            id,
+            member_code,
+            full_name,
+            email,
+            parent_member_id,
+            placement_side,
+            business_points,
+            status
+        `)
         .eq(
             "email",
             user.email
@@ -648,12 +557,7 @@ async function loadBinaryTree(){
 
         if(currentError){
 
-            showError(
-                "Member could not be loaded: " +
-                currentError.message
-            );
-
-            return;
+            throw currentError;
 
         }
 
@@ -661,7 +565,7 @@ async function loadBinaryTree(){
         if(!currentMember){
 
             showError(
-                "Your member record was not found."
+                "Member record not found."
             );
 
             return;
@@ -669,9 +573,9 @@ async function loadBinaryTree(){
         }
 
 
-        /* -----------------------------
-           DISPLAY ROOT
-        ----------------------------- */
+        /* -------------------------------------
+           3. DISPLAY ROOT MEMBER
+        ------------------------------------- */
 
         document
         .getElementById("rootName")
@@ -690,54 +594,29 @@ async function loadBinaryTree(){
             );
 
 
-        /* -----------------------------
-           FIND UUID OF CURRENT MEMBER
+        /* -------------------------------------
+           4. CURRENT MEMBER UUID
            
            IMPORTANT:
-           We DO NOT use:
-           id
-           idfield
-           idiied
-           or any fixed UUID column name.
-        ----------------------------- */
+           Database column is exactly "id"
+        ------------------------------------- */
 
-        const currentUUIDs =
-            getUUIDValues(
-                currentMember
+        const currentMemberId =
+            currentMember.id;
+
+
+        if(!currentMemberId){
+
+            throw new Error(
+                "Current member UUID (id) was not found."
             );
-
-
-        if(
-            currentUUIDs.length === 0
-        ){
-
-            showError(
-                "Current member UUID could not be identified. " +
-                "The members table is not exposing a UUID value to this page."
-            );
-
-            return;
 
         }
 
 
-        /*
-           Normally the first UUID is the
-           member's primary UUID.
-
-           We also keep every UUID because
-           the database column name is custom.
-        */
-
-        const currentUUID =
-            normalizeUUID(
-                currentUUIDs[0]
-            );
-
-
-        /* -----------------------------
-           GET ALL MEMBERS
-        ----------------------------- */
+        /* -------------------------------------
+           5. LOAD MEMBERS
+        ------------------------------------- */
 
         const {
             data: members,
@@ -745,38 +624,40 @@ async function loadBinaryTree(){
         } =
         await supabaseClient
         .from("members")
-        .select("*");
+        .select(`
+            id,
+            member_code,
+            full_name,
+            email,
+            parent_member_id,
+            placement_side,
+            business_points,
+            status
+        `);
 
 
         if(membersError){
 
-            showError(
-                "Members could not be loaded: " +
-                membersError.message
-            );
-
-            return;
+            throw membersError;
 
         }
 
 
-        if(
-            !members ||
-            members.length === 0
-        ){
+        if(!members){
 
-            showError(
-                "No member records were found."
+            throw new Error(
+                "Members could not be loaded."
             );
-
-            return;
 
         }
 
 
-        /* -----------------------------
-           FIND DIRECT CHILDREN
-        ----------------------------- */
+        /* -------------------------------------
+           6. FIND DIRECT CHILDREN
+           
+           parent_member_id must equal
+           current member's id.
+        ------------------------------------- */
 
         let leftMember = null;
 
@@ -787,19 +668,19 @@ async function loadBinaryTree(){
             const member of members
         ){
 
-            if(!member.parent_member_id){
+            if(
+                !member.parent_member_id
+            ){
+
                 continue;
+
             }
 
 
-            const parentUUID =
-                normalizeUUID(
-                    member.parent_member_id
-                );
-
-
             if(
-                parentUUID !== currentUUID
+                String(member.parent_member_id)
+                !==
+                String(currentMemberId)
             ){
 
                 continue;
@@ -833,9 +714,9 @@ async function loadBinaryTree(){
         }
 
 
-        /* -----------------------------
-           LEFT DISPLAY
-        ----------------------------- */
+        /* -------------------------------------
+           7. DISPLAY LEFT MEMBER
+        ------------------------------------- */
 
         const leftBox =
             document.getElementById(
@@ -891,8 +772,7 @@ async function loadBinaryTree(){
 
             `;
 
-        }
-        else{
+        }else{
 
             leftBox.innerHTML = `
 
@@ -905,9 +785,9 @@ async function loadBinaryTree(){
         }
 
 
-        /* -----------------------------
-           RIGHT DISPLAY
-        ----------------------------- */
+        /* -------------------------------------
+           8. DISPLAY RIGHT MEMBER
+        ------------------------------------- */
 
         const rightBox =
             document.getElementById(
@@ -963,8 +843,7 @@ async function loadBinaryTree(){
 
             `;
 
-        }
-        else{
+        }else{
 
             rightBox.innerHTML = `
 
@@ -977,180 +856,142 @@ async function loadBinaryTree(){
         }
 
 
-        /* =================================
-           COUNT ONLY MEMBERS UNDER CURRENT
-           MEMBER'S LEFT / RIGHT BRANCH
-        ================================= */
+        /* -------------------------------------
+           9. CALCULATE CURRENT MEMBER'S
+              LEFT AND RIGHT TEAM
+           
+           This counts the complete subtree,
+           not unrelated members elsewhere.
+        ------------------------------------- */
 
-        const memberMap =
-            new Map();
-
-
-        members.forEach(
-            function(member){
-
-                const uuids =
-                    getUUIDValues(member);
-
-                uuids.forEach(
-                    function(uuid){
-
-                        memberMap.set(
-                            normalizeUUID(uuid),
-                            member
-                        );
-
-                    }
-                );
-
-            }
-        );
+        const childrenMap = {};
 
 
-        /*
-           Count descendants recursively.
-        */
-
-        function countBranch(
-            startingMember,
-            wantedSide
+        for(
+            const member of members
         ){
 
-            if(!startingMember){
-                return {
-                    count:0,
-                    points:0
-                };
+            if(
+                !member.parent_member_id
+            ){
+
+                continue;
+
             }
 
+
+            const parentId =
+                String(
+                    member.parent_member_id
+                );
+
+
+            if(
+                !childrenMap[parentId]
+            ){
+
+                childrenMap[parentId] = [];
+
+            }
+
+
+            childrenMap[parentId].push(
+                member
+            );
+
+        }
+
+
+        function getSubtreeStats(
+            rootId
+        ){
 
             let count = 0;
 
             let points = 0;
 
-            const visited =
-                new Set();
+            const stack = [];
 
 
-            function walk(
-                memberUUID
+            if(
+                childrenMap[
+                    String(rootId)
+                ]
             ){
 
-                if(
-                    !memberUUID ||
-                    visited.has(memberUUID)
-                ){
-
-                    return;
-
-                }
-
-
-                visited.add(
-                    memberUUID
+                stack.push(
+                    ...childrenMap[
+                        String(rootId)
+                    ]
                 );
-
-
-                for(
-                    const child of members
-                ){
-
-                    if(
-                        !child.parent_member_id
-                    ){
-
-                        continue;
-
-                    }
-
-
-                    const parent =
-                        normalizeUUID(
-                            child.parent_member_id
-                        );
-
-
-                    if(
-                        parent !== memberUUID
-                    ){
-
-                        continue;
-
-                    }
-
-
-                    count += 1;
-
-                    points +=
-                        Number(
-                            child.business_points ||
-                            0
-                        );
-
-
-                    const childUUIDs =
-                        getUUIDValues(child);
-
-
-                    if(
-                        childUUIDs.length > 0
-                    ){
-
-                        walk(
-                            normalizeUUID(
-                                childUUIDs[0]
-                            )
-                        );
-
-                    }
-
-                }
 
             }
 
 
-            /*
-               Start from the selected direct child.
-            */
-
-            const startingUUIDs =
-                getUUIDValues(
-                    startingMember
-                );
-
-
-            if(
-                startingUUIDs.length > 0
+            while(
+                stack.length > 0
             ){
 
-                walk(
-                    normalizeUUID(
-                        startingUUIDs[0]
-                    )
-                );
+                const member =
+                    stack.pop();
+
+
+                count += 1;
+
+
+                points +=
+                    Number(
+                        member.business_points ||
+                        0
+                    );
+
+
+                const childList =
+                    childrenMap[
+                        String(member.id)
+                    ];
+
+
+                if(childList){
+
+                    stack.push(
+                        ...childList
+                    );
+
+                }
 
             }
 
 
             return {
-                count:count,
-                points:points
+                count,
+                points
             };
 
         }
 
 
+        /* -------------------------------------
+           10. LEFT STATS
+        ------------------------------------- */
+
         const leftStats =
-            countBranch(
-                leftMember,
-                "left"
+            getSubtreeStats(
+                leftMember
+                    ? leftMember.id
+                    : null
             );
 
 
+        /* -------------------------------------
+           11. RIGHT STATS
+        ------------------------------------- */
+
         const rightStats =
-            countBranch(
-                rightMember,
-                "right"
+            getSubtreeStats(
+                rightMember
+                    ? rightMember.id
+                    : null
             );
 
 
@@ -1178,36 +1019,22 @@ async function loadBinaryTree(){
             rightStats.points;
 
 
+        /* -------------------------------------
+           12. SUCCESS
+        ------------------------------------- */
+
         showSuccess(
             "Binary Tree loaded successfully."
         );
 
 
-        console.log(
-            "Current Member:",
-            currentMember
+    }catch(error){
+
+        console.error(
+            "Binary Tree Error:",
+            error
         );
 
-        console.log(
-            "Current Member UUID:",
-            currentUUID
-        );
-
-        console.log(
-            "Left Member:",
-            leftMember
-        );
-
-        console.log(
-            "Right Member:",
-            rightMember
-        );
-
-
-    }
-    catch(error){
-
-        console.error(error);
 
         showError(
             "Unable to load Binary Tree: " +
@@ -1228,5 +1055,4 @@ loadBinaryTree();
 </script>
 
 </body>
-
-    </html>
+      </html>
