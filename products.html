@@ -469,9 +469,9 @@ Loading products...
 
 <script>
 
-/* ================================
-   SUPABASE CONNECTION
-================================ */
+/* =================================
+   SUPABASE
+================================= */
 
 const SUPABASE_URL =
 "https://rtnxobtczeaxtpxgvfpb.supabase.co";
@@ -486,9 +486,9 @@ supabase.createClient(
 );
 
 
-/* ================================
+/* =================================
    VARIABLES
-================================ */
+================================= */
 
 let products = [];
 
@@ -500,9 +500,9 @@ JSON.parse(
 );
 
 
-/* ================================
+/* =================================
    CART COUNT
-================================ */
+================================= */
 
 function updateCartCount(){
 
@@ -510,7 +510,9 @@ function updateCartCount(){
 
     cart.forEach(function(item){
 
-        count += Number(item.quantity || 0);
+        count += Number(
+            item.quantity || 0
+        );
 
     });
 
@@ -521,9 +523,9 @@ function updateCartCount(){
 }
 
 
-/* ================================
+/* =================================
    SAVE CART
-================================ */
+================================= */
 
 function saveCart(){
 
@@ -537,9 +539,9 @@ function saveCart(){
 }
 
 
-/* ================================
+/* =================================
    PRICE
-================================ */
+================================= */
 
 function price(value){
 
@@ -550,9 +552,9 @@ function price(value){
 }
 
 
-/* ================================
+/* =================================
    SHOW PRODUCTS
-================================ */
+================================= */
 
 function showProducts(){
 
@@ -801,9 +803,9 @@ function showProducts(){
 }
 
 
-/* ================================
-   ADD CART
-================================ */
+/* =================================
+   ADD TO CART
+================================= */
 
 function addToCart(productId){
 
@@ -899,9 +901,9 @@ function addToCart(productId){
 }
 
 
-/* ================================
+/* =================================
    BUY NOW
-================================ */
+================================= */
 
 function buyNow(productId){
 
@@ -910,9 +912,9 @@ function buyNow(productId){
 }
 
 
-/* ================================
+/* =================================
    LOAD PRODUCTS
-================================ */
+================================= */
 
 async function loadProducts(){
 
@@ -950,10 +952,6 @@ async function loadProducts(){
         products =
             result.data || [];
 
-
-        /*
-          Only active products
-        */
 
         products =
             products.filter(
@@ -1003,9 +1001,9 @@ async function loadProducts(){
 }
 
 
-/* ================================
+/* =================================
    SEARCH
-================================ */
+================================= */
 
 document
 .getElementById("search")
@@ -1015,9 +1013,9 @@ document
 );
 
 
-/* ================================
+/* =================================
    CATEGORY
-================================ */
+================================= */
 
 document
 .querySelectorAll(".category")
@@ -1061,9 +1059,10 @@ document
 );
 
 
-/* ================================
+/* =================================
    CART BUTTON
-================================ */
+   DIRECTLY OPEN CART PAGE
+================================= */
 
 document
 .getElementById("cartButton")
@@ -1071,30 +1070,16 @@ document
     "click",
     function(){
 
-        if(cart.length === 0){
-
-            alert(
-                "Your cart is empty."
-            );
-
-            return;
-
-        }
-
-
-        alert(
-            "You have " +
-            cart.length +
-            " product(s) in your cart."
-        );
+        window.location.href =
+            "cart.html";
 
     }
 );
 
 
-/* ================================
+/* =================================
    START
-================================ */
+================================= */
 
 updateCartCount();
 
@@ -1105,4 +1090,4 @@ loadProducts();
 
 </body>
 
-    </html>
+</html>
