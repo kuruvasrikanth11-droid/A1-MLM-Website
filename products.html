@@ -4,7 +4,6 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>A1 Products</title>
@@ -28,10 +27,11 @@ body{
 header{
     background:#071a3d;
     color:white;
-    padding:16px 6%;
+    padding:16px 5%;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    gap:10px;
 }
 
 .logo{
@@ -42,7 +42,8 @@ header{
 
 .header-buttons{
     display:flex;
-    gap:10px;
+    gap:8px;
+    align-items:center;
 }
 
 .header-btn{
@@ -50,10 +51,11 @@ header{
     text-decoration:none;
     background:#0758a8;
     color:white;
-    padding:10px 15px;
+    padding:10px 13px;
     border-radius:7px;
     font-weight:bold;
     cursor:pointer;
+    white-space:nowrap;
 }
 
 .cart-btn{
@@ -63,7 +65,7 @@ header{
 .container{
     max-width:1200px;
     margin:auto;
-    padding:30px 18px;
+    padding:30px 18px 45px;
 }
 
 .title{
@@ -74,10 +76,12 @@ header{
 .title h1{
     color:#071a3d;
     margin-bottom:8px;
+    font-size:42px;
 }
 
 .title p{
     color:#666;
+    font-size:20px;
 }
 
 .search{
@@ -87,7 +91,7 @@ header{
     border-radius:10px;
     border:1px solid #ddd;
     margin-bottom:20px;
-    font-size:16px;
+    font-size:17px;
     outline:none;
 }
 
@@ -96,16 +100,18 @@ header{
     gap:10px;
     overflow-x:auto;
     margin-bottom:25px;
+    padding-bottom:5px;
 }
 
 .category{
     border:0;
     background:white;
-    padding:10px 16px;
-    border-radius:20px;
+    padding:11px 18px;
+    border-radius:22px;
     cursor:pointer;
     white-space:nowrap;
     font-weight:bold;
+    font-size:15px;
 }
 
 .category.active{
@@ -143,11 +149,12 @@ header{
 }
 
 .image-box{
-    height:210px;
+    height:230px;
     background:#f7f9fc;
     display:flex;
     justify-content:center;
     align-items:center;
+    overflow:hidden;
 }
 
 .image-box img{
@@ -157,7 +164,7 @@ header{
 }
 
 .no-image{
-    font-size:55px;
+    font-size:65px;
 }
 
 .info{
@@ -166,7 +173,7 @@ header{
 
 .category-name{
     color:#0758a8;
-    font-size:12px;
+    font-size:13px;
     font-weight:bold;
     text-transform:uppercase;
     margin-bottom:8px;
@@ -174,7 +181,7 @@ header{
 
 .name{
     color:#071a3d;
-    font-size:17px;
+    font-size:18px;
     font-weight:bold;
     line-height:1.4;
     margin-bottom:12px;
@@ -189,13 +196,13 @@ header{
 .points{
     color:#198754;
     font-weight:bold;
-    font-size:14px;
+    font-size:15px;
     margin-bottom:7px;
 }
 
 .stock{
     color:#666;
-    font-size:13px;
+    font-size:14px;
     margin-bottom:15px;
 }
 
@@ -218,6 +225,7 @@ header{
     color:white;
     font-weight:bold;
     cursor:pointer;
+    font-size:14px;
 }
 
 .buy{
@@ -243,54 +251,76 @@ header{
 }
 
 footer{
-    margin-top:40px;
     background:#041128;
     color:white;
     text-align:center;
     padding:25px;
 }
 
+
+/* MOBILE */
+
 @media(max-width:950px){
 
     .products{
-        grid-template-columns:repeat(3,1fr);
+        grid-template-columns:repeat(2,1fr);
     }
 
 }
 
-@media(max-width:700px){
+@media(max-width:600px){
 
     header{
-        padding:14px;
+        padding:14px 12px;
     }
 
-    .dashboard{
-        display:none;
+    .logo{
+        font-size:28px;
+    }
+
+    .header-buttons{
+        gap:6px;
+    }
+
+    .header-btn{
+        padding:9px 10px;
+        font-size:13px;
+    }
+
+    .title h1{
+        font-size:34px;
+    }
+
+    .title p{
+        font-size:17px;
     }
 
     .products{
-        grid-template-columns:repeat(2,1fr);
-        gap:12px;
+        grid-template-columns:1fr;
     }
 
     .image-box{
-        height:160px;
-    }
-
-    .info{
-        padding:12px;
-    }
-
-    .name{
-        font-size:15px;
-    }
-
-    .price{
-        font-size:19px;
+        height:260px;
     }
 
     .buttons{
-        grid-template-columns:1fr;
+        grid-template-columns:1fr 1fr;
+    }
+
+}
+
+
+/* VERY SMALL PHONES */
+
+@media(max-width:380px){
+
+    .header-btn{
+        padding:8px 7px;
+        font-size:12px;
+    }
+
+    .logo{
+        font-size:25px;
     }
 
 }
@@ -309,14 +339,16 @@ footer{
 A1
 </div>
 
+
 <div class="header-buttons">
 
 <a
     href="dashboard.html"
-    class="header-btn dashboard"
+    class="header-btn"
 >
-← Dashboard
+🏠 Dashboard
 </a>
+
 
 <button
     type="button"
@@ -469,9 +501,7 @@ Loading products...
 
 <script>
 
-/* =================================
-   SUPABASE
-================================= */
+/* SUPABASE */
 
 const SUPABASE_URL =
 "https://rtnxobtczeaxtpxgvfpb.supabase.co";
@@ -486,9 +516,7 @@ supabase.createClient(
 );
 
 
-/* =================================
-   VARIABLES
-================================= */
+/* VARIABLES */
 
 let products = [];
 
@@ -500,9 +528,7 @@ JSON.parse(
 );
 
 
-/* =================================
-   CART COUNT
-================================= */
+/* CART COUNT */
 
 function updateCartCount(){
 
@@ -523,9 +549,7 @@ function updateCartCount(){
 }
 
 
-/* =================================
-   SAVE CART
-================================= */
+/* SAVE CART */
 
 function saveCart(){
 
@@ -539,9 +563,7 @@ function saveCart(){
 }
 
 
-/* =================================
-   PRICE
-================================= */
+/* PRICE */
 
 function price(value){
 
@@ -552,9 +574,7 @@ function price(value){
 }
 
 
-/* =================================
-   SHOW PRODUCTS
-================================= */
+/* SHOW PRODUCTS */
 
 function showProducts(){
 
@@ -669,7 +689,7 @@ function showProducts(){
 
                         <img
                             src="${imageURL}"
-                            alt="Product"
+                            alt="${product.product_name || "Product"}"
                             onerror="this.style.display='none';"
                         >
 
@@ -803,9 +823,7 @@ function showProducts(){
 }
 
 
-/* =================================
-   ADD TO CART
-================================= */
+/* ADD TO CART */
 
 function addToCart(productId){
 
@@ -901,9 +919,7 @@ function addToCart(productId){
 }
 
 
-/* =================================
-   BUY NOW
-================================= */
+/* BUY NOW */
 
 function buyNow(productId){
 
@@ -912,9 +928,7 @@ function buyNow(productId){
 }
 
 
-/* =================================
-   LOAD PRODUCTS
-================================= */
+/* LOAD PRODUCTS */
 
 async function loadProducts(){
 
@@ -1001,9 +1015,7 @@ async function loadProducts(){
 }
 
 
-/* =================================
-   SEARCH
-================================= */
+/* SEARCH */
 
 document
 .getElementById("search")
@@ -1013,9 +1025,7 @@ document
 );
 
 
-/* =================================
-   CATEGORY
-================================= */
+/* CATEGORIES */
 
 document
 .querySelectorAll(".category")
@@ -1059,10 +1069,7 @@ document
 );
 
 
-/* =================================
-   CART BUTTON
-   DIRECTLY OPEN CART PAGE
-================================= */
+/* CART BUTTON */
 
 document
 .getElementById("cartButton")
@@ -1077,9 +1084,7 @@ document
 );
 
 
-/* =================================
-   START
-================================= */
+/* START */
 
 updateCartCount();
 
@@ -1090,4 +1095,4 @@ loadProducts();
 
 </body>
 
-</html>
+    </html>
