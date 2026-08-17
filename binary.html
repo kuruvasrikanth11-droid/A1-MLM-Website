@@ -5,8 +5,10 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
 <title>A1 Binary Tree</title>
 
@@ -76,7 +78,6 @@ header{
     padding:15px;
     border-radius:8px;
     margin-bottom:20px;
-    line-height:1.5;
 }
 
 .root-card{
@@ -140,7 +141,7 @@ header{
     border-radius:12px;
     padding:25px;
     text-align:center;
-    min-height:170px;
+    min-height:180px;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -167,12 +168,13 @@ header{
 .child-info{
     color:#666;
     font-size:14px;
-    line-height:1.6;
+    line-height:1.7;
 }
 
 .stats{
     display:grid;
-    grid-template-columns:repeat(4,1fr);
+    grid-template-columns:
+    repeat(4,1fr);
     gap:15px;
     margin-top:25px;
 }
@@ -238,6 +240,7 @@ footer{
 
 <body>
 
+
 <header>
 
 <div class="logo">
@@ -255,6 +258,7 @@ Dashboard
 
 
 <div class="container">
+
 
 <div class="title">
 
@@ -301,6 +305,7 @@ Loading...
 
 <div class="tree">
 
+
 <div class="branch">
 
 <div class="branch-title left-title">
@@ -344,6 +349,7 @@ Loading...
 
 
 <div class="stats">
+
 
 <div class="stat">
 
@@ -408,6 +414,7 @@ Right Business Points
 
 </div>
 
+
 </div>
 
 
@@ -420,7 +427,11 @@ Members are connected using
 and
 <code>placement_side</code>.
 
+LEFT and RIGHT positions are calculated
+from the member's actual parent relationship.
+
 </div>
+
 
 </div>
 
@@ -454,7 +465,7 @@ window.supabase.createClient(
 
 
 /* =========================================
-   ERROR
+   ERROR MESSAGE
 ========================================= */
 
 function showError(message){
@@ -470,12 +481,12 @@ function showError(message){
 
 
 /* =========================================
-   ESCAPE HTML
+   HTML SAFETY
 ========================================= */
 
 function escapeHTML(value){
 
-    return String(value)
+    return String(value ?? "")
         .replace(/&/g,"&amp;")
         .replace(/</g,"&lt;")
         .replace(/>/g,"&gt;")
@@ -486,143 +497,14 @@ function escapeHTML(value){
 
 
 /* =========================================
-   UUID CHECK
+   NORMALIZE SIDE
 ========================================= */
 
-function isUUID(value){
+function normalizeSide(value){
 
-    if(typeof value !== "string"){
-        return false;
-    }
-
-    return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
-
-}
-
-
-/* =========================================
-   FIND MEMBER UUID
-   IMPORTANT:
-   We do NOT blindly use the first UUID.
-========================================= */
-
-function getMemberUUID(member){
-
-    const preferredFields = [
-
-        "id",
-        "idi",
-        "uuid",
-        "member_id",
-        "user_id"
-
-    ];
-
-    for(const field of preferredFields){
-
-        if(
-            Object.prototype.hasOwnProperty.call(member,field)
-            &&
-            isUUID(member[field])
-        ){
-
-            return member[field];
-
-        }
-
-    }
-
-
-    /* Fallback:
-       Search remaining fields for UUID */
-
-    for(const key of Object.keys(member)){
-
-        if(
-            preferredFields.includes(key)
-        ){
-
-            continue;
-
-        }
-
-        if(
-            isUUID(member[key])
-        ){
-
-            return member[key];
-
-        }
-
-    }
-
-
-    return null;
-
-}
-
-
-/* =========================================
-   DISPLAY CHILD
-========================================= */
-
-function displayChild(element, member, defaultSide){
-
-    if(!member){
-
-        element.innerHTML = `
-
-            <div class="empty">
-                Empty Position
-            </div>
-
-        `;
-
-        return;
-
-    }
-
-
-    element.innerHTML = `
-
-        <div class="child-name">
-            ${escapeHTML(
-                member.full_name || "A1 Member"
-            )}
-        </div>
-
-        <div class="child-code">
-            ${escapeHTML(
-                member.member_code || "No Member ID"
-            )}
-        </div>
-
-        <div class="child-info">
-
-            Placement:
-            ${escapeHTML(
-                member.placement_side || defaultSide
-            )}
-
-            <br>
-
-            Status:
-            ${escapeHTML(
-                member.status || "active"
-            )}
-
-            <br>
-
-            Business Points:
-            ${escapeHTML(
-                String(
-                    member.business_points || 0
-                )
-            )}
-
-        </div>
-
-    `;
+    return String(value || "")
+        .trim()
+        .toLowerCase();
 
 }
 
@@ -635,13 +517,13 @@ async function loadBinaryTree(){
 
     try{
 
-        /* =========================
+        /* ================================
            GET LOGGED-IN USER
-        ========================= */
+        ================================= */
 
         const {
-            data:userData,
-            error:userError
+            data: userData,
+            error: userError
         } =
         await supabaseClient
         .auth
@@ -650,7 +532,9 @@ async function loadBinaryTree(){
 
         if(userError){
 
-            throw userError;
+            throw new Error(
+                "Login session could not be verified."
+            );
 
         }
 
@@ -669,27 +553,27 @@ async function loadBinaryTree(){
         }
 
 
-        /* =========================
+        /* ================================
            GET CURRENT MEMBER
-        ========================= */
+        ================================= */
 
         const {
-            data:currentMember,
-            error:currentError
+            data: currentMember,
+            error: currentError
         } =
         await supabaseClient
         .from("members")
         .select("*")
-        .eq(
-            "email",
-            user.email
-        )
+        .eq("email",user.email)
         .maybeSingle();
 
 
         if(currentError){
 
-            throw currentError;
+            throw new Error(
+                "Member could not be loaded: " +
+                currentError.message
+            );
 
         }
 
@@ -703,9 +587,29 @@ async function loadBinaryTree(){
         }
 
 
-        /* =========================
+        /* ================================
+           CURRENT MEMBER DETAILS
+           
+           IMPORTANT:
+           Your database uses id as UUID.
+        ================================= */
+
+        const rootUUID =
+            currentMember.id;
+
+
+        if(!rootUUID){
+
+            throw new Error(
+                "Current member UUID (id) was not found."
+            );
+
+        }
+
+
+        /* ================================
            ROOT DISPLAY
-        ========================= */
+        ================================= */
 
         document
         .getElementById("rootName")
@@ -724,62 +628,41 @@ async function loadBinaryTree(){
             );
 
 
-        /* =========================
-           GET REAL ROOT UUID
-        ========================= */
-
-        const rootUUID =
-            getMemberUUID(
-                currentMember
-            );
-
-
-        if(!rootUUID){
-
-            throw new Error(
-                "The UUID of this member could not be identified. Please check the member ID column in Supabase."
-            );
-
-        }
-
-
-        console.log(
-            "A1 Root UUID:",
-            rootUUID
-        );
-
-
-        /* =========================
-           GET DIRECT CHILDREN
-           
-           IMPORTANT:
-           We query using
-           parent_member_id directly.
-        ========================= */
+        /* ================================
+           GET ALL MEMBERS
+        ================================= */
 
         const {
-            data:children,
-            error:childrenError
+            data: members,
+            error: membersError
         } =
         await supabaseClient
         .from("members")
-        .select("*")
-        .eq(
-            "parent_member_id",
-            rootUUID
+        .select(
+            "id,member_code,full_name,parent_member_id,placement_side,status,business_points"
         );
 
 
-        if(childrenError){
+        if(membersError){
 
-            throw childrenError;
+            throw new Error(
+                "Members could not be loaded: " +
+                membersError.message
+            );
 
         }
 
 
-        const childMembers =
-            children || [];
+        const allMembers =
+            members || [];
 
+
+        /* ================================
+           FIND DIRECT CHILDREN
+
+           IMPORTANT:
+           Compare against CURRENT MEMBER id.
+        ================================= */
 
         let leftMember = null;
 
@@ -787,15 +670,45 @@ async function loadBinaryTree(){
 
 
         for(
-            const member of childMembers
+            const member of allMembers
         ){
 
-            const side =
+            if(
+                !member.parent_member_id
+            ){
+
+                continue;
+
+            }
+
+
+            const parentID =
                 String(
-                    member.placement_side || ""
+                    member.parent_member_id
                 )
                 .trim()
                 .toLowerCase();
+
+
+            const currentID =
+                String(rootUUID)
+                .trim()
+                .toLowerCase();
+
+
+            if(
+                parentID !== currentID
+            ){
+
+                continue;
+
+            }
+
+
+            const side =
+                normalizeSide(
+                    member.placement_side
+                );
 
 
             if(side === "left"){
@@ -816,153 +729,353 @@ async function loadBinaryTree(){
         }
 
 
-        /* =========================
-           DISPLAY LEFT
-        ========================= */
+        /* ================================
+           DISPLAY LEFT MEMBER
+        ================================= */
 
-        displayChild(
-
+        const leftBox =
             document.getElementById(
                 "leftPosition"
-            ),
-
-            leftMember,
-
-            "left"
-
-        );
-
-
-        /* =========================
-           DISPLAY RIGHT
-        ========================= */
-
-        displayChild(
-
-            document.getElementById(
-                "rightPosition"
-            ),
-
-            rightMember,
-
-            "right"
-
-        );
-
-
-        /* =========================
-           GET ALL MEMBERS
-           
-           Used for basic statistics.
-        ========================= */
-
-        const {
-            data:allMembers,
-            error:allMembersError
-        } =
-        await supabaseClient
-        .from("members")
-        .select(
-            "parent_member_id, placement_side, business_points"
-        );
-
-
-        if(allMembersError){
-
-            console.warn(
-                "Statistics could not be loaded:",
-                allMembersError.message
             );
+
+
+        if(leftMember){
+
+            leftBox.innerHTML = `
+
+                <div class="child-name">
+                    ${escapeHTML(
+                        leftMember.full_name ||
+                        "A1 Member"
+                    )}
+                </div>
+
+                <div class="child-code">
+                    ${escapeHTML(
+                        leftMember.member_code ||
+                        "No Member ID"
+                    )}
+                </div>
+
+                <div class="child-info">
+
+                    Placement:
+                    ${escapeHTML(
+                        leftMember.placement_side ||
+                        "left"
+                    )}
+
+                    <br>
+
+                    Status:
+                    ${escapeHTML(
+                        leftMember.status ||
+                        "active"
+                    )}
+
+                    <br>
+
+                    Business Points:
+                    ${escapeHTML(
+                        Number(
+                            leftMember.business_points ||
+                            0
+                        )
+                    )}
+
+                </div>
+
+            `;
+
+        }
+        else{
+
+            leftBox.innerHTML = `
+
+                <div class="empty">
+                    Empty Position
+                </div>
+
+            `;
 
         }
 
 
-        const members =
-            allMembers || [];
+        /* ================================
+           DISPLAY RIGHT MEMBER
+        ================================= */
+
+        const rightBox =
+            document.getElementById(
+                "rightPosition"
+            );
 
 
-        let leftCount = 0;
+        if(rightMember){
 
-        let rightCount = 0;
+            rightBox.innerHTML = `
 
-        let leftPoints = 0;
+                <div class="child-name">
+                    ${escapeHTML(
+                        rightMember.full_name ||
+                        "A1 Member"
+                    )}
+                </div>
 
-        let rightPoints = 0;
+                <div class="child-code">
+                    ${escapeHTML(
+                        rightMember.member_code ||
+                        "No Member ID"
+                    )}
+                </div>
+
+                <div class="child-info">
+
+                    Placement:
+                    ${escapeHTML(
+                        rightMember.placement_side ||
+                        "right"
+                    )}
+
+                    <br>
+
+                    Status:
+                    ${escapeHTML(
+                        rightMember.status ||
+                        "active"
+                    )}
+
+                    <br>
+
+                    Business Points:
+                    ${escapeHTML(
+                        Number(
+                            rightMember.business_points ||
+                            0
+                        )
+                    )}
+
+                </div>
+
+            `;
+
+        }
+        else{
+
+            rightBox.innerHTML = `
+
+                <div class="empty">
+                    Empty Position
+                </div>
+
+            `;
+
+        }
 
 
-        /*
-         * IMPORTANT:
-         * For now, count direct/available
-         * placement records by side.
-         *
-         * We will build complete recursive
-         * subtree counting after the direct
-         * LEFT / RIGHT connection is confirmed.
-         */
+        /* ================================
+           BUILD CHILD MAP
+        ================================= */
+
+        const childrenMap =
+            new Map();
+
 
         for(
-            const member of members
+            const member of allMembers
         ){
 
-            const side =
+            if(
+                !member.parent_member_id
+            ){
+
+                continue;
+
+            }
+
+
+            const parentID =
                 String(
-                    member.placement_side || ""
+                    member.parent_member_id
                 )
                 .trim()
                 .toLowerCase();
 
 
-            if(side === "left"){
+            if(
+                !childrenMap.has(parentID)
+            ){
 
-                leftCount += 1;
-
-                leftPoints +=
-                    Number(
-                        member.business_points || 0
-                    );
-
-            }
-
-
-            if(side === "right"){
-
-                rightCount += 1;
-
-                rightPoints +=
-                    Number(
-                        member.business_points || 0
-                    );
+                childrenMap.set(
+                    parentID,
+                    []
+                );
 
             }
+
+
+            childrenMap
+            .get(parentID)
+            .push(member);
 
         }
 
 
+        /* ================================
+           COUNT EACH BRANCH
+        ================================= */
+
+        function getBranchStats(
+            startMember
+        ){
+
+            let count = 0;
+
+            let points = 0;
+
+            const queue = [
+                startMember.id
+            ];
+
+
+            const visited =
+                new Set();
+
+
+            while(
+                queue.length > 0
+            ){
+
+                const parentID =
+                    String(
+                        queue.shift()
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                if(
+                    visited.has(parentID)
+                ){
+
+                    continue;
+
+                }
+
+
+                visited.add(parentID);
+
+
+                const children =
+                    childrenMap.get(
+                        parentID
+                    ) || [];
+
+
+                for(
+                    const child of children
+                ){
+
+                    count += 1;
+
+                    points +=
+                        Number(
+                            child.business_points ||
+                            0
+                        );
+
+
+                    if(child.id){
+
+                        queue.push(
+                            child.id
+                        );
+
+                    }
+
+                }
+
+            }
+
+
+            return {
+                count,
+                points
+            };
+
+        }
+
+
+        /* ================================
+           LEFT STATISTICS
+        ================================= */
+
+        let leftStats = {
+            count:0,
+            points:0
+        };
+
+
+        if(leftMember){
+
+            leftStats =
+                getBranchStats(
+                    leftMember
+                );
+
+        }
+
+
+        /* ================================
+           RIGHT STATISTICS
+        ================================= */
+
+        let rightStats = {
+            count:0,
+            points:0
+        };
+
+
+        if(rightMember){
+
+            rightStats =
+                getBranchStats(
+                    rightMember
+                );
+
+        }
+
+
+        /* ================================
+           UPDATE STATISTICS
+        ================================= */
+
         document
         .getElementById("leftCount")
         .innerText =
-            leftCount;
+            leftStats.count;
 
 
         document
         .getElementById("rightCount")
         .innerText =
-            rightCount;
+            rightStats.count;
 
 
         document
         .getElementById("leftPoints")
         .innerText =
-            leftPoints;
+            leftStats.points;
 
 
         document
         .getElementById("rightPoints")
         .innerText =
-            rightPoints;
+            rightStats.points;
 
 
-    }catch(error){
+    }
+    catch(error){
 
         console.error(
             "Binary Tree Error:",
@@ -990,4 +1103,4 @@ loadBinaryTree();
 
 </body>
 
-</html>
+      </html>
