@@ -4,7 +4,6 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>A1 Cart</title>
@@ -26,25 +25,32 @@ body{
 header{
     background:#071a3d;
     color:white;
-    padding:16px 6%;
+    padding:15px 5%;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    gap:10px;
 }
 
 .logo{
+    color:#ffb000;
     font-size:30px;
     font-weight:bold;
-    color:#ffb000;
 }
 
-.back-btn{
-    background:#0758a8;
+.nav{
+    display:flex;
+    gap:8px;
+}
+
+.nav a{
     color:white;
     text-decoration:none;
-    padding:10px 15px;
+    padding:10px 12px;
     border-radius:7px;
+    background:#0758a8;
     font-weight:bold;
+    font-size:14px;
 }
 
 .container{
@@ -67,24 +73,32 @@ header{
     color:#666;
 }
 
-.cart-list{
-    display:flex;
-    flex-direction:column;
-    gap:15px;
-}
-
-.cart-item{
-    background:white;
-    padding:18px;
-    border-radius:12px;
-    box-shadow:0 5px 20px rgba(0,0,0,.07);
+.layout{
     display:grid;
-    grid-template-columns:100px 1fr auto;
-    gap:18px;
-    align-items:center;
+    grid-template-columns:1.5fr .8fr;
+    gap:20px;
 }
 
-.image-box{
+.box{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.box h2{
+    color:#071a3d;
+    margin-bottom:18px;
+}
+
+.item{
+    display:flex;
+    gap:15px;
+    padding:15px 0;
+    border-bottom:1px solid #eee;
+}
+
+.image{
     width:100px;
     height:100px;
     background:#f7f9fc;
@@ -93,34 +107,38 @@ header{
     align-items:center;
     justify-content:center;
     overflow:hidden;
+    flex-shrink:0;
 }
 
-.image-box img{
+.image img{
     width:100%;
     height:100%;
     object-fit:contain;
 }
 
 .no-image{
-    font-size:40px;
+    font-size:45px;
 }
 
-.product-name{
+.info{
+    flex:1;
+}
+
+.name{
     color:#071a3d;
-    font-size:18px;
     font-weight:bold;
+    font-size:17px;
     margin-bottom:8px;
 }
 
-.product-price{
-    font-size:17px;
-    font-weight:bold;
-    margin-bottom:6px;
+.details{
+    color:#666;
+    line-height:1.7;
+    font-size:14px;
 }
 
-.product-points{
+.points{
     color:#198754;
-    font-size:14px;
     font-weight:bold;
 }
 
@@ -131,7 +149,7 @@ header{
     margin-top:12px;
 }
 
-.quantity button{
+.qty-btn{
     width:32px;
     height:32px;
     border:0;
@@ -139,10 +157,11 @@ header{
     background:#0758a8;
     color:white;
     font-size:18px;
+    font-weight:bold;
     cursor:pointer;
 }
 
-.quantity span{
+.qty{
     min-width:25px;
     text-align:center;
     font-weight:bold;
@@ -151,38 +170,24 @@ header{
 .remove{
     margin-top:10px;
     border:0;
-    background:#d9534f;
+    background:#dc3545;
     color:white;
     padding:7px 10px;
     border-radius:6px;
     cursor:pointer;
 }
 
-.item-total{
-    font-size:18px;
-    font-weight:bold;
-    text-align:right;
-}
-
-.summary{
-    margin-top:25px;
-    background:white;
-    padding:22px;
-    border-radius:12px;
-    box-shadow:0 5px 20px rgba(0,0,0,.07);
-}
-
-.summary-row{
+.row{
     display:flex;
     justify-content:space-between;
-    padding:8px 0;
+    padding:11px 0;
     color:#555;
 }
 
-.summary-total{
+.total{
     border-top:1px solid #ddd;
     margin-top:10px;
-    padding-top:15px;
+    padding-top:16px;
     display:flex;
     justify-content:space-between;
     font-size:22px;
@@ -190,24 +195,45 @@ header{
     color:#071a3d;
 }
 
+.total-points{
+    color:#198754;
+    font-weight:bold;
+}
+
 .checkout{
+    display:block;
     width:100%;
-    margin-top:18px;
-    padding:14px;
+    text-align:center;
+    text-decoration:none;
     border:0;
-    border-radius:8px;
     background:#198754;
     color:white;
+    padding:14px;
+    margin-top:20px;
+    border-radius:8px;
     font-size:17px;
     font-weight:bold;
     cursor:pointer;
 }
 
+.products{
+    display:block;
+    width:100%;
+    text-align:center;
+    text-decoration:none;
+    background:#0758a8;
+    color:white;
+    padding:12px;
+    margin-top:10px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
 .empty{
     background:white;
-    padding:60px 20px;
-    text-align:center;
     border-radius:12px;
+    padding:55px 20px;
+    text-align:center;
     box-shadow:0 5px 20px rgba(0,0,0,.07);
 }
 
@@ -216,15 +242,9 @@ header{
     margin-bottom:15px;
 }
 
-.shop-btn{
-    display:inline-block;
-    margin-top:18px;
-    background:#0758a8;
-    color:white;
-    text-decoration:none;
-    padding:12px 18px;
-    border-radius:7px;
-    font-weight:bold;
+.empty h2{
+    color:#071a3d;
+    margin-bottom:8px;
 }
 
 footer{
@@ -238,26 +258,29 @@ footer{
 @media(max-width:700px){
 
     header{
-        padding:14px;
+        padding:14px 12px;
     }
 
-    .cart-item{
-        grid-template-columns:75px 1fr;
-        gap:12px;
+    .nav a{
+        padding:9px 8px;
+        font-size:12px;
     }
 
-    .image-box{
-        width:75px;
-        height:75px;
+    .layout{
+        grid-template-columns:1fr;
     }
 
-    .item-total{
-        grid-column:2;
-        text-align:left;
+    .item{
+        gap:10px;
     }
 
-    .product-name{
-        font-size:16px;
+    .image{
+        width:80px;
+        height:80px;
+    }
+
+    .name{
+        font-size:15px;
     }
 
 }
@@ -276,12 +299,18 @@ footer{
 A1
 </div>
 
-<a
-    href="products.html"
-    class="back-btn"
->
-← Products
+
+<div class="nav">
+
+<a href="dashboard.html">
+🏠 Dashboard
 </a>
+
+<a href="products.html">
+🛍 Products
+</a>
+
+</div>
 
 </header>
 
@@ -296,69 +325,13 @@ A1
 </h1>
 
 <p>
-Review your selected A1 products
+Review your products before checkout
 </p>
 
 </div>
 
 
-<div id="cartList"></div>
-
-
-<div
-    id="summary"
-    class="summary"
-    style="display:none;"
->
-
-<div class="summary-row">
-
-<span>
-Total Items
-</span>
-
-<strong id="totalItems">
-0
-</strong>
-
-</div>
-
-
-<div class="summary-row">
-
-<span>
-Total Business Points
-</span>
-
-<strong id="totalPoints">
-0
-</strong>
-
-</div>
-
-
-<div class="summary-total">
-
-<span>
-Total Amount
-</span>
-
-<span id="totalAmount">
-₹0
-</span>
-
-</div>
-
-
-<button
-    type="button"
-    class="checkout"
-    id="checkoutButton"
->
-Proceed to Checkout
-</button>
-
-</div>
+<div id="cartArea"></div>
 
 
 </div>
@@ -375,9 +348,9 @@ Proceed to Checkout
 
 <script>
 
-/* =================================
-   CART DATA
-================================= */
+/* ================================
+   CART
+================================ */
 
 let cart =
 JSON.parse(
@@ -385,11 +358,11 @@ JSON.parse(
 );
 
 
-/* =================================
+/* ================================
    PRICE
-================================= */
+================================ */
 
-function formatPrice(value){
+function price(value){
 
     return "₹" +
         Number(value || 0)
@@ -398,9 +371,9 @@ function formatPrice(value){
 }
 
 
-/* =================================
-   SAVE
-================================= */
+/* ================================
+   SAVE CART
+================================ */
 
 function saveCart(){
 
@@ -412,9 +385,9 @@ function saveCart(){
 }
 
 
-/* =================================
+/* ================================
    CHANGE QUANTITY
-================================= */
+================================ */
 
 function changeQuantity(index, change){
 
@@ -424,8 +397,9 @@ function changeQuantity(index, change){
 
 
     cart[index].quantity =
-        Number(cart[index].quantity || 1)
-        + change;
+        Number(
+            cart[index].quantity || 1
+        ) + change;
 
 
     if(cart[index].quantity <= 0){
@@ -442,9 +416,9 @@ function changeQuantity(index, change){
 }
 
 
-/* =================================
+/* ================================
    REMOVE
-================================= */
+================================ */
 
 function removeItem(index){
 
@@ -457,30 +431,21 @@ function removeItem(index){
 }
 
 
-/* =================================
+/* ================================
    RENDER CART
-================================= */
+================================ */
 
 function renderCart(){
 
-    const list =
+    const area =
         document.getElementById(
-            "cartList"
-        );
-
-    const summary =
-        document.getElementById(
-            "summary"
+            "cartArea"
         );
 
 
     if(cart.length === 0){
 
-        summary.style.display =
-            "none";
-
-
-        list.innerHTML = `
+        area.innerHTML = `
 
             <div class="empty">
 
@@ -492,14 +457,14 @@ function renderCart(){
                     Your Cart is Empty
                 </h2>
 
-                <p style="margin-top:8px;">
-                    Add products from the
-                    A1 Products page.
+                <p>
+                    Add products to your cart
+                    to continue.
                 </p>
 
                 <a
                     href="products.html"
-                    class="shop-btn"
+                    class="products"
                 >
                     Browse Products
                 </a>
@@ -513,18 +478,13 @@ function renderCart(){
     }
 
 
-    summary.style.display =
-        "block";
-
+    let itemsHTML = "";
 
     let totalItems = 0;
 
     let totalAmount = 0;
 
     let totalPoints = 0;
-
-
-    let html = "";
 
 
     cart.forEach(
@@ -536,32 +496,37 @@ function renderCart(){
                 );
 
 
-            const price =
+            const itemPrice =
                 Number(
                     item.selling_price || 0
                 );
 
 
-            const points =
+            const itemPoints =
                 Number(
                     item.business_points || 0
                 );
 
 
-            const itemTotal =
-                price * quantity;
+            totalItems +=
+                quantity;
 
 
-            totalItems += quantity;
+            totalAmount +=
+                itemPrice * quantity;
 
-            totalAmount += itemTotal;
 
             totalPoints +=
-                points * quantity;
+                itemPoints * quantity;
 
 
-            let imageHTML =
-                '<div class="no-image">📦</div>';
+            let imageHTML = `
+
+                <div class="no-image">
+                    📦
+                </div>
+
+            `;
 
 
             if(item.product_image){
@@ -578,30 +543,43 @@ function renderCart(){
             }
 
 
-            html += `
+            itemsHTML += `
 
-                <div class="cart-item">
+                <div class="item">
 
-                    <div class="image-box">
+                    <div class="image">
+
                         ${imageHTML}
+
                     </div>
 
 
-                    <div>
+                    <div class="info">
 
-                        <div class="product-name">
-                            ${item.product_name}
+                        <div class="name">
+
+                            ${
+                                item.product_name ||
+                                "A1 Product"
+                            }
+
                         </div>
 
 
-                        <div class="product-price">
-                            ${formatPrice(price)}
-                        </div>
+                        <div class="details">
 
+                            Price:
+                            ${
+                                price(itemPrice)
+                            }
 
-                        <div class="product-points">
-                            ⭐ Business Points:
-                            ${points}
+                            <br>
+
+                            Business Points:
+                            <span class="points">
+                                ${itemPoints}
+                            </span>
+
                         </div>
 
 
@@ -609,6 +587,7 @@ function renderCart(){
 
                             <button
                                 type="button"
+                                class="qty-btn"
                                 onclick="changeQuantity(
                                     ${index},
                                     -1
@@ -618,13 +597,14 @@ function renderCart(){
                             </button>
 
 
-                            <span>
+                            <span class="qty">
                                 ${quantity}
                             </span>
 
 
                             <button
                                 type="button"
+                                class="qty-btn"
                                 onclick="changeQuantity(
                                     ${index},
                                     1
@@ -648,13 +628,6 @@ function renderCart(){
 
                     </div>
 
-
-                    <div class="item-total">
-
-                        ${formatPrice(itemTotal)}
-
-                    </div>
-
                 </div>
 
             `;
@@ -663,51 +636,98 @@ function renderCart(){
     );
 
 
-    list.innerHTML =
-        html;
+    area.innerHTML = `
+
+        <div class="layout">
 
 
-    document.getElementById(
-        "totalItems"
-    ).innerText =
-        totalItems;
+            <div class="box">
+
+                <h2>
+                    Your Products
+                </h2>
+
+                ${itemsHTML}
+
+            </div>
 
 
-    document.getElementById(
-        "totalPoints"
-    ).innerText =
-        totalPoints;
+            <div class="box">
+
+                <h2>
+                    Cart Summary
+                </h2>
 
 
-    document.getElementById(
-        "totalAmount"
-    ).innerText =
-        formatPrice(totalAmount);
+                <div class="row">
+
+                    <span>
+                        Total Items
+                    </span>
+
+                    <strong>
+                        ${totalItems}
+                    </strong>
+
+                </div>
+
+
+                <div class="row">
+
+                    <span>
+                        Total Business Points
+                    </span>
+
+                    <strong class="total-points">
+                        ${totalPoints}
+                    </strong>
+
+                </div>
+
+
+                <div class="total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <span>
+                        ${price(totalAmount)}
+                    </span>
+
+                </div>
+
+
+                <!-- DIRECT CHECKOUT LINK -->
+
+                <a
+                    href="checkout.html"
+                    class="checkout"
+                >
+                    Proceed to Checkout
+                </a>
+
+
+                <a
+                    href="products.html"
+                    class="products"
+                >
+                    Continue Shopping
+                </a>
+
+            </div>
+
+
+        </div>
+
+    `;
 
 }
 
 
-/* =================================
-   CHECKOUT
-================================= */
-
-document
-.getElementById("checkoutButton")
-.addEventListener(
-    "click",
-    function(){
-
-        alert(
-            "Checkout page will be created next."
-        );
-
-    }
-);
-
-
-/* =================================
+/* ================================
    START
-================================= */
+================================ */
 
 renderCart();
 
@@ -717,11 +737,3 @@ renderCart();
 </body>
 
 </html>
-
-ఇప్పుడు
-
-Code paste చేసిన తర్వాత Commit changes / Save నొక్కండి.
-
-ఇంతే.
-
-Save అయిన తర్వాత నాకు “సక్సెస్” అని చెప్పండి. తర్వాత మన "Products" pageలో ఉన్న 🛒 Cart buttonని ఈ "cart.html"కి connect చేద్దాం.
